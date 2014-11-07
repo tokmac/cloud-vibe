@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -15,9 +16,12 @@ namespace Cloud_Vibe.Data.Models
 
         public int ID { get; set; }
         public string Title { get; set; }
+
+        [Display(Name = "Artist")]
         public virtual Artist Artist { get; set; }
         public int Year { get; set; }
         public DateTime SharedOn { get; set; }
+        [Display(Name = "User Shared")]
         public virtual AppUser UserShared { get; set; }
         public byte Torrent { get; set; }
         public byte CoverArt { get; set; }
