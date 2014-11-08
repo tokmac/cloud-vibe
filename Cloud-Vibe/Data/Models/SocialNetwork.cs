@@ -10,7 +10,7 @@ namespace Cloud_Vibe.Data.Models
     {
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage="Cannot save social network with empty name")]
         public string Name { get; set; }
     }
 }

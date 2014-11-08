@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -11,6 +12,8 @@ namespace Cloud_Vibe.Data.Models
         public Song()
         {
             this.Thanxies = new HashSet<Thanx>();
+            this.UsersDownloaded = new HashSet<AppUser>();
+            this.Comments = new HashSet<Comment>();
         }
 
         public int ID { get; set; }
@@ -18,16 +21,20 @@ namespace Cloud_Vibe.Data.Models
         [Display(Name = "Artist")]
         public virtual Artist Artist { get; set; }
         
+        [Required(ErrorMessage="Cannot save song with empty title")]
+        [Index(IsUnique = true)]
+        [MaxLength(450)]
         public string Title { get; set; }
 
-        public byte CoverArt { get; set; }
+        public byte[] CoverArt { get; set; }
 
         public int Year { get; set; }
 
         public DateTime SharedOn { get; set; }
-        [Display(Name = "User Shared")]
+
         public virtual AppUser UserShared { get; set; }
 
+        [Required(ErrorMessage="You need to add torrent file")]
         public byte[] Torrent { get; set; }
 
         public string VideoLink { get; set; }
@@ -36,7 +43,12 @@ namespace Cloud_Vibe.Data.Models
 
         public int Downloads { get; set; }
 
-        [Display(Name = "Thanxies")]
+        [InverseProperty("Song")]
         public virtual ICollection<Thanx> Thanxies { get; set; }
+
+        public virtual ICollection<AppUser> UsersDownloaded { get; set; }
+
+        [InverseProperty("Song")]
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

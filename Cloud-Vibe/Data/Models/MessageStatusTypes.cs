@@ -8,6 +8,6 @@ namespace Cloud_Vibe.Data.Models
     public enum MessageStatusTypes
     {
         NotRead = 0,
-        Read = 0
+        Read = 1
     }
 }

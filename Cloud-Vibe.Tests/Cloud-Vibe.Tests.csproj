@@ -93,9 +93,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cloud-Vibe\Cloud-Vibe.csproj">
+    <ProjectReference Include="..\Cloud-Vibe\Cloud-Vibe.Web.csproj">
       <Project>{2BC2EA10-31ED-40E3-A1C0-5D5949BCAD0E}</Project>
-      <Name>Cloud-Vibe</Name>
+      <Name>Cloud-Vibe.Web</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

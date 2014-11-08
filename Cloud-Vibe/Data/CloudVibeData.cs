@@ -8,7 +8,7 @@ using System.Web;
 
 namespace Cloud_Vibe.Data
 {
-    public class CloudVibeData
+    public class CloudVibeData : ICloudVibeData
     {
         private DbContext context;
         private IDictionary<Type, object> repositories;
@@ -63,7 +63,6 @@ namespace Cloud_Vibe.Data
         {
             get { return this.GetRepository<Thanx>(); }
         }
-
         public int SaveChanges()
         {
             return this.context.SaveChanges();
