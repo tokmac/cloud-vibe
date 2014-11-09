@@ -33,9 +33,9 @@ namespace Cloud_Vibe.Data.Migrations
             //Add Users
             if (context.Users.Count() == 0)
             {
-                context.Users.Add(new AppUser { FirstName = "Georgi", LastName = "Georgiev", UserName = "gosho", Email = "gosho@goshov.bg" });
-                context.Users.Add(new AppUser { FirstName = "Pesho", LastName = "Peshov", UserName = "peshkata", Email = "pesho@peshov.bg" });
-                context.Users.Add(new AppUser { FirstName = "Radka", LastName = "Piratka", UserName = "radka", Email = "radka@piratka.bg" });
+                context.Users.Add(new User { FirstName = "Georgi", LastName = "Georgiev", UserName = "gosho", Email = "gosho@goshov.bg" });
+                context.Users.Add(new User { FirstName = "Pesho", LastName = "Peshov", UserName = "peshkata", Email = "pesho@peshov.bg" });
+                context.Users.Add(new User { FirstName = "Radka", LastName = "Piratka", UserName = "radka", Email = "radka@piratka.bg" });
                 context.SaveChanges();
             }
             

@@ -11,9 +11,9 @@ using System.Web;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class AppUser : IdentityUser
+    public class User : IdentityUser
     {
-        public AppUser()
+        public User()
         {
             this.SharedAlbums = new HashSet<Album>();
             this.DownloadedAlbums = new HashSet<Album>();
@@ -26,16 +26,16 @@ namespace Cloud_Vibe.Data.Models
             this.MessagesRecieved = new HashSet<Message>();
         }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<AppUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
         }
-        [Required]
+        //[Required]
         public string FirstName { get; set; }
-        [Required]
+        //[Required]
         public string LastName { get; set; }
         public Byte[] Avatar { get; set; }
 

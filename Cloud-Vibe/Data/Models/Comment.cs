@@ -11,7 +11,7 @@ namespace Cloud_Vibe.Data.Models
         public int ID { get; set; }
 
         [Required]
-        public virtual AppUser User { get; set; }
+        public virtual User User { get; set; }
 
         [Required(ErrorMessage="Cannot post empty comment")]
         public string Text { get; set; }

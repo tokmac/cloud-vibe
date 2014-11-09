@@ -12,8 +12,9 @@ namespace Cloud_Vibe.Controllers
     public class HomeController : BaseController
     {
         public HomeController(ICloudVibeData data)
-            :base(data)
+            : base(data)
         {
+
         }
 
         public ActionResult Index()

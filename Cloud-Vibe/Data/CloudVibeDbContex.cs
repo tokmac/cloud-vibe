@@ -10,7 +10,7 @@ using System.Web;
 
 namespace Cloud_Vibe.Data
 {
-    public class CloudVibeDbContex : IdentityDbContext<AppUser>
+    public class CloudVibeDbContex : IdentityDbContext<User>
     {
         public CloudVibeDbContex()
             : base("DefaultConnection", throwIfV1Schema: false)

@@ -12,7 +12,7 @@ namespace Cloud_Vibe.Data.Models
         public Song()
         {
             this.Thanxies = new HashSet<Thanx>();
-            this.UsersDownloaded = new HashSet<AppUser>();
+            this.UsersDownloaded = new HashSet<User>();
             this.Comments = new HashSet<Comment>();
         }
 
@@ -32,7 +32,7 @@ namespace Cloud_Vibe.Data.Models
 
         public DateTime SharedOn { get; set; }
 
-        public virtual AppUser UserShared { get; set; }
+        public virtual User UserShared { get; set; }
 
         [Required(ErrorMessage="You need to add torrent file")]
         public byte[] Torrent { get; set; }
@@ -46,7 +46,7 @@ namespace Cloud_Vibe.Data.Models
         [InverseProperty("Song")]
         public virtual ICollection<Thanx> Thanxies { get; set; }
 
-        public virtual ICollection<AppUser> UsersDownloaded { get; set; }
+        public virtual ICollection<User> UsersDownloaded { get; set; }
 
         [InverseProperty("Song")]
         public virtual ICollection<Comment> Comments { get; set; }

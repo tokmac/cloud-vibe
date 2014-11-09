@@ -31,7 +31,7 @@ namespace Cloud_Vibe.Data.Models
         public string WebSite { get; set; }
         [InverseProperty("Artist")]
         public virtual ICollection<SocialAccountLink> SocialAccounts { get; set; }
-        public virtual ICollection<AppUser> UsersFavored { get; set; }
+        public virtual ICollection<User> UsersFavored { get; set; }
         public bool IsFamous { get; set; }
     }
 }

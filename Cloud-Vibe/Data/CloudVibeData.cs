@@ -13,15 +13,15 @@ namespace Cloud_Vibe.Data
         private DbContext context;
         private IDictionary<Type, object> repositories;
 
-        public CloudVibeData(DbContext context)
+        public CloudVibeData(CloudVibeDbContex context)
         {
             this.context = context;
             this.repositories = new Dictionary<Type, object>();
         }
 
-        public IRepository<AppUser> Users
+        public IRepository<User> Users
         {
-            get { return this.GetRepository<AppUser>(); }
+            get { return this.GetRepository<User>(); }
         }
 
         public IRepository<Album> Albums

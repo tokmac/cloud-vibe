@@ -10,7 +10,7 @@ namespace Cloud_Vibe.Data.Models
     {
         public int ID { get; set; }
         [Required]
-        public virtual AppUser User { get; set; }
+        public virtual User User { get; set; }
         public virtual Song Song { get; set; }
         public virtual Album Album { get; set; }
     }

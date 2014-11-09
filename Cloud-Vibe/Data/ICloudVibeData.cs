@@ -10,7 +10,7 @@ namespace Cloud_Vibe.Data
     public interface ICloudVibeData
     {
         IRepository<Album> Albums { get; }
-        IRepository<AppUser> Users { get; }
+        IRepository<User> Users { get; }
         IRepository<Artist> Artists { get; }
         IRepository<Comment> Comments { get; }
         IRepository<Message> Messages { get; }

@@ -4,41 +4,133 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/respond")*@
+    <link href="~/Content/vendor/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/flat-ui-pro.css" rel="stylesheet" />
+    <script src="~/Scripts/vendor/respond.min.js"></script>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    @*<nav class="navbar navbar-inverse navbar-fixed-top navbar-embossed">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new {  })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+        </nav>*@
+
+    <!--Header-->
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-03">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="#">Flat UI</a>
         </div>
-    </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-03">
+            <ul class="nav navbar-nav">
+                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("How to Share", "HowToShare", "Home")</li>
+                <li>@Html.ActionLink("How to Download", "HowToDownload", "Home")</li>
+            </ul>
+            @Html.Partial("_LoginPartial")
+
+        </div><!-- /.navbar-collapse -->
+    </nav>
+
+    <!--Main Container-->
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    <!--Footer-->
+    <div class="mvl pvl">
+        <div class="bottom-menu bottom-menu-large bottom-menu-inverse">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 col-sm-2">
+                        <a href="#fakelink" class="bottom-menu-brand">Flat UI</a>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <h5 class="title">ABOUT US</h5>
+                        <ul class="bottom-menu-list">
+                            <li><a href="#fakelink">Dashboard</a></li>
+                            <li><a href="#fakelink">Feed</a></li>
+                            <li><a href="#fakelink">Forums</a></li>
+                            <li><a href="#fakelink">Radio</a></li>
+                            <li><a href="#fakelink">Journal</a></li>
+                            <li><a href="#fakelink">Reader</a></li>
+                            <li><a href="#fakelink">Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <h5 class="title">CATEGORIES</h5>
+                        <ul class="bottom-menu-list">
+                            <li><a href="#fakelink">Design</a></li>
+                            <li><a href="#fakelink">Freebies</a></li>
+                            <li><a href="#fakelink">Tutorials</a></li>
+                            <li><a href="#fakelink">Coding</a></li>
+                            <li><a href="#fakelink">Inspiration</a></li>
+                            <li><a href="#fakelink">WordPress</a></li>
+                            <li><a href="#fakelink">Resources</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <h5 class="title">NETWORKS</h5>
+                        <ul class="bottom-menu-list">
+                            <li><a href="#fakelink">Insight</a></li>
+                            <li><a href="#fakelink">Promotion</a></li>
+                            <li><a href="#fakelink">Production</a></li>
+                            <li><a href="#fakelink">Planning</a></li>
+                            <li><a href="#fakelink">Journal</a></li>
+                            <li><a href="#fakelink">Reader</a></li>
+                            <li><a href="#fakelink">Store</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <h5 class="title">MAINFRAME</h5>
+                        <ul class="bottom-menu-list">
+                            <li><a href="#fakelink">Register / Login</a></li>
+                            <li class="active"><a href="#fakelink">Jobs</a></li>
+                            <li><a href="#fakelink">Contacts</a></li>
+                            <li><a href="#fakelink">Privacy</a></li>
+                            <li><a href="#fakelink">Terms of Use</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2 col-sm-2">
+                        <h5 class="title">FOLLOW US</h5>
+                        <ul class="bottom-menu-list">
+                            <li><a href="#fakelink">Facebook</a></li>
+                            <li><a href="#fakelink">Twitter</a></li>
+                            <li><a href="#fakelink">Youtube</a></li>
+                            <li><a href="#fakelink">Vimeo</a></li>
+                            <li><a href="#fakelink">Instagram</a></li>
+                            <li><a href="#fakelink">Vine&nbsp;&nbsp;<span class="label label-small label-primary">New</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- /bottom-menu -->
+    </div>
+    <script src="~/Scripts/vendor/jquery.min.js"></script>
+    <script src="~/Scripts/flat-ui-pro.js"></script>
+    @*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/flat-ui-pro")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>

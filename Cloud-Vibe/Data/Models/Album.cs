@@ -13,7 +13,7 @@ namespace Cloud_Vibe.Data.Models
         {
             this.VideosLinks = new List<string>();
             this.Thanxies = new HashSet<Thanx>();
-            this.UsersDownloaded = new HashSet<AppUser>();
+            this.UsersDownloaded = new HashSet<User>();
             this.Comments = new HashSet<Comment>();
         }
 
@@ -27,7 +27,7 @@ namespace Cloud_Vibe.Data.Models
         public int Year { get; set; }
         [Required]
         public DateTime SharedOn { get; set; }
-        public virtual AppUser UserShared { get; set; }
+        public virtual User UserShared { get; set; }
         [Required]
         public byte[] Torrent { get; set; }
         public byte[] CoverArt { get; set; }
@@ -36,7 +36,7 @@ namespace Cloud_Vibe.Data.Models
         public int Views { get; set; }
         [InverseProperty("Album")]
         public virtual ICollection<Thanx> Thanxies { get; set; }
-        public virtual ICollection<AppUser> UsersDownloaded { get; set; }
+        public virtual ICollection<User> UsersDownloaded { get; set; }
         [InverseProperty("Album")]
         public virtual ICollection<Comment> Comments { get; set; }
     }

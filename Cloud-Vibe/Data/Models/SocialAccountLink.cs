@@ -13,7 +13,7 @@ namespace Cloud_Vibe.Data.Models
         public virtual SocialNetwork SocialNetwork { get; set; }
         [Required(ErrorMessage="Cannot save empty social link")]
         public string AccountLink { get; set; }
-        public virtual AppUser User { get; set; }
+        public virtual User User { get; set; }
         public virtual Artist Artist { get; set; }
     }
 }
