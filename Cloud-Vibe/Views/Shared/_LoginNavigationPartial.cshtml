@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNet.Identity
+@using Cloud_Vibe.Data
+
+<ul class="nav navbar-nav">
+    @if (Request.IsAuthenticated)
+    {
+        <li class="dropdown">
+            <div class="btn-group btn-group-hg">
+                <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
+                    All Genres
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="active">@Html.ActionLink("Home", "Index", "User")</li>
+        <li>@Html.ActionLink("Top Songs", "ShareGuide", "Info")</li>
+        <li>@Html.ActionLink("Top Albums", "ShareGuide", "Info")</li>
+    }
+    else
+    {
+        <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
+        <li>@Html.ActionLink("How to Share", "ShareGuide", "Info")</li>
+        <li>@Html.ActionLink("How to Download", "DownloadGuide", "Info")</li>
+    }
+</ul>

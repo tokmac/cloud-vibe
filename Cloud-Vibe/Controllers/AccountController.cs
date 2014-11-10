@@ -80,11 +80,11 @@ namespace Cloud_Vibe.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "User");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -161,7 +161,7 @@ namespace Cloud_Vibe.Controllers
         {
             string NO_USER_IMAGE_PATH = HttpContext.Server.MapPath("~/Content/images/no_user.jpg");
 
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.hasAgreedWithTerms == true)
             {
                 var user = new User
                 {
@@ -195,9 +195,6 @@ namespace Cloud_Vibe.Controllers
                 }
                 else
                 {
-
-
-
                     user.Avatar = FilesByteUtility.FileFromPathToByteArray(NO_USER_IMAGE_PATH);
 
                     var result = await UserManager.CreateAsync(user, model.Password);

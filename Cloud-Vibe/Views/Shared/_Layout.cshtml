@@ -11,44 +11,18 @@
     <script src="~/Scripts/vendor/respond.min.js"></script>
 </head>
 <body>
-    @*<nav class="navbar navbar-inverse navbar-fixed-top navbar-embossed">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-3">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new {  })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </nav>*@
-
     <!--Header-->
     <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-03">
                 <span class="sr-only">Toggle navigation</span>
             </button>
-            <a class="navbar-brand" href="#">Flat UI</a>
+            <a class="navbar-brand" href="#">Cloud <span class="fui-spotify"></span> Vibe</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-03">
-            <ul class="nav navbar-nav">
-                <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("How to Share", "HowToShare", "Home")</li>
-                <li>@Html.ActionLink("How to Download", "HowToDownload", "Home")</li>
-            </ul>
-            @Html.Partial("_LoginPartial")
-
-        </div><!-- /.navbar-collapse -->
+            @Html.Partial("_LoginNavigationPartial")
+            @Html.Partial("_LoginAccountPartial")
+        </div>
     </nav>
 
     <!--Main Container-->
