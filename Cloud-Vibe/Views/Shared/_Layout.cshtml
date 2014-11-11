@@ -38,7 +38,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 col-sm-2">
-                        <a href="#fakelink" class="bottom-menu-brand">Flat UI</a>
+                        <a href="#fakelink" class="bottom-menu-brand">Cloud <span class="fui-spotify"></span> Vibe</a>
                     </div>
                     <div class="col-md-2 col-sm-2">
                         <h5 class="title">ABOUT US</h5>
@@ -101,10 +101,9 @@
             </div>
         </div> <!-- /bottom-menu -->
     </div>
-    <script src="~/Scripts/vendor/jquery.min.js"></script>
-    <script src="~/Scripts/flat-ui-pro.js"></script>
-    @*@Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/flat-ui-pro")*@
-    @RenderSection("scripts", required: false)
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/flat-ui-pro")
+    @RenderSection("Scripts", false)
 </body>
 </html>

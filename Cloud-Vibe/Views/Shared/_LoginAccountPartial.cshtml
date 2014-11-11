@@ -1,28 +1,45 @@
 ﻿@using Microsoft.AspNet.Identity
 @using Cloud_Vibe.Data
+@using Cloud_Vibe.Utilities
 @if (Request.IsAuthenticated)
 {
     ICloudVibeData data = new CloudVibeData(new CloudVibeDbContex());
-    var avatar = data.Users.Find(User.Identity.GetUserId()).Avatar;
-    var base64 = Convert.ToBase64String(avatar);
-    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-    
+    var user = data.Users.Find(User.Identity.GetUserId());
+    var avatar = user.Avatar;
+    var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(avatar);
+
 
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-
-    
     <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+            <div class="btn-group btn-group-hg">
+                <button class="btn btn-inverse dropdown-toggle" type="button" data-toggle="dropdown">
+                    <a href="">
+                        <img src="@imgSrc" style="float:left;height:25px; margin-right:10px" class="img-rounded img-responsive" />
+                        @User.Identity.GetUserName()
+                    </a>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li>@Html.ActionLink("Share song/album", "Share", "User")</li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            </div>
+        </li>
         <li>
-            <a href="">
-                <img src="@imgSrc" style="float:left;height:25px; margin-right:10px" class="img-rounded img-responsive" />
-                @User.Identity.GetUserName()
+            <a href="#fakelink" class="fui-mail">
+                @if (@user.MessagesRecieved.Where(m => m.MessageStatus == Cloud_Vibe.Data.Models.MessageStatusTypes.NotRead).ToList().Count > 0)
+                {
+                    <span class="navbar-unread">1</span>
+                }
             </a>
         </li>
-        <li>
-            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-        </li>
+
     </ul>
     }
 }

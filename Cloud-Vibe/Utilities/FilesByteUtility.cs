@@ -45,5 +45,14 @@ namespace Cloud_Vibe.Utilities
             }
             return result;
         }
+        public static string ByteArrayToImageSrcString(byte[] imgByte) 
+        {
+            if (imgByte == null)
+            {
+                return string.Empty;
+            }
+            var base64 = Convert.ToBase64String(imgByte);
+            return String.Format("data:image/gif;base64,{0}", base64);
+        }
     }
 }
