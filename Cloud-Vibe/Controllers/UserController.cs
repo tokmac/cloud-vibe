@@ -169,36 +169,34 @@ namespace Cloud_Vibe.Controllers
         }
 
         [HttpGet]
-        public ActionResult DownloadFile(int id)
+        public ActionResult DownloadFile(int id, string name, string item)
         {
-            //if (type == "song")
-            //{
-            //    var model = data.Songs.Find(id);
-            //    var cd = new System.Net.Mime.ContentDisposition
-            //    {
-            //        // for example foo.bak
-            //        FileName = model.Title,
-
-            //        // always prompt the user for downloading, set to true if you want 
-            //        // the browser to try to show the file inline
-            //        Inline = false,
-            //    };
-            //    Response.AppendHeader("Content-Disposition", cd.ToString());
-            //    return File(model.Torrent, model.TypeMIME);
-            //}
-
-            var m = data.Songs.Find(id);
-            var cdd = new System.Net.Mime.ContentDisposition
+            var model = GetModel(id,item);
+            var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
-                FileName = m.Title,
+                FileName = name,
 
                 // always prompt the user for downloading, set to true if you want 
                 // the browser to try to show the file inline
                 Inline = false,
             };
-            Response.AppendHeader("Content-Disposition", cdd.ToString());
-            return File(m.Torrent, m.TypeMIME);
+            Response.AppendHeader("Content-Disposition", cd.ToString());
+
+            model.Downloads = model.Downloads + 1;
+            data.SaveChanges();
+
+            return File(model.Torrent, model.TypeMIME);
+        }
+
+        private IDownloadable GetModel(int id, string type) 
+        {
+            if (type == "song")
+            {
+                return data.Songs.All().FirstOrDefault(s => s.ID == id);
+            }
+
+            return data.Albums.All().FirstOrDefault(a => a.ID == id);
         }
     }
 }

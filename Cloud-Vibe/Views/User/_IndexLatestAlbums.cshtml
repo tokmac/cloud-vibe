@@ -11,12 +11,13 @@
             @{
                 var albumImg = album.CoverArt;
                 var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+                var albumUrl = Url.Action("Details", "Album", new { title = album.Title.ToString() });
             }
             <img src="@imgSrc" style="float:left;height:155px; margin-right:10px" class="img-rounded img-responsive" />
         </div>
         <div class="col-md-6">
             <div class="row">
-                <a href="">
+                <a href="@albumUrl">
                     <h5>
                         <span style="font-weight: normal"><i>@album.Title</i></span>
                         <br />

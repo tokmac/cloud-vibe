@@ -21,16 +21,13 @@ namespace Cloud_Vibe.Controllers
         // GET: Album
         public ActionResult Details(string title)
         {
-            var album = data.Songs.All().FirstOrDefault(s => s.Title == title);
-            var thanxies = album.Thanxies.Count;
+            Album album = data.Albums.All().FirstOrDefault(s => s.Title == title);
 
             Mapper.CreateMap<Album, AlbumDetailsViewModel>();
+            AlbumDetailsViewModel albumToSee = new AlbumDetailsViewModel();
+            Mapper.Map<Album, AlbumDetailsViewModel>(album, albumToSee);
 
-            var albumToSee = Mapper.Map<AlbumDetailsViewModel>(album);
-            
-
-
-            return View();
+            return View(albumToSee);
         }
     }
 }

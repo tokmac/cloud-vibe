@@ -30,8 +30,7 @@
                         Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
                         By: <strong>@Model.UserShared.UserName</strong> <br />
 
-                        @Html.ActionLink("Download", "DownloadFile", "User", new { id = Model.ID })
-                        <a href="#fakelink" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
+                        <a href="@Url.Action("DownloadFile","User", new { id = Model.ID, name= Model.Title+"-"+Model.Artist.Name , item = "song"})" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
                     </p>
                 </div>
 

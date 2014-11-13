@@ -15,5 +15,7 @@ namespace Cloud_Vibe.Data.Models
         string TypeMIME { get; set; }
 
         string Title { get; set; }
+
+        int Downloads { get; set; }
     }
 }
