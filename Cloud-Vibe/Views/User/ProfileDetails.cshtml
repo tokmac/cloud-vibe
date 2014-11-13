@@ -1,8 +1,7 @@
 ﻿@using Cloud_Vibe.Utilities
-@using Cloud_Vibe.Models.ViewModels
-@model SongDetailsViewModel
+@model Cloud_Vibe.Models.OtherUserDetailsViewModel
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "ProfileDetails";
 }
 <div class="container jumbotron">
     <div class="row">
@@ -11,7 +10,7 @@
         <div class="col-md-4">
             <!--Image Container-->
             @{
-                var albumImg = Model.CoverArt;
+                var albumImg = Model.Avatar;
                 var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
             }
             <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive" />
@@ -23,24 +22,32 @@
                 <div class="col-md-8 pull-left">
                     <!--Main Info Container-->
                     <p>
-                        @Model.Title <br />
-                        <strong>@Model.Artist.Name</strong>
+                        @Model.FirstName @Model.LastName<br />
+                        <strong>@Model.Username</strong>
                     </p>
                     <p>
-                        Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
-                        By: <strong>@Html.ActionLink(@Model.UserShared.UserName, "ProfileDetails", "User", new { username = @Model.UserShared.UserName }, null) </strong> <br />
-
-                        <a href="@Url.Action("DownloadFile","User", new { id = Model.ID, name= Model.Title+"-"+Model.Artist.Name , item = "song"})" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
+                        <strong>Socials</strong> <br />
+                        <span class="fui-facebook"></span>
+                        <span class="fui-twitter"></span>
+                        <span class="fui-youtube"></span>
+                        <span class="fui-google-plus"></span>
                     </p>
                 </div>
 
                 <div class="col-md-4 pull-right">
                     <!--Statistic Info Container-->
                     <p>
-                        <strong>Viewed: </strong> @Model.Views
+                        <strong>Albums Shared: </strong> @Model.SharedAlbums.Count
                     </p>
                     <p>
-                        <strong>Downloaded: </strong> @Model.Downloads
+                        <strong>Songs Shared: </strong> @Model.SharedSongs
+                    </p>
+                    <hr />
+                    <p>
+                        <strong>Songs Downloaded: </strong> @Model.DownloadedSongs
+                    </p>
+                    <p>
+                        <strong>Albums Downloaded: </strong> @Model.DownloadedAlbums.Count
                     </p>
 
                 </div>
@@ -48,3 +55,4 @@
         </div>
     </div>
 </div>
+

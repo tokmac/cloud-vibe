@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Cloud_Vibe.Data;
 using Cloud_Vibe.Data.Models;
+using Cloud_Vibe.Models;
 using Cloud_Vibe.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -189,6 +190,16 @@ namespace Cloud_Vibe.Controllers
             return File(model.Torrent, model.TypeMIME);
         }
 
+        public ActionResult ProfileDetails(string username)
+        {
+            var user = data.Users.All().FirstOrDefault(u => u.UserName == username);
+
+            var userToPass = Mapper.Map<User, OtherUserDetailsViewModel>(user);
+
+            return View(userToPass);
+        }
+
+
         private IDownloadable GetModel(int id, string type) 
         {
             if (type == "song")
@@ -198,5 +209,7 @@ namespace Cloud_Vibe.Controllers
 
             return data.Albums.All().FirstOrDefault(a => a.ID == id);
         }
+
+        
     }
 }

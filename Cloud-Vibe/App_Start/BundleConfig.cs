@@ -5,8 +5,19 @@ namespace Cloud_Vibe
 {
     public class BundleConfig
     {
-        // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
+        {
+            RegisterScripts(bundles);
+
+            RegisterStyles(bundles);
+            
+
+            // Set EnableOptimizations to false for debugging. For more information,
+            // visit http://go.microsoft.com/fwlink/?LinkId=301862
+            BundleTable.EnableOptimizations = false;
+        }
+
+        private static void RegisterScripts(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/vendor/jquery.min.js"));
@@ -23,15 +34,14 @@ namespace Cloud_Vibe
             bundles.Add(new ScriptBundle("~/bundles/flat-ui-pro").Include(
                       "~/Scripts/flat-ui-pro.js",
                       "~/Scripts/vendor/respond.min.js"));
+        }
 
+        private static void RegisterStyles(BundleCollection bundles)
+        {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/flat-ui-pro.css",
                       "~/Content/site.css"));
-
-            // Set EnableOptimizations to false for debugging. For more information,
-            // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = false;
         }
     }
 }

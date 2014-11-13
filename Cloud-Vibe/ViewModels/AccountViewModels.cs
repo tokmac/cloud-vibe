@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Cloud_Vibe.Data.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web;
 
@@ -125,5 +127,29 @@ namespace Cloud_Vibe.Models
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+    }
+
+    public class OtherUserDetailsViewModel
+    {
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        public Byte[] Avatar { get; set; }
+
+        [Display(Name = "Shared Albums")]
+        public ICollection<Album> SharedAlbums { get; set; }
+        public virtual ICollection<Album> DownloadedAlbums { get; set; }
+
+        [Display(Name = "Shared Songs")]
+        public ICollection<Song> SharedSongs { get; set; }
+        public virtual ICollection<Song> DownloadedSongs { get; set; }
+
+        [Display(Name = "Social Links")]
+        public ICollection<SocialAccountLink> SocialAccoutsLinks { get; set; }
     }
 }
