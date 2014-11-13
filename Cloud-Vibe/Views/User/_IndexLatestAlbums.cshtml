@@ -1,0 +1,39 @@
+﻿@using Cloud_Vibe.Utilities
+@model List<Cloud_Vibe.Models.ViewModels.AlbumDetailsViewModel>
+@{
+    ViewBag.Title = "_IndexLatestAlbums";
+}
+
+@foreach (var album in Model)
+{
+    <div class="row">
+        <div class="col-md-6">
+            @{
+                var albumImg = album.CoverArt;
+                var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+            }
+            <img src="@imgSrc" style="float:left;height:155px; margin-right:10px" class="img-rounded img-responsive" />
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <a href="">
+                    <h5>
+                        <span style="font-weight: normal"><i>@album.Title</i></span>
+                        <br />
+                        @if (album.Artist != null)
+                        {
+                            @album.Artist.Name
+                        }
+                    </h5>
+                </a>
+            </div>
+            <div class="row margin-top-30">
+                <p style="font-size: 12px; line-height: 20px;">
+                    Shared On:  @Html.Timeago(album.SharedOn) <em>|</em> by @if (album.UserShared != null) {@album.UserShared.UserName}
+                </p>
+            </div>
+        </div>
+    </div>
+    <hr/>
+}
+

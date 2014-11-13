@@ -1,0 +1,51 @@
+﻿@using Cloud_Vibe.Utilities
+@using Cloud_Vibe.Models.ViewModels
+@model SongDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+<div class="container jumbotron">
+    <div class="row">
+        <!--Info Container-->
+
+        <div class="col-md-4">
+            <!--Image Container-->
+            @{
+                var albumImg = Model.CoverArt;
+                var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+            }
+            <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive" />
+        </div>
+
+        <div class="col-md-8">
+            <!--Info Container-->
+            <div class="row">
+                <div class="col-md-8 pull-left">
+                    <!--Main Info Container-->
+                    <p>
+                        @Model.Title <br />
+                        <strong>@Model.Artist.Name</strong>
+                    </p>
+                    <p>
+                        Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
+                        By: <strong>@Model.UserShared.UserName</strong> <br />
+
+                        @Html.ActionLink("Download", "DownloadFile", "User", new { id = Model.ID })
+                        <a href="#fakelink" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 pull-right">
+                    <!--Statistic Info Container-->
+                    <p>
+                        <strong>Viewed: </strong> @Model.Views
+                    </p>
+                    <p>
+                        <strong>Downloaded: </strong> @Model.Downloads
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

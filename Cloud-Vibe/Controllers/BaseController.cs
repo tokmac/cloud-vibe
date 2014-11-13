@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Cloud_Vibe.Controllers
 {
-    public class BaseController : Controller
+    public abstract class BaseController : Controller
     {
         protected ICloudVibeData data;
 

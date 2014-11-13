@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class Album
+    public class Album : IDownloadable
     {
         public Album()
         {
@@ -39,5 +39,7 @@ namespace Cloud_Vibe.Data.Models
         public virtual ICollection<User> UsersDownloaded { get; set; }
         [InverseProperty("Album")]
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public string TypeMIME { get; set; }
     }
 }

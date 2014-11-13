@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class Song
+    public class Song : IDownloadable
     {
         public Song()
         {
@@ -50,5 +50,8 @@ namespace Cloud_Vibe.Data.Models
 
         [InverseProperty("Song")]
         public virtual ICollection<Comment> Comments { get; set; }
+
+        [Required]
+        public string TypeMIME { get; set; }
     }
 }

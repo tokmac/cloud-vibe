@@ -22,29 +22,39 @@ namespace Cloud_Vibe.Controllers
         // GET: User
         public ActionResult Index()
         {
-            IList<Album> allAlbumsOrdered = data.Albums.All().OrderByDescending(a => a.SharedOn).ToList();
-            IList<Album> latestAlbums = new List<Album>();
+            Mapper.CreateMap<Album, AlbumDetailsViewModel>();
+            Mapper.CreateMap<Song, SongDetailsViewModel>();
 
-            if (allAlbumsOrdered.Count == 0)
+            IEnumerable<Album> allAlbumsOrdered = data.Albums.All().OrderByDescending(a => a.SharedOn).ToList().Take(10);
+            IEnumerable<Song> allSongsOrdered = data.Songs.All().OrderByDescending(a => a.SharedOn).ToList().Take(10);
+
+            List<AlbumDetailsViewModel> latestAlbums = new List<AlbumDetailsViewModel>();
+            List<SongDetailsViewModel> latestSongs = new List<SongDetailsViewModel>();
+
+            if (allAlbumsOrdered.Count() >= 1)
             {
-                return View(latestAlbums);
-            }
-            else if (allAlbumsOrdered.Count < 10)
-            {
-                for (int i = 0; i < allAlbumsOrdered.Count; i++)
+                foreach (var album in allAlbumsOrdered)
                 {
-                    latestAlbums.Add(allAlbumsOrdered[i]);
-                }
-            }
-            else
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    latestAlbums.Add(allAlbumsOrdered[i]);
+                    AlbumDetailsViewModel currentAlbum = new AlbumDetailsViewModel();
+                    Mapper.Map<Album, AlbumDetailsViewModel>(album, currentAlbum);
+                    latestAlbums.Add(currentAlbum);
                 }
             }
 
-            return View(latestAlbums);
+            if (allSongsOrdered.Count() >= 1)
+            {
+                foreach (var song in allSongsOrdered)
+                {
+                    SongDetailsViewModel currentSong = new SongDetailsViewModel();
+                    Mapper.Map<Song, SongDetailsViewModel>(song, currentSong);
+                    latestSongs.Add(currentSong);
+                }
+            }
+
+            ViewData["latestAlbums"] = latestAlbums;
+            ViewData["latestSongs"] = latestSongs;
+
+            return View();
         }
 
         // GET: User
@@ -57,8 +67,7 @@ namespace Cloud_Vibe.Controllers
         [HttpPost]
         public ActionResult ShareAlbum(ShareAlbumViewModel album)
         {
-            
-
+            string fileType = album.CoverArt.ContentType;
             List<byte[]> box = new List<byte[]>();
             if (album.CoverArt != null)
             {
@@ -89,7 +98,8 @@ namespace Cloud_Vibe.Controllers
                 .ForMember(c => c.Torrent, option => option.UseValue(torrent))
                 .ForMember(c => c.Artist, option => option.UseValue(artist))
                 .ForMember(c => c.UserShared, option => option.UseValue(user[0]))
-                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now));
+                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now))
+                .ForMember(c => c.TypeMIME, option => option.UseValue(fileType));
 
 
             var albumToSave = Mapper.Map<ShareAlbumViewModel, Album>(album);
@@ -99,7 +109,7 @@ namespace Cloud_Vibe.Controllers
             user[0].SharedAlbums.Add(albumToSave);
             data.SaveChanges();
 
-            TempData["success"] = String.Format("Succesfully added album {0}",album.ArtistName);
+            TempData["success"] = String.Format("Succesfully added album {0}", album.ArtistName);
             return RedirectToAction("Index");
         }
 
@@ -107,6 +117,7 @@ namespace Cloud_Vibe.Controllers
         public ActionResult ShareSong(ShareSongViewModel song)
         {
             List<byte[]> box = new List<byte[]>();
+            string fileType = song.CoverArt.ContentType;
             if (song.CoverArt != null)
             {
                 box.Add(Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.CoverArt));
@@ -137,18 +148,57 @@ namespace Cloud_Vibe.Controllers
                 .ForMember(c => c.Torrent, option => option.UseValue(torrent))
                 .ForMember(c => c.Artist, option => option.UseValue(artist))
                 .ForMember(c => c.UserShared, option => option.UseValue(user[0]))
-                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now));
+                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now))
+                .ForMember(c => c.TypeMIME, option => option.UseValue(fileType));
 
 
             var songToSave = Mapper.Map<ShareSongViewModel, Song>(song);
 
-            user[0].SharedSongs.Add(songToSave);
+
             data.Songs.Add(songToSave);
+            data.SaveChanges();
+
             artist.Songs.Add(songToSave);
+            data.SaveChanges();
+
+            user[0].SharedSongs.Add(songToSave);
             data.SaveChanges();
 
             TempData["success"] = String.Format("Succesfully added album {0}", song.ArtistName);
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult DownloadFile(int id)
+        {
+            //if (type == "song")
+            //{
+            //    var model = data.Songs.Find(id);
+            //    var cd = new System.Net.Mime.ContentDisposition
+            //    {
+            //        // for example foo.bak
+            //        FileName = model.Title,
+
+            //        // always prompt the user for downloading, set to true if you want 
+            //        // the browser to try to show the file inline
+            //        Inline = false,
+            //    };
+            //    Response.AppendHeader("Content-Disposition", cd.ToString());
+            //    return File(model.Torrent, model.TypeMIME);
+            //}
+
+            var m = data.Songs.Find(id);
+            var cdd = new System.Net.Mime.ContentDisposition
+            {
+                // for example foo.bak
+                FileName = m.Title,
+
+                // always prompt the user for downloading, set to true if you want 
+                // the browser to try to show the file inline
+                Inline = false,
+            };
+            Response.AppendHeader("Content-Disposition", cdd.ToString());
+            return File(m.Torrent, m.TypeMIME);
         }
     }
 }
