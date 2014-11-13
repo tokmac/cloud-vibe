@@ -31,5 +31,10 @@ namespace Cloud_Vibe.Controllers
 
             return View(songToSee);
         }
+
+        public ActionResult AllSongs() 
+        {
+            return View();
+        }
     }
 }

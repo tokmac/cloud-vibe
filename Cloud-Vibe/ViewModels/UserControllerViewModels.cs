@@ -125,6 +125,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
     public class SongDetailsViewModel
     {
+
         [HiddenInput(DisplayValue = false)]
         public int ID { get; set; }
 

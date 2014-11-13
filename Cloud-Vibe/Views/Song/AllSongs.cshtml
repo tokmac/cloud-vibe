@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "AllSongs";
+}
+
+<div class="container">
+    <div class="row">
+        <!--Sort By Menu-->
+        <div>
+            <span class="text-primary">Sort By</span>
+            <div class="btn-group btn-group-sm">
+                <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    ----- <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-inverse" role="menu">
+                    <li><a href="#">Downloads</a></li>
+                    <li><a href="#">Artist</a></li>
+                    <li><a href="#">Title</a></li>
+                    <li><a href="#">Share Date</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<div class="row">
+    <!--List of songs-->
+    <div class="col-md-2">
+        Image
+    </div>
+
+    <div class="col-md-5">
+        Info
+    </div>
+
+    <div class="col-md-5">
+        Statistics
+    </div>
+</div>
+<hr />
+<div class="row">
+    <!--Paging-->
+    <div class="pagination pagination-inverse">
+        <a href="#fakelink" class="btn btn-inverse previous">
+            <span class="fui-arrow-left"></span>
+            OLDER
+        </a>
+        <ul>
+            <li><a href="#fakelink">1</a></li>
+            <li><a href="#fakelink">2</a></li>
+            <li><a href="#fakelink">3</a></li>
+            <li><a href="#fakelink">4</a></li>
+            <li><a href="#fakelink">5</a></li>
+        </ul>
+        <a href="#fakelink" class="btn btn-inverse next">
+            NEWER
+            <span class="fui-arrow-right"></span>
+        </a>
+    </div>
+</div>
+</div>
+

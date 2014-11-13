@@ -1,17 +1,14 @@
 ﻿@using Cloud_Vibe.Utilities
-@model List<Cloud_Vibe.Models.ViewModels.AlbumDetailsViewModel>
-@{
-    ViewBag.Title = "_IndexLatestAlbums";
-}
+@model List<Cloud_Vibe.Data.Models.Album>
 
 @foreach (var album in Model)
 {
     <div class="row">
         <div class="col-md-6">
             @{
-                var albumImg = album.CoverArt;
-                var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-                var albumUrl = Url.Action("Details", "Album", new { title = album.Title.ToString() });
+    var albumImg = album.CoverArt;
+    var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+    var albumUrl = Url.Action("Details", "Album", new { title = album.Title.ToString() });
             }
             <img src="@imgSrc" style="float:left;height:155px; margin-right:10px" class="img-rounded img-responsive" />
         </div>
@@ -30,11 +27,12 @@
             </div>
             <div class="row margin-top-30">
                 <p style="font-size: 12px; line-height: 20px;">
-                    Shared On:  @Html.Timeago(album.SharedOn) <em>|</em> by @if (album.UserShared != null) {@Html.ActionLink(album.UserShared.UserName, "ProfileDetails", "User", new { username = album.UserShared.UserName }, null)}
+                    Shared On:  @Html.Timeago(album.SharedOn)
                 </p>
             </div>
         </div>
     </div>
-    <hr/>
+    <hr />
 }
+
 

@@ -26,8 +26,7 @@
                         <strong>@Model.Username</strong>
                     </p>
                     <p>
-                        <strong>Socials</strong> <br />
-                        <span class="fui-facebook"></span>
+                        <strong>Socials </strong><span class="fui-facebook"></span> 
                         <span class="fui-twitter"></span>
                         <span class="fui-youtube"></span>
                         <span class="fui-google-plus"></span>
@@ -37,20 +36,37 @@
                 <div class="col-md-4 pull-right">
                     <!--Statistic Info Container-->
                     <p>
-                        <strong>Albums Shared: </strong> @Model.SharedAlbums.Count
+                        <h4>Shared</h4>
+                        <strong>Albums : </strong> @Model.SharedAlbums.Count <br />
+                        <strong>Songs : </strong> @Model.SharedSongs.Count
                     </p>
                     <p>
-                        <strong>Songs Shared: </strong> @Model.SharedSongs
-                    </p>
-                    <hr />
-                    <p>
-                        <strong>Songs Downloaded: </strong> @Model.DownloadedSongs
-                    </p>
-                    <p>
-                        <strong>Albums Downloaded: </strong> @Model.DownloadedAlbums.Count
+                        <h4>Downloaded</h4>
+                        <strong>Songs : </strong> @Model.DownloadedSongs.Count <br />
+                        <strong>Albums : </strong> @Model.DownloadedAlbums.Count
                     </p>
 
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="container jumbotron">
+    <div class="row">
+        <div class="col-md-5 pull-left">
+            <!--Left Column - Latest Albums -->
+            <h4>Shared Albums</h4>
+
+            @Html.Partial("_UserSharedAlbums", Model.SharedAlbums)
+        </div>
+        <div class="col-md-5 pull-right">
+            <!--Left Column - Latest Song -->
+            <h4>Shared Songs</h4>
+            <div class="row">
+                @Html.Partial("_UserSharedSongs", Model.SharedSongs)
             </div>
         </div>
     </div>

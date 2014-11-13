@@ -1,8 +1,5 @@
 ﻿@using Cloud_Vibe.Utilities
-@model List<Cloud_Vibe.Models.ViewModels.SongDetailsViewModel>
-@{
-    ViewBag.Title = "_IndexLatestSongs";
-}
+@model List<Cloud_Vibe.Data.Models.Song>
 
 @foreach (var song in Model)
 {
@@ -30,17 +27,15 @@
             </div>
             <div class="row margin-top-30">
                 <p style="font-size: 12px; line-height: 20px;">
-                    Shared: @Html.Timeago(song.SharedOn) <em>|</em>
-                    By: @if (song.UserShared != null)
-                    {
-                        @Html.ActionLink(song.UserShared.UserName, "ProfileDetails", "User", new { username = song.UserShared.UserName }, null);
-                    }
+                    Shared: @Html.Timeago(song.SharedOn) <em>|</em> By: @if (song.UserShared != null)
+                    {@song.UserShared.UserName}
                 </p>
             </div>
         </div>
     </div>
     <hr />
 }
+
 
 
 

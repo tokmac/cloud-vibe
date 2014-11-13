@@ -1,0 +1,57 @@
+﻿@model Cloud_Vibe.Models.OtherUserDetailsViewModel
+
+@using (Html.BeginForm("EditProfile", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    if (ViewData.ModelState.Any(x => x.Value.Errors.Any()))
+    {
+        <div class="alert alert-danger">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <h4>Validation Errors</h4>
+            @Html.ValidationSummary()
+        </div>
+    }
+    @Html.ValidationSummary("", new { @class = "alert alert-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.HiddenFor(m => m.Username, new { value = Model.Username.ToString(), name="username"})
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <!--Image Container-->
+        @{
+            var albumImg = Model.Avatar;
+            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+        }
+        <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive" />
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Share" />
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+        $(".validation-summary-errors").addClass('alert alert-danger');
+        $(".validation-summary-errors").prepend('<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>')
+    });
+</script>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

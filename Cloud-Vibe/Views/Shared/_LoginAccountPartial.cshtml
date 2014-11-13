@@ -24,7 +24,8 @@
                 </button>
                 <ul class="dropdown-menu" role="menu">
                     <li>@Html.ActionLink("Share song/album", "Share", "User")</li>
-                    <li><a href="#">Another action</a></li>
+                    <li>@Html.ActionLink("Check your profile", "ProfileDetails", "User", new { username = User.Identity.GetUserName() }, null)</li>
+                    <li>@Html.ActionLink("Edit profile", "EditProfile", "User", new { username = User.Identity.GetUserName() }, null)</li> 
                     <li><a href="#">Something else here</a></li>
                     <li class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>

@@ -1,4 +1,5 @@
 ﻿using Cloud_Vibe.Data.Models;
+using Cloud_Vibe.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -129,7 +130,7 @@ namespace Cloud_Vibe.Models
         public string Email { get; set; }
     }
 
-    public class OtherUserDetailsViewModel
+    public class OtherUserDetailsViewModel : IHaveCustomMappings
     {
         [Display(Name = "Username")]
         public string Username { get; set; }
@@ -151,5 +152,16 @@ namespace Cloud_Vibe.Models
 
         [Display(Name = "Social Links")]
         public ICollection<SocialAccountLink> SocialAccoutsLinks { get; set; }
+
+        #region IHaveCustomMappings Members
+
+        public void CreateMappings(AutoMapper.IConfiguration configuration)
+        {
+            configuration.CreateMap<User, OtherUserDetailsViewModel>().ReverseMap();
+        }
+
+        #endregion
     }
+
+
 }
