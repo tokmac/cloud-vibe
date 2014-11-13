@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Share";
+}
+
+<h2>Share</h2>
+
+<div class="mbl pbm">
+    <ul class="nav nav-pills">
+        <li><a href="#" id="btn-song-view">Song</a></li>
+        <li><a href="#" id="btn-album-view">Album</a></li>
+    </ul>
+</div>
+
+
+@*TODO://Add artist *@
+@if (TempData["need-artist"] == "true")
+{
+    using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "POST", Url = "your controller", OnComplete = "some client event" }))
+    {
+        @Html.Partial("_AddArtist")
+    }
+}
+<div id="album-container">
+    <h1>Share Album</h1>
+
+    @Html.Partial("_AlbumShare")
+</div>
+<div id="song-container">
+    <h1>Share Song</h1>
+
+    @Html.Partial("_SongShare")
+</div>
+<br />
+<br />
+
+@section Scripts {
+    <script>
+        $('#song-container').hide();
+        $('#album-container').hide();
+        $('#btn-song-view').click(function () {
+            $('#btn-song-view').addClass('active');
+            $('#btn-album-view').removeClass('active');
+            $('#song-container').show("slow");
+            $('#album-container').hide("slow");
+            return false;
+        });
+        $('#btn-album-view').click(function () {
+            $('#btn-album-view').addClass('active');
+            $('#btn-song-view').removeClass('active');
+            $('#album-container').show("slow");
+            $('#song-container').hide("slow");
+            return false;
+        });
+    </script>
+}
