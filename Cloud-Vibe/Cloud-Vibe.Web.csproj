@@ -342,7 +342,6 @@
     <Content Include="Views\Info\ShareGuide.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Shared\_LoginNavigationPartial.cshtml" />
-    <Content Include="Views\User\Share.cshtml" />
     <Content Include="Views\User\_AlbumShare.cshtml" />
     <Content Include="Views\User\_AddArtist.cshtml" />
     <Content Include="Views\User\_SongShare.cshtml" />
@@ -357,6 +356,7 @@
     <Content Include="Views\Song\AllSongs.cshtml" />
     <Content Include="Views\Album\AllAlbums.cshtml" />
     <Content Include="Views\User\Search.cshtml" />
+    <Content Include="Views\User\Share.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
