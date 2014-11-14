@@ -83,10 +83,11 @@
         }
     </div>
 
+    <br />
     <div class="row">
         <!--Paging-->
-        <br />
-        <div>
+
+        <div class="">
             Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
         </div>
         <div class="pagination pagination-inverse pager">
@@ -94,10 +95,9 @@
             {
                 <a href="@Url.Action("AllAlbums", "Album", new { page = (Model.PageNumber - 1) })" class="btn btn-inverse previous">
                     <span class="fui-arrow-left"></span>
-                    OLDER
+                    Previous
                 </a>
             }
-
             <ul>
                 @for (int i = 1; i <= Model.PageCount; i++)
                 {
@@ -119,7 +119,7 @@
             @if (Model.PageNumber != Model.PageCount)
             {
                 <a href="@Url.Action("AllAlbums", "Album", new { page = (Model.PageNumber + 1) })" class="btn btn-inverse next">
-                    NEWER
+                    Next
                     <span class="fui-arrow-right"></span>
                 </a>
             }

@@ -381,8 +381,8 @@
     <Content Include="Scripts\vendor\jquery.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj">
-      <Project>{c0463e8b-29ee-4fc7-8fc8-854fcdb10ce1}</Project>
+    <ProjectReference Include="..\..\cloud-vibe.Web\Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj">
+      <Project>{253ff344-3b0d-4884-b0c5-372bd3596617}</Project>
       <Name>Cloud-Vibe.Web.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>

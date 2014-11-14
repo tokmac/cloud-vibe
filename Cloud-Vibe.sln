@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Web", "Cloud-Vib
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Tests", "Cloud-Vibe.Tests\Cloud-Vibe.Tests.csproj", "{EF94A6E7-79A2-4988-8C53-521F2B4B7141}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Web.Infrastructure", "Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj", "{C0463E8B-29EE-4FC7-8FC8-854FCDB10CE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Web.Infrastructure", "..\cloud-vibe.Web\Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj", "{253FF344-3B0D-4884-B0C5-372BD3596617}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C0463E8B-29EE-4FC7-8FC8-854FCDB10CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C0463E8B-29EE-4FC7-8FC8-854FCDB10CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C0463E8B-29EE-4FC7-8FC8-854FCDB10CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C0463E8B-29EE-4FC7-8FC8-854FCDB10CE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{253FF344-3B0D-4884-B0C5-372BD3596617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{253FF344-3B0D-4884-B0C5-372BD3596617}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{253FF344-3B0D-4884-B0C5-372BD3596617}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{253FF344-3B0D-4884-B0C5-372BD3596617}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
