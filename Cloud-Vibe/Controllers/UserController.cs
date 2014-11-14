@@ -1,16 +1,19 @@
-﻿using AutoMapper;
-using Cloud_Vibe.Data;
-using Cloud_Vibe.Data.Models;
-using Cloud_Vibe.Models;
-using Cloud_Vibe.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace Cloud_Vibe.Controllers
+﻿namespace Cloud_Vibe.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web;
+    using System.Web.Mvc;
+
+    using AutoMapper;
+    using PagedList;
+
+    using Cloud_Vibe.Data;
+    using Cloud_Vibe.Data.Models;
+    using Cloud_Vibe.Models;
+    using Cloud_Vibe.Models.ViewModels;
+
     [Authorize]
     public class UserController : BaseController
     {
@@ -172,7 +175,7 @@ namespace Cloud_Vibe.Controllers
         [HttpGet]
         public ActionResult DownloadFile(int id, string name, string item)
         {
-            var model = GetModel(id,item);
+            var model = GetModel(id, item);
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
@@ -190,9 +193,9 @@ namespace Cloud_Vibe.Controllers
             return File(model.Torrent, "application/x-bittorrent ");
         }
 
-       
 
-        private IDownloadable GetModel(int id, string type) 
+
+        private IDownloadable GetModel(int id, string type)
         {
             if (type == "song")
             {
@@ -203,9 +206,100 @@ namespace Cloud_Vibe.Controllers
         }
 
         [HttpGet]
-        public ActionResult Search(string searchString)
+        public ActionResult Search(string sortOrder, string searchString,string currentFilter, int? page)
         {
-            return View();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.TitleSortParam = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.DateSortParam = sortOrder == "date_desc" ? "Date" : "date_desc";
+            ViewBag.ArtistSortParam = sortOrder == "Artist" ? "artist_desc" : "Artist";
+            ViewBag.DownloadsSortParam = sortOrder == "downloads_desc" ? "Downloads" : "downloads_desc";
+            ViewBag.SearchString = searchString;
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            var songs = data.Songs.All();
+            var albums = data.Albums.All();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                songs = songs.Where(s => s.Title.Contains(searchString)
+                                       || s.Artist.Name.Contains(searchString));
+
+                albums =albums.Where(s => s.Title.Contains(searchString)
+                                       || s.Artist.Name.Contains(searchString));
+            }
+
+            var readySongs = songs.ToList();
+            List<SearchViewModel> allSongs = new List<SearchViewModel>();
+            if (readySongs.Count != 0)
+            {
+                foreach (var song in readySongs)
+                {
+                    allSongs.Add(Mapper.Map<SearchViewModel>(song));
+                }
+            }
+
+            var readyAlbums = albums.ToList();
+            List<SearchViewModel> allAlbums = new List<SearchViewModel>();
+            if (readyAlbums.Count != 0)
+            {
+                foreach (var album in readyAlbums)
+                {
+                    allAlbums.Add(Mapper.Map<SearchViewModel>(album));
+                }
+            }
+
+            IList<SearchViewModel> results = new List<SearchViewModel>();
+
+            foreach (var song in allSongs)
+            {
+                results.Add(song);
+            }
+            foreach (var album in allAlbums)
+            {
+                results.Add(album);
+            }
+
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    results = results.OrderByDescending(s => s.Title).ToList();
+                    break;
+                case "Date":
+                    results = results.OrderBy(a => a.SharedOn).ToList();
+                    break;
+                case "date_desc":
+                    results = results.OrderByDescending(s => s.SharedOn).ToList();
+                    break;
+                case "Artist":
+                    results = results.OrderBy(s => s.Artist.Name).ToList();
+                    break;
+                case "artist_desc":
+                    results = results.OrderByDescending(s => s.Artist.Name).ToList();
+                    break;
+                case "Downloads":
+                    results = results.OrderBy(s => s.Downloads).ToList();
+                    break;
+                case "downloads_desc":
+                    results = results.OrderByDescending(s => s.Downloads).ToList();
+                    break;
+                default:  // Name ascending 
+                    results = results.OrderBy(s => s.Title).ToList();
+                    break;
+            }
+
+
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
+
+            return View(results.ToPagedList(pageNumber, pageSize));
         }
     }
 }

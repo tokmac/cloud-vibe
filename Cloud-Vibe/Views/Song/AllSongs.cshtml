@@ -23,7 +23,7 @@
                 </ul>
             </div>
 
-            
+
         </div>
         <div class="col-md-4">
             @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
@@ -37,92 +37,93 @@
             }
 
         </div>
-</div>
-<hr />
-
-<div class="container">
-    @foreach (var song in Model)
-    {
-        <div class="row">
-            <!--List of songs-->
-            <div class="col-md-2">
-                <!--Image Container-->
-                @{
-        var albumImg = song.CoverArt;
-        var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-        var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
-                }
-                <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
-            </div>
-
-            <div class="col-md-5 pull-left">
-                <!--Main Info Container-->
-                <p>
-                    <a href="@songUrl">
-                        @song.Title <br />
-                        <strong>@song.Artist.Name</strong>
-                    </a>
-                </p>
-                <p>
-                    Uploaded <strong>@Html.Timeago(song.SharedOn)</strong> <br />
-                    By: <strong>@Html.ActionLink(@song.UserShared.UserName, "ProfileDetails", "Account", new { username = @song.UserShared.UserName }, null) </strong> <br />
-                </p>
-            </div>
-
-            <div class="col-md-5 pull-right">
-                <!--Statistic Info Container-->
-                <p>
-                    <strong>Viewed: </strong> @song.Views
-                </p>
-                <p>
-                    <strong>Downloaded: </strong> @song.Downloads
-                </p>
-            </div>
-        </div>
-        <hr />
-    }
-</div>
-
-<div class="row">
-    <!--Paging-->
-    <br />
-    <div>
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
     </div>
-    <div class="pagination pagination-inverse pager">
-        @if (Model.PageNumber != 1)
-        {
-            <a href="@Url.Action("AllSongs", "Song", new { page = (Model.PageNumber - 1) })" class="btn btn-inverse previous">
-                <span class="fui-arrow-left"></span>
-                OLDER
-            </a>
-        }
+    <hr />
 
-        <ul>
-            @for (int i = 1; i <= Model.PageCount; i++)
+    <div class="container">
+        @foreach (var song in Model)
+        {
+            <div class="row">
+                <!--List of songs-->
+                <div class="col-md-2">
+                    <!--Image Container-->
+                    @{
+            var albumImg = song.CoverArt;
+            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+            var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                    }
+                    <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
+                </div>
+
+                <div class="col-md-5 pull-left">
+                    <!--Main Info Container-->
+                    <p>
+                        <a href="@songUrl">
+                            @song.Title <br />
+                            <strong>@song.Artist.Name</strong>
+                        </a>
+                    </p>
+                    <p>
+                        Uploaded <strong>@Html.Timeago(song.SharedOn)</strong> <br />
+                        By: <strong>@Html.ActionLink(@song.UserShared.UserName, "ProfileDetails", "Account", new { username = @song.UserShared.UserName }, null) </strong> <br />
+                    </p>
+                </div>
+
+                <div class="col-md-5 pull-right">
+                    <!--Statistic Info Container-->
+                    <p>
+                        <strong>Viewed: </strong> @song.Views
+                    </p>
+                    <p>
+                        <strong>Downloaded: </strong> @song.Downloads
+                    </p>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+
+    <div class="row">
+        <!--Paging-->
+        <br />
+        <div>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+        <div class="pagination pagination-inverse pager">
+            @if (Model.PageNumber != 1)
             {
-                if (i == Model.PageNumber)
-                {
-                    <li class="Highlighted pager">
-                        <a href="@Url.Action("AllSongs", "Song", new { page = i })">@i</a>
-                    </li>
-                }
-                else
-                {
-                    <li class="pager">
-                        <a href="@Url.Action("AllSongs", "Song", new { page = i })">@i</a>
-                    </li>
-                }
+                <a href="@Url.Action("AllSongs", "Song", new { page = (Model.PageNumber - 1) })" class="btn btn-inverse previous">
+                    <span class="fui-arrow-left"></span>
+                    OLDER
+                </a>
             }
-        </ul>
 
-        @if (Model.PageNumber != Model.PageCount)
-        {
-            <a href="@Url.Action("AllSongs", "Song", new { page = (Model.PageNumber + 1) })" class="btn btn-inverse next">
-                NEWER
-                <span class="fui-arrow-right"></span>
-            </a>
-        }
+            <ul>
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="Highlighted pager">
+                            <a href="@Url.Action("AllSongs", "Song", new { page = i })">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="pager">
+                            <a href="@Url.Action("AllSongs", "Song", new { page = i })">@i</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            @if (Model.PageNumber != Model.PageCount)
+            {
+                <a href="@Url.Action("AllSongs", "Song", new { page = (Model.PageNumber + 1) })" class="btn btn-inverse next">
+                    NEWER
+                    <span class="fui-arrow-right"></span>
+                </a>
+            }
+        </div>
     </div>
 </div>
 

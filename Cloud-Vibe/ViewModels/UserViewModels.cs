@@ -83,7 +83,7 @@ namespace Cloud_Vibe.Models.ViewModels
     public class AlbumDetailsViewModel : IMapFrom<Album>
     {
         [HiddenInput(DisplayValue = false)]
-        public int? ID { get; set; }
+        public int ID { get; set; }
 
         [Required]
         [Display(Name = "Title")]
@@ -156,6 +156,35 @@ namespace Cloud_Vibe.Models.ViewModels
 
         [Display(Name = "Video")]
         public string VideoLink { get; set; }
+
+        [Display(Name = "Viewed")]
+        public int Views { get; set; }
+
+        [Display(Name = "Downloaded")]
+        public int Downloads { get; set; }
+    }
+
+    public class SearchViewModel : IMapFrom<Song>, IMapFrom<Album>
+    {
+
+        [HiddenInput(DisplayValue = false)]
+        public int ID { get; set; }
+
+        [Display(Name = "Artist")]
+        public virtual Artist Artist { get; set; }
+
+        [Required(ErrorMessage = "Cannot save song with empty title")]
+        [Display(Name = "Title")]
+        public string Title { get; set; }
+
+        [Display(Name = "Cover Art")]
+        public byte[] CoverArt { get; set; }
+
+        [Display(Name = "Shared on")]
+        public DateTime SharedOn { get; set; }
+
+        [Display(Name = "Shared by")]
+        public User UserShared { get; set; }
 
         [Display(Name = "Viewed")]
         public int Views { get; set; }

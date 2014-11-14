@@ -1,7 +1,135 @@
-﻿
+﻿@using Cloud_Vibe.Utilities
+@using Cloud_Vibe.Models.ViewModels
+@using PagedList.Mvc;
+@model PagedList.IPagedList<SearchViewModel>
 @{
     ViewBag.Title = "Search";
+    var a = Model;
 }
+<div class="container">
+    <div class="row">
+        <h2>Search</h2>
+    </div>
+</div>
+<hr />
 
-<h2>Search</h2>
+<div class="container">
+    <div class="row">
+        <!--Sort By Menu-->
+        <div class="col-md-2">
+            <span class="text-primary">Sort By</span>
+            <div class="btn-group btn-group-lg">
+                <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+                    ----- <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-inverse" role="menu">
+                    <li>@Html.ActionLink("Share Date", "Search", new { searchString = ViewBag.SearchString, sortOrder = ViewBag.DateSortParam, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Downloads", "Search", new { searchString = ViewBag.SearchString, sortOrder = ViewBag.DownloadsSortParam, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Title", "Search", new { searchString = ViewBag.SearchString, sortOrder = ViewBag.TitleSortParam, currentFilter = ViewBag.CurrentFilter })</li>
+                    <li>@Html.ActionLink("Artist Name", "Search", new { searchString = ViewBag.SearchString, sortOrder = ViewBag.ArtistSortParam, currentFilter = ViewBag.CurrentFilter }, null)</li>
+                </ul>
+            </div>
 
+
+        </div>
+        @*<div class="col-md-4">
+                @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
+                {
+                    <div class="input-group input-group-lg">
+                        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Search", @class = "form-control", type = "search" })
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit"><span class="fui-search"></span></button>
+                        </span>
+                    </div>
+                }
+
+            </div>*@
+    </div>
+    <hr />
+
+    <div class="container">
+        @foreach (var song in Model)
+        {
+            <div class="row">
+                <!--List of songs-->
+                <div class="col-md-2">
+                    <!--Image Container-->
+                    @{
+            var albumImg = song.CoverArt;
+            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+            var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                    }
+                    <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
+                </div>
+
+                <div class="col-md-5 pull-left">
+                    <!--Main Info Container-->
+                    <p>
+                        <a href="@songUrl">
+                            @song.Title <br />
+                            <strong>@song.Artist.Name</strong>
+                        </a>
+                    </p>
+                    <p>
+                        Uploaded <strong>@Html.Timeago(song.SharedOn)</strong> <br />
+                        By: <strong>@Html.ActionLink(@song.UserShared.UserName, "ProfileDetails", "Account", new { username = @song.UserShared.UserName }, null) </strong> <br />
+                    </p>
+                </div>
+
+                <div class="col-md-5 pull-right">
+                    <!--Statistic Info Container-->
+                    <p>
+                        <strong>Viewed: </strong> @song.Views
+                    </p>
+                    <p>
+                        <strong>Downloaded: </strong> @song.Downloads
+                    </p>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+
+    <div class="row">
+        <!--Paging-->
+        <br />
+        <div>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        </div>
+        <div class="pagination pagination-inverse pager">
+            @if (Model.PageNumber != 1)
+            {
+                <a href="@Url.Action("Search", "User", new { page = (Model.PageNumber - 1) })" class="btn btn-inverse previous">
+                    <span class="fui-arrow-left"></span>
+                    OLDER
+                </a>
+            }
+
+            <ul>
+                @for (int i = 1; i <= Model.PageCount; i++)
+                {
+                    if (i == Model.PageNumber)
+                    {
+                        <li class="Highlighted pager">
+                            <a href="@Url.Action("Search", "User", new { page = i })">@i</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="pager">
+                            <a href="@Url.Action("Search", "User", new { page = i })">@i</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            @if (Model.PageNumber != Model.PageCount)
+            {
+                <a href="@Url.Action("Search", "User", new { page = (Model.PageNumber + 1) })" class="btn btn-inverse next">
+                    NEWER
+                    <span class="fui-arrow-right"></span>
+                </a>
+            }
+        </div>
+    </div>
+</div>
