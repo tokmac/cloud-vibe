@@ -22,7 +22,6 @@ namespace Cloud_Vibe.Data.Models
         [Index(IsUnique = true)]
         [MaxLength(450)]
         public string Title { get; set; }
-        [Required]
         public virtual Artist Artist { get; set; }
         public int Year { get; set; }
         [Required]

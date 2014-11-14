@@ -16,19 +16,22 @@ using Cloud_Vibe.Models;
 using Cloud_Vibe.Data.Models;
 using Cloud_Vibe.Data;
 using Cloud_Vibe.Utilities;
+using AutoMapper;
 
 namespace Cloud_Vibe.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        public AccountController()
+        public AccountController(ICloudVibeData data)
+            :base(data)
         {
 
         }
         private ApplicationUserManager _userManager;
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ICloudVibeData data)
+            :base(data)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -441,6 +444,43 @@ namespace Cloud_Vibe.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult ProfileDetails(string username)
+        {
+            var user = data.Users.All().FirstOrDefault(u => u.UserName == username);
+
+            var userToPass = Mapper.Map<OtherUserDetailsViewModel>(user);
+
+            return View(userToPass);
+        }
+
+        [HttpGet]
+        public ActionResult EditProfile(string username)
+        {
+            var user = data.Users.All().FirstOrDefault(u => u.UserName == username);
+
+            var userToPass = Mapper.Map<OtherUserDetailsViewModel>(user);
+
+            return View(userToPass);
+        }
+
+        [HttpPost]
+        public ActionResult EditProfile(EditUserDetailsViewModel model)
+        {
+            var dbModel = data.Users.All().FirstOrDefault(u => u.UserName == model.UserName);
+
+            dbModel.FirstName = model.FirstName;
+            dbModel.LastName = model.LastName;
+            if (model.Avatar != null)
+            {
+                dbModel.Avatar = Utilities.FilesByteUtility.HttpPostedFileToByteArray(model.Avatar);
+            }
+
+            data.Users.Update(dbModel);
+            data.SaveChanges();
+            return RedirectToAction("ProfileDetails", new { username = dbModel.UserName });
         }
 
         #region Helpers

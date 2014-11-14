@@ -51,7 +51,6 @@ namespace Cloud_Vibe.Data.Models
         [InverseProperty("Song")]
         public virtual ICollection<Comment> Comments { get; set; }
 
-        [Required]
         public string TypeMIME { get; set; }
     }
 }

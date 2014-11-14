@@ -33,7 +33,7 @@
                     Shared: @Html.Timeago(song.SharedOn) <em>|</em>
                     By: @if (song.UserShared != null)
                     {
-                        @Html.ActionLink(song.UserShared.UserName, "ProfileDetails", "User", new { username = song.UserShared.UserName }, null);
+                        @Html.ActionLink(song.UserShared.UserName, "ProfileDetails", "Account", new { username = song.UserShared.UserName }, null);
                     }
                 </p>
             </div>

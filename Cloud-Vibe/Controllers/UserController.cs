@@ -187,45 +187,10 @@ namespace Cloud_Vibe.Controllers
             model.Downloads = model.Downloads + 1;
             data.SaveChanges();
 
-            return File(model.Torrent, model.TypeMIME);
+            return File(model.Torrent, "application/x-bittorrent ");
         }
 
-        [HttpGet]
-        public ActionResult ProfileDetails(string username)
-        {
-            var user = data.Users.All().FirstOrDefault(u => u.UserName == username);
-
-                var userToPass = Mapper.Map<OtherUserDetailsViewModel>(user);
-
-            return View(userToPass);
-        }
-
-        [HttpGet]
-        public ActionResult EditProfile(string username)
-        {
-            var user = data.Users.All().FirstOrDefault(u => u.UserName == username);
-
-            var userToPass = Mapper.Map<OtherUserDetailsViewModel>(user);
-
-            return View(userToPass);
-        }
-
-        [HttpPost]
-        public ActionResult EditProfile(OtherUserDetailsViewModel model)
-        {
-            var dbModel = data.Users.All().FirstOrDefault(u => u.UserName == model.Username);
-
-            dbModel.FirstName = model.FirstName;
-            dbModel.LastName = model.LastName;
-            if(model.Avatar != null)
-            {
-                dbModel.Avatar = model.Avatar;
-            }
-
-            data.Users.Update(dbModel);
-            data.SaveChanges();
-            return RedirectToAction("ProfileDetails", new { username = dbModel.UserName });
-        }
+       
 
         private IDownloadable GetModel(int id, string type) 
         {
@@ -236,7 +201,5 @@ namespace Cloud_Vibe.Controllers
 
             return data.Albums.All().FirstOrDefault(a => a.ID == id);
         }
-
-        
     }
 }

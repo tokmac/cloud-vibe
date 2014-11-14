@@ -30,7 +30,7 @@
             </div>
             <div class="row margin-top-30">
                 <p style="font-size: 12px; line-height: 20px;">
-                    Shared On:  @Html.Timeago(album.SharedOn) <em>|</em> by @if (album.UserShared != null) {@Html.ActionLink(album.UserShared.UserName, "ProfileDetails", "User", new { username = album.UserShared.UserName }, null)}
+                    Shared On:  @Html.Timeago(album.SharedOn) <em>|</em> by @if (album.UserShared != null) {@Html.ActionLink(album.UserShared.UserName, "ProfileDetails", "Account", new { username = album.UserShared.UserName }, null)}
                 </p>
             </div>
         </div>

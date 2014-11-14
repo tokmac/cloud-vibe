@@ -47,6 +47,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AutoMapper.3.2.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
+    <Reference Include="Calabonga.Mvc.PagedListExt">
+      <HintPath>..\packages\PagedListExt.0.8.0\lib\net45\Calabonga.Mvc.PagedListExt.dll</HintPath>
+    </Reference>
     <Reference Include="Glimpse.AspNet">
       <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
     </Reference>
@@ -69,6 +72,12 @@
     </Reference>
     <Reference Include="Ninject.Web.Mvc">
       <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -241,6 +250,7 @@
     <Content Include="Content\images\carosel_2.jpg" />
     <Content Include="Content\images\carosel_3.jpg" />
     <Content Include="Content\images\no_user.jpg" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\vendor\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -340,11 +350,12 @@
     <Content Include="Views\User\_IndexLatestSongs.cshtml" />
     <Content Include="Views\Album\Details.cshtml" />
     <Content Include="Views\Song\Details.cshtml" />
-    <Content Include="Views\User\ProfileDetails.cshtml" />
-    <Content Include="Views\User\_UserSharedSongs.cshtml" />
-    <Content Include="Views\User\_UserSharedAlbums.cshtml" />
-    <Content Include="Views\User\EditProfile.cshtml" />
+    <Content Include="Views\Account\ProfileDetails.cshtml" />
+    <Content Include="Views\Account\_UserSharedSongs.cshtml" />
+    <Content Include="Views\Account\_UserSharedAlbums.cshtml" />
+    <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Song\AllSongs.cshtml" />
+    <Content Include="Views\Album\AllAlbums.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

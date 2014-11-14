@@ -28,7 +28,7 @@
                     </p>
                     <p>
                         Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
-                        By: <strong>@Html.ActionLink(@Model.UserShared.UserName, "ProfileDetails", "User", new { username = @Model.UserShared.UserName }, null) </strong> <br />
+                        By: <strong>@Html.ActionLink(@Model.UserShared.UserName, "ProfileDetails", "Account", new { username = @Model.UserShared.UserName }, null) </strong> <br />
 
                         <a href="@Url.Action("DownloadFile","User", new { id = Model.ID, name= Model.Title+"-"+Model.Artist.Name , item = "song"})" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
                     </p>

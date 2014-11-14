@@ -137,6 +137,7 @@ namespace Cloud_Vibe.Models
 
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
+
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
@@ -153,14 +154,24 @@ namespace Cloud_Vibe.Models
         [Display(Name = "Social Links")]
         public ICollection<SocialAccountLink> SocialAccoutsLinks { get; set; }
 
-        #region IHaveCustomMappings Members
-
         public void CreateMappings(AutoMapper.IConfiguration configuration)
         {
             configuration.CreateMap<User, OtherUserDetailsViewModel>().ReverseMap();
         }
+    }
 
-        #endregion
+    public class EditUserDetailsViewModel
+    {
+        public string UserName { get; set; }
+
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Display(Name = "Avatar")]
+        public HttpPostedFileBase Avatar { get; set; }
     }
 
 

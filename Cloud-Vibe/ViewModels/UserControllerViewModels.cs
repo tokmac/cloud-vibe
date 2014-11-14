@@ -1,4 +1,5 @@
 ﻿using Cloud_Vibe.Data.Models;
+using Cloud_Vibe.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -79,7 +80,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
     }
 
-    public class AlbumDetailsViewModel
+    public class AlbumDetailsViewModel : IMapFrom<Album>
     {
         [HiddenInput(DisplayValue = false)]
         public int? ID { get; set; }
@@ -123,7 +124,7 @@ namespace Cloud_Vibe.Models.ViewModels
         public ICollection<Comment> Comments { get; set; }
     }
 
-    public class SongDetailsViewModel
+    public class SongDetailsViewModel : IMapFrom<Song>
     {
 
         [HiddenInput(DisplayValue = false)]
