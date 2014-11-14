@@ -356,6 +356,7 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Song\AllSongs.cshtml" />
     <Content Include="Views\Album\AllAlbums.cshtml" />
+    <Content Include="Views\User\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -379,12 +380,6 @@
     <Content Include="Content\flat-ui-pro.css.map" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\vendor\jquery.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\cloud-vibe.Web\Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj">
-      <Project>{253ff344-3b0d-4884-b0c5-372bd3596617}</Project>
-      <Name>Cloud-Vibe.Web.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

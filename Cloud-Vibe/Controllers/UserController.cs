@@ -201,5 +201,11 @@ namespace Cloud_Vibe.Controllers
 
             return data.Albums.All().FirstOrDefault(a => a.ID == id);
         }
+
+        [HttpGet]
+        public ActionResult Search(string searchString)
+        {
+            return View();
+        }
     }
 }
