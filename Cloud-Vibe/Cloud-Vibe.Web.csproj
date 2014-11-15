@@ -228,6 +228,7 @@
     <Compile Include="Data\Models\Thanx.cs" />
     <Compile Include="Data\Repositories\EFRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
+    <Compile Include="Filters\BasicAuthAttribute.cs" />
     <Compile Include="GlimpseSecurityPolicy.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -357,6 +358,7 @@
     <Content Include="Views\Album\AllAlbums.cshtml" />
     <Content Include="Views\User\Search.cshtml" />
     <Content Include="Views\User\Share.cshtml" />
+    <Content Include="Views\Shared\_Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

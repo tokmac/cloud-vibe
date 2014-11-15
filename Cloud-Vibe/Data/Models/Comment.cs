@@ -16,6 +16,8 @@ namespace Cloud_Vibe.Data.Models
         [Required(ErrorMessage="Cannot post empty comment")]
         public string Text { get; set; }
 
+        public DateTime SharedOn { get; set; }
+
         public virtual Song Song { get; set; }
 
         public virtual Album Album { get; set; }

@@ -41,7 +41,7 @@ namespace Cloud_Vibe
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.min.css",
                       "~/Content/flat-ui-pro.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

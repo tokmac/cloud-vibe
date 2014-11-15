@@ -112,7 +112,7 @@ namespace Cloud_Vibe.Models.ViewModels
         public byte[] CoverArt { get; set; }
 
         [Display(Name = "Videos")]
-        public List<string> VideosLinks { get; set; }
+        public string VideoLink { get; set; }
 
         [Display(Name = "Downloaded")]
         public int Downloads { get; set; }
@@ -191,5 +191,12 @@ namespace Cloud_Vibe.Models.ViewModels
 
         [Display(Name = "Downloaded")]
         public int Downloads { get; set; }
+    }
+
+    public class CommentViewModel : IMapFrom<Comment>
+    {
+        public User User { get; set; }
+        public string Text { get; set; }
+        public DateTime PostedOn { get; set; }
     }
 }

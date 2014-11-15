@@ -1,5 +1,6 @@
 ﻿using Cloud_Vibe.Data.Models;
 using Cloud_Vibe.Data.Repositories;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -13,7 +14,7 @@ namespace Cloud_Vibe.Data
         private DbContext context;
         private IDictionary<Type, object> repositories;
 
-        public CloudVibeData(CloudVibeDbContex context)
+        public CloudVibeData(CloudVibeDbContex  context)
         {
             this.context = context;
             this.repositories = new Dictionary<Type, object>();
@@ -63,6 +64,7 @@ namespace Cloud_Vibe.Data
         {
             get { return this.GetRepository<Thanx>(); }
         }
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();

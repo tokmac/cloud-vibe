@@ -71,7 +71,6 @@
         [HttpPost]
         public ActionResult ShareAlbum(ShareAlbumViewModel album)
         {
-            string fileType = album.CoverArt.ContentType;
             List<byte[]> box = new List<byte[]>();
             if (album.CoverArt != null)
             {
@@ -82,35 +81,38 @@
                 box.Add(Utilities.FilesByteUtility.FileFromPathToByteArray(HttpContext.Server.MapPath("~/Content/images/no_user.jpg")));
             }
 
-            var coverArt = box[0];
-            var artist = data.Artists.All().FirstOrDefault(a => a.Name == album.ArtistName);
+            string fileType = album.Torrent.ContentType;
 
+            var coverArt = box[0];
+
+            var artist = data.Artists.All().FirstOrDefault(a => a.Name == album.ArtistName);
             if (artist == null)
             {
                 artist = new Artist { Name = album.ArtistName, Picture = coverArt };
-                //TempData["need-artist"] = "true";
-                //return View("Share");
                 data.Artists.Add(artist);
                 data.SaveChanges();
             }
 
             var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.Torrent);
-            var user = data.Users.All().Where(u => u.UserName == User.Identity.Name).ToArray();
+            var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
 
-            Mapper.CreateMap<ShareAlbumViewModel, Album>()
-                .ForMember(c => c.CoverArt, option => option.UseValue(coverArt))
-                .ForMember(c => c.Torrent, option => option.UseValue(torrent))
-                .ForMember(c => c.Artist, option => option.UseValue(artist))
-                .ForMember(c => c.UserShared, option => option.UseValue(user[0]))
-                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now))
-                .ForMember(c => c.TypeMIME, option => option.UseValue(fileType));
+            Album albumToSave = new Album
+            {
+                Artist = artist,
+                UserShared = currentUser,
+                SharedOn = DateTime.Now,
+                TypeMIME = fileType,
+                CoverArt = coverArt,
+                Torrent = torrent,
+                Title = album.Title,
+                VideoLink = album.VideoLink,
+                Year = album.Year
 
-
-            var albumToSave = Mapper.Map<ShareAlbumViewModel, Album>(album);
+            };
 
             data.Albums.Add(albumToSave);
             artist.Albums.Add(albumToSave);
-            user[0].SharedAlbums.Add(albumToSave);
+            currentUser.SharedAlbums.Add(albumToSave);
             data.SaveChanges();
 
             TempData["success"] = String.Format("Succesfully added album {0}", album.ArtistName);
@@ -145,18 +147,20 @@
 
             var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.Torrent);
 
-            var user = data.Users.All().Where(u => u.UserName == User.Identity.Name).ToArray();
+            var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
 
-            Mapper.CreateMap<ShareSongViewModel, Song>()
-                .ForMember(c => c.CoverArt, option => option.UseValue(coverArt))
-                .ForMember(c => c.Torrent, option => option.UseValue(torrent))
-                .ForMember(c => c.Artist, option => option.UseValue(artist))
-                .ForMember(c => c.UserShared, option => option.UseValue(user[0]))
-                .ForMember(c => c.SharedOn, option => option.UseValue(DateTime.Now))
-                .ForMember(c => c.TypeMIME, option => option.UseValue(fileType));
-
-
-            var songToSave = Mapper.Map<ShareSongViewModel, Song>(song);
+            Song songToSave = new Song
+            {
+                Artist = artist,
+                UserShared = currentUser,
+                SharedOn = DateTime.Now,
+                TypeMIME = fileType,
+                CoverArt = coverArt,
+                Torrent = torrent,
+                Title = song.Title,
+                VideoLink = song.VideoLink,
+                Year = song.Year
+            };
 
 
             data.Songs.Add(songToSave);
@@ -165,7 +169,7 @@
             artist.Songs.Add(songToSave);
             data.SaveChanges();
 
-            user[0].SharedSongs.Add(songToSave);
+            currentUser.SharedSongs.Add(songToSave);
             data.SaveChanges();
 
             TempData["success"] = String.Format("Succesfully added album {0}", song.ArtistName);
@@ -193,7 +197,40 @@
             return File(model.Torrent, "application/x-bittorrent ");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Comments(string type, string id, string comment)
+        {
+            var user = data.Users.All().SingleOrDefault(u=> u.UserName == User.Identity.Name);
+            var currentComment = new Comment { User = user, Text = comment, SharedOn = DateTime.Now };
+            switch (type)
+	        {
+                case "song":
+                    currentComment.Song = data.Songs.Find(Int32.Parse(id));
+                    break;
+                case "album":
+                    currentComment.Album = data.Albums.Find(Int32.Parse(id));
+                    break;
+		        default:
+                    break;
+	        }
 
+            data.Comments.Add(currentComment);
+            data.SaveChanges();
+
+            switch (type)
+            {
+                case "song":
+                    return RedirectToAction("Details", "Song", new { title = currentComment.Song.Title });
+                    break;
+                case "album":
+                    return RedirectToAction("Details", "Album", new { title = currentComment.Album.Title });
+                    break;
+                default:
+                    return RedirectToAction("Index", "Home");
+                    break;
+            }
+        }
 
         private IDownloadable GetModel(int id, string type)
         {
@@ -206,7 +243,7 @@
         }
 
         [HttpGet]
-        public ActionResult Search(string sortOrder, string searchString,string currentFilter, int? page)
+        public ActionResult Search(string sortOrder, string searchString, string currentFilter, int? page)
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TitleSortParam = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
@@ -232,7 +269,7 @@
                 songs = songs.Where(s => s.Title.Contains(searchString)
                                        || s.Artist.Name.Contains(searchString));
 
-                albums =albums.Where(s => s.Title.Contains(searchString)
+                albums = albums.Where(s => s.Title.Contains(searchString)
                                        || s.Artist.Name.Contains(searchString));
             }
 
@@ -301,5 +338,6 @@
 
             return View(results.ToPagedList(pageNumber, pageSize));
         }
+
     }
 }

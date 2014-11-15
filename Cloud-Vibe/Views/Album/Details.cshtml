@@ -48,3 +48,63 @@
         </div>
     </div>
 </div>
+
+@if (Model.VideoLink != null)
+{
+    <div class="jumbotron">
+        <!--Video Container-->
+    </div>
+}
+
+@{var moreAlbums = ViewBag.MoreAlbums as List<AlbumDetailsViewModel>;  }
+@if (moreAlbums.Count != 0)
+{
+    <div class="jumbotron">
+        <div class="row">
+            <h4> ALBUMS FROM "@Model.Artist.Name.ToUpper()"</h4>
+        </div>
+        <div class="row">
+            
+            @foreach (var album in moreAlbums)
+            {
+                <div class="col-md-2">
+                    <div class="row">
+                        <!--Image Container-->
+                        @{
+                var cover = album.CoverArt;
+                var img = FilesByteUtility.ByteArrayToImageSrcString(cover);
+                        }
+                        <img src="@img" style="float:left;height:150px; margin-right:10px" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="row">
+                        <a href="@Url.Action("Details", "Album", new { title = album.Title })">
+                            @if (album.Title.Count() < 30)
+                            {
+                                <p>@album.Title</p>
+                            }
+                            else
+                            {
+                                <p>@album.Title.Substring(0, 30) ...</p>
+                            }
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+        <hr />
+        <div class="row row-centered">
+            @using (Html.BeginForm("AllAlbums", "Album", FormMethod.Get))
+            {
+                <div class="input-group input-group-lg col-md-12">
+                    @Html.Hidden("SearchString", Model.Artist.Name)
+                    <button class="btn btn-lg btn-block btn-warning" type="submit">See more song from "@Model.Artist.Name"</button>
+
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@{ViewBag.id = Model.ID;}
+@{ViewBag.Type = "album";}
+@Html.Partial("_Comments", ViewBag.CommentsInfo as List<CommentViewModel>)

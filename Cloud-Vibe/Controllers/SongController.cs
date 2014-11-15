@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Web;
     using System.Web.Mvc;
-    
+
     using AutoMapper;
     using PagedList;
 
@@ -17,22 +17,47 @@
     {
 
         public SongController(ICloudVibeData data)
-            :base(data)
+            : base(data)
         {
 
         }
         // GET: Song
         public ActionResult Details(string title)
         {
-            var song = data.Songs.All().FirstOrDefault(s => s.Title == title);
-            song.Views = song.Views + 1;
-            data.SaveChanges();
+            if (title == null)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                var song = data.Songs.All().FirstOrDefault(s => s.Title == title);
+                song.Views = song.Views + 1;
+                data.SaveChanges();
 
-            Mapper.CreateMap<Song,SongDetailsViewModel>();
+                Mapper.CreateMap<Song, SongDetailsViewModel>();
+                SongDetailsViewModel songToSee = Mapper.Map<SongDetailsViewModel>(song);
 
-            SongDetailsViewModel songToSee = Mapper.Map<SongDetailsViewModel>(song);
+                var songsFrom = data.Songs.All().Where(s => s.Artist.Name.Contains(song.Artist.Name)).Take(5).ToList();
+                var moreSongs = new List<SongDetailsViewModel>();
 
-            return View(songToSee);
+                foreach (var sng in songsFrom)
+	            {
+		            moreSongs.Add(Mapper.Map<SongDetailsViewModel>(sng));
+	            }
+
+                var songsCurrentComments = data.Comments.All().Where(c => c.Song.ID == songToSee.ID).ToList();
+                var comments = new List<CommentViewModel>();
+
+                foreach (var comment in songsCurrentComments)
+	            {
+                    comments.Add(Mapper.Map<CommentViewModel>(comment));
+	            }
+
+                ViewBag.MoreSongs = moreSongs;
+                ViewBag.CommentsInfo = comments;
+
+                return View(songToSee);
+            }
         }
 
         [HttpGet]

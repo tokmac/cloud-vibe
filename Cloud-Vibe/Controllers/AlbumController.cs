@@ -24,13 +24,40 @@
         // GET: Album
         public ActionResult Details(string title)
         {
-            Album album = data.Albums.All().FirstOrDefault(s => s.Title == title);
+            if (title == null)
+            {
+                return RedirectToAction("Index", "User");
+            }
+            else
+            {
+                var album = data.Albums.All().FirstOrDefault(s => s.Title == title);
+                album.Views = album.Views + 1;
+                data.SaveChanges();
 
-            Mapper.CreateMap<Album, AlbumDetailsViewModel>();
-            AlbumDetailsViewModel albumToSee = new AlbumDetailsViewModel();
-            Mapper.Map<Album, AlbumDetailsViewModel>(album, albumToSee);
+                Mapper.CreateMap<Album, AlbumDetailsViewModel>();
+                AlbumDetailsViewModel albumToSee = Mapper.Map<AlbumDetailsViewModel>(album);
 
-            return View(albumToSee);
+                var albumsFrom = data.Songs.All().Where(s => s.Artist.Name.Contains(album.Artist.Name)).Take(5).ToList();
+                var moreAlbums = new List<AlbumDetailsViewModel>();
+
+                foreach (var alb in albumsFrom)
+                {
+                    moreAlbums.Add(Mapper.Map<AlbumDetailsViewModel>(alb));
+                }
+
+                var albumCurrentComments = data.Comments.All().Where(c => c.Album.ID == albumToSee.ID).ToList();
+                var comments = new List<CommentViewModel>();
+
+                foreach (var comment in albumCurrentComments)
+                {
+                    comments.Add(Mapper.Map<CommentViewModel>(comment));
+                }
+
+                ViewBag.MoreAlbums = moreAlbums;
+                ViewBag.CommentsInfo = comments;
+
+                return View(albumToSee);
+            }
         }
 
         [HttpGet]

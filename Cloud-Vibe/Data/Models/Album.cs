@@ -11,7 +11,6 @@ namespace Cloud_Vibe.Data.Models
     {
         public Album()
         {
-            this.VideosLinks = new List<string>();
             this.Thanxies = new HashSet<Thanx>();
             this.UsersDownloaded = new HashSet<User>();
             this.Comments = new HashSet<Comment>();
@@ -30,7 +29,7 @@ namespace Cloud_Vibe.Data.Models
         [Required]
         public byte[] Torrent { get; set; }
         public byte[] CoverArt { get; set; }
-        public List<string> VideosLinks { get; set; }
+        public string VideoLink { get; set; }
         public int Downloads { get; set; }
         public int Views { get; set; }
         [InverseProperty("Album")]
