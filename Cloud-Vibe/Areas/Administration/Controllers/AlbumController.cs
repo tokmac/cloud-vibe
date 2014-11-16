@@ -18,12 +18,15 @@ namespace Cloud_Vibe.Areas.Administration.Controllers
     using Cloud_Vibe.Controllers;
     using Cloud_Vibe.Data;
     using Cloud_Vibe.Data.Models;
+    using System.Threading;
+    using System.Globalization;
 
     public class AlbumController : AdminController
     {
         public AlbumController(ICloudVibeData data)
             : base(data)
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         [HttpGet]
@@ -49,27 +52,35 @@ namespace Cloud_Vibe.Areas.Administration.Controllers
             return Json(test.ToDataSourceResult(request));
         }
 
-        [HttpPost]
-        public ActionResult Create([DataSourceRequest]DataSourceRequest request, AlbumViewModel model)
-        {
-            if (model != null && ModelState.IsValid)
-            {
-                var dbModel = Mapper.Map<Album>(model);
-                this.data.Albums.Add(dbModel);
-                this.data.SaveChanges();
-                model.ID = dbModel.ID;
-            }
+        //[HttpPost]
+        //public ActionResult Create([DataSourceRequest]DataSourceRequest request, AlbumViewModel model)
+        //{
+        //    if (model != null && ModelState.IsValid)
+        //    {
+        //        Album dbModel = new Album()
+        //        {
+        //            Artist = new Artist() { Name = model.UserShared },
+        //            Title = model.Title,
+        //            SharedOn = model.SharedOn,
 
-            return Json(new[] { model }.ToDataSourceResult(request, ModelState));
-        }
+        //        };
+        //        this.data.Albums.Add(dbModel);
+        //        this.data.SaveChanges();
+        //        model.ID = dbModel.ID;
+        //    }
+
+        //    return Json(new[] { model }.ToDataSourceResult(request, ModelState));
+        //}
 
         [HttpPost]
         public ActionResult Update([DataSourceRequest]DataSourceRequest request, AlbumViewModel model)
         {
-            if (model != null && ModelState.IsValid)
+            if (model != null)
             {
-                var album = this.data.Albums.Find(model.ID);
-                Mapper.Map(model.ID, album);
+                var album = this.data.Albums.GetById(model.ID);
+                album.Title = model.Title;
+                album.Artist.Name = model.Artist;
+                album.VideoLink = model.VideoLink;
                 this.data.SaveChanges();
             }
 
@@ -81,7 +92,7 @@ namespace Cloud_Vibe.Areas.Administration.Controllers
         {
             if (model != null && ModelState.IsValid)
             {
-                var album = this.data.Albums.Find(model.ID);
+                var album = this.data.Albums.GetById(model.ID);
                 album.IsDeleted = true;
                 album.DeletedOn = DateTime.Now;
                 this.data.SaveChanges();

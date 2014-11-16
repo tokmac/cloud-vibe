@@ -9,15 +9,23 @@ using System.Web;
 
 namespace Cloud_Vibe.Data
 {
-    public class CloudVibeData : ICloudVibeData
+    public class CloudVibeData : ICloudVibeData 
     {
-        private DbContext context;
-        private IDictionary<Type, object> repositories;
+        private readonly ICloudDbContext context;
 
-        public CloudVibeData(CloudVibeDbContex  context)
+        private readonly Dictionary<Type, object> repositories = new Dictionary<Type, object>();
+
+        public CloudVibeData(ICloudDbContext context)
         {
             this.context = context;
-            this.repositories = new Dictionary<Type, object>();
+        }
+
+        public ICloudDbContext Context
+        {
+            get
+            {
+                return this.context;
+            }
         }
 
         public IRepository<User> Users
@@ -25,9 +33,9 @@ namespace Cloud_Vibe.Data
             get { return this.GetRepository<User>(); }
         }
 
-        public IRepository<Album> Albums
+        public IDeletableEntityRepository<Album> Albums
         {
-            get { return this.GetRepository<Album>(); }
+            get { return this.GetDeletableEntityRepository<Album>(); }
         }
 
         public IRepository<Artist> Artists
@@ -55,9 +63,9 @@ namespace Cloud_Vibe.Data
             get { return this.GetRepository<SocialAccountLink>(); }
         }
 
-        public IRepository<Song> Songs
+        public IDeletableEntityRepository<Song> Songs
         {
-            get { return this.GetRepository<Song>(); }
+            get { return this.GetDeletableEntityRepository<Song>(); }
         }
 
         public IRepository<Thanx> Thanxies
@@ -70,16 +78,43 @@ namespace Cloud_Vibe.Data
             return this.context.SaveChanges();
         }
 
+        public void Dispose()
+        {
+            this.Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (this.context != null)
+                {
+                    this.context.Dispose();
+                }
+            }
+        }
+
         private IRepository<T> GetRepository<T>() where T : class
         {
-            var typeOfRepository = typeof(T);
-            if (!this.repositories.ContainsKey(typeOfRepository))
+            if (!this.repositories.ContainsKey(typeof(T)))
             {
-                var newRepository = Activator.CreateInstance(typeof(EFRepository<T>), context);
-                this.repositories.Add(typeOfRepository, newRepository);
+                var type = typeof(EFRepository<T>);
+                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
             }
 
-            return (IRepository<T>)this.repositories[typeOfRepository];
+            return (IRepository<T>)this.repositories[typeof(T)];
         }
+
+        private IDeletableEntityRepository<T> GetDeletableEntityRepository<T>() where T : class, IDeletableEntity
+        {
+            if (!this.repositories.ContainsKey(typeof(T)))
+            {
+                var type = typeof(DeletableEntityRepository<T>);
+                this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
+            }
+
+            return (IDeletableEntityRepository<T>)this.repositories[typeof(T)];
+        }
+        
     }
 }

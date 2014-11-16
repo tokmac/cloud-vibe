@@ -201,15 +201,15 @@
         [ValidateAntiForgeryToken]
         public ActionResult Comments(string type, string id, string comment)
         {
-            var user = data.Users.All().SingleOrDefault(u=> u.UserName == User.Identity.Name);
+            var user = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
             var currentComment = new Comment { User = user, Text = comment, SharedOn = DateTime.Now };
             switch (type)
 	        {
                 case "song":
-                    currentComment.Song = data.Songs.Find(Int32.Parse(id));
+                    currentComment.Song = data.Songs.GetById(Int32.Parse(id));
                     break;
                 case "album":
-                    currentComment.Album = data.Albums.Find(Int32.Parse(id));
+                    currentComment.Album = data.Albums.GetById(Int32.Parse(id));
                     break;
 		        default:
                     break;
@@ -222,13 +222,10 @@
             {
                 case "song":
                     return RedirectToAction("Details", "Song", new { title = currentComment.Song.Title });
-                    break;
                 case "album":
                     return RedirectToAction("Details", "Album", new { title = currentComment.Album.Title });
-                    break;
                 default:
                     return RedirectToAction("Index", "Home");
-                    break;
             }
         }
 
@@ -266,11 +263,9 @@
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                songs = songs.Where(s => s.Title.Contains(searchString)
-                                       || s.Artist.Name.Contains(searchString));
+                songs = songs.Where(s => s.Title.Contains(searchString) || s.Artist.Name.Contains(searchString));
 
-                albums = albums.Where(s => s.Title.Contains(searchString)
-                                       || s.Artist.Name.Contains(searchString));
+                albums = albums.Where(s => s.Title.Contains(searchString) || s.Artist.Name.Contains(searchString));
             }
 
             var readySongs = songs.ToList();

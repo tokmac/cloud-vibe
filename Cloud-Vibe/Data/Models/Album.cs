@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cloud_Vibe.Data.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Web;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class Album : IDownloadable, IDeletableEntity
+    public class Album : DeletableEntity, IDownloadable
     {
         public Album()
         {
@@ -25,7 +26,6 @@ namespace Cloud_Vibe.Data.Models
         public int Year { get; set; }
         public DateTime SharedOn { get; set; }
         public virtual User UserShared { get; set; }
-        [Required]
         public byte[] Torrent { get; set; }
         public byte[] CoverArt { get; set; }
         public string VideoLink { get; set; }

@@ -4,7 +4,7 @@
 @if (Request.IsAuthenticated)
 {
     ICloudVibeData data = new CloudVibeData(new CloudVibeDbContex());
-    var user = data.Users.Find(User.Identity.GetUserId());
+    var user = data.Users.GetById(User.Identity.GetUserId());
     var avatar = user.Avatar;
     var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(avatar);
 

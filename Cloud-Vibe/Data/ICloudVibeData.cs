@@ -9,14 +9,16 @@ namespace Cloud_Vibe.Data
 {
     public interface ICloudVibeData
     {
-        IRepository<Album> Albums { get; }
+        ICloudDbContext Context { get; }
+
+        IDeletableEntityRepository<Album> Albums { get; }
         IRepository<User> Users { get; }
         IRepository<Artist> Artists { get; }
         IRepository<Comment> Comments { get; }
         IRepository<Message> Messages { get; }
         IRepository<SocialNetwork> SocialNetworks { get; }
         IRepository<SocialAccountLink> SocialAccountLinks { get; }
-        IRepository<Song> Songs { get; }
+        IDeletableEntityRepository<Song> Songs { get; }
         IRepository<Thanx> Thanxies { get; }
 
         int SaveChanges();

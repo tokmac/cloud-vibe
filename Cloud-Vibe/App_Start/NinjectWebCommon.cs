@@ -62,6 +62,7 @@ namespace Cloud_Vibe.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<ICloudDbContext>().To<CloudVibeDbContex>();
             kernel.Bind<ICloudVibeData>().To<CloudVibeData>();
         }        
     }

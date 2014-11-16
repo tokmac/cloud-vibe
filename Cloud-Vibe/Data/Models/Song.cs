@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cloud_Vibe.Data.Contracts;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class Song : IDownloadable
+    public class Song : DeletableEntity, IDownloadable
     {
         public Song()
         {

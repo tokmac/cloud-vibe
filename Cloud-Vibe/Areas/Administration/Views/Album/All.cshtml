@@ -13,11 +13,11 @@
             columns.Bound(pr => pr.Title).Width(250);
             columns.Bound(pr => pr.Artist);
             columns.Bound(pr => pr.Year);
-            columns.Bound(pr => pr.SharedOn);
+            columns.Bound(pr => pr.SharedOn).ClientTemplate("#=kendo.toString(SharedOn, 'dd/MM/yyyy HH:mm:ss')#");
             columns.Bound(pr => pr.UserShared);
             columns.Bound(pr => pr.Views);
             columns.Bound(pr => pr.Downloads);
-            columns.Command(cmd => cmd.Edit());
+            columns.Command(cmd => { cmd.Edit(); cmd.Destroy(); });
         })
         .DataSource(data => data
                 .Ajax()
@@ -26,29 +26,30 @@
                     m.Id(p => p.ID);
                     m.Field(p => p.Downloads).Editable(false);
                     m.Field(p => p.Views).Editable(false);
-                    m.Field(p => p.SharedOn).DefaultValue(DateTime.Now).Editable(false);
                     m.Field(p => p.UserShared).DefaultValue(User.Identity.Name).Editable(false);
                 })
                 .Events(events => events.Error("onError"))
                 .Read(read => read.Action("Read", ControllerName))
-                .Create(create => create.Action("Create", ControllerName))
+                //.Create(create => create.Action("Create", ControllerName))
                 .Update(update => update.Action("Update", ControllerName))
                 .Destroy(destroy => destroy.Action("Destroy", ControllerName))
         )
-        .Pageable()
+        .Pageable(pager => pager.Refresh(true))
         .Sortable()
         .Filterable()
         .Groupable()
         .Selectable()
-        .ToolBar(toolbar => { toolbar.Create(); })
+        //.ToolBar(toolbar => { toolbar.Create(); })
         .Editable(edit => edit.Mode(GridEditMode.PopUp))
 
 )
 
 <script>
 
+
     function onError(e, status) {
         alert("A server error has occurred!");
     }
+
 </script>
 
