@@ -2,40 +2,34 @@
     ViewBag.Title = "Share";
 }
 
-<h2>Share</h2>
 
-<div class="mbl pbm">
-    <ul class="nav nav-pills">
 
-        <li><a href="#" id="btn-song-view">Song</a></li>
-
-        <li><a href="#" id="btn-album-view">Album</a></li>
-
-    </ul>
-
+<div class="row row-centered">
+    <div class="col-centered">
+        <h2>Share</h2>
+        <hr />
+        <ul class="nav nav-pills">
+            <li><a href="#" id="btn-song-view">Song</a></li>
+            <li><a href="#" id="btn-album-view">Album</a></li>
+        </ul>
+    </div>
 </div>
 
+<div class="row">
+    <div id="album-container">
+        <h1>Share Album</h1>
 
-@*TODO://Add artist *@
-@*@if(TempData["need-artist"] == "true")
-    {
-        using (Ajax.BeginForm(new AjaxOptions() { HttpMethod = "POST", Url = "your controller", OnComplete = "some client event" }))
-        {
-            @Html.Partial("_AddArtist")
-        }
-    }*@
-<div id="album-container">
-    <h1>Share Album</h1>
+        @Html.Partial("_AlbumShare")
 
-    @Html.Partial("_AlbumShare")
+    </div>
+    <div id="song-container">
+        <h1>Share Song</h1>
 
+        @Html.Partial("_SongShare")
+
+    </div>
 </div>
--<div id="song-container">
-    <h1>Share Song</h1>
 
-    @Html.Partial("_SongShare")
-
-</div>
 <br />
 <br />
 
