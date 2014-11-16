@@ -4,7 +4,7 @@
 <ul class="nav navbar-nav">
     @if (Request.IsAuthenticated)
     {
-        <li class="dropdown">
+        @*<li class="dropdown">
             <div class="btn-group btn-group-hg">
                 <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">
                     All Genres
@@ -18,16 +18,16 @@
                     <li><a href="#">See All</a></li>
                 </ul>
             </div>
-        </li>
-        <li class="active">@Html.ActionLink("Home", "Index", "User")</li>
-        <li>@Html.ActionLink("All Songs", "AllSongs", "Song")</li>
-        <li>@Html.ActionLink("All Albums", "AllAlbums", "Album")</li>
+        </li>*@
+        <li class="active">@Html.ActionLink("Home", "Index", "User", new { area = "" }, null)</li>
+        <li>@Html.ActionLink("All Songs", "AllSongs", "Song",new { area = "" }, null)</li>
+        <li>@Html.ActionLink("All Albums", "AllAlbums", "Album", new { area = "" }, null)</li>
     }
     else
     {
         <li class="active">@Html.ActionLink("Home", "Index", "Home")</li>
-        <li>@Html.ActionLink("How to Share", "ShareGuide", "Info")</li>
-        <li>@Html.ActionLink("How to Download", "DownloadGuide", "Info")</li>
+        @*<li>@Html.ActionLink("How to Share", "ShareGuide", "Info")</li>
+        <li>@Html.ActionLink("How to Download", "DownloadGuide", "Info")</li>*@
     }
 </ul>
 

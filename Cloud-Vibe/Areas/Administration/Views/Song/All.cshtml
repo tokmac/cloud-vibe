@@ -1,14 +1,14 @@
-﻿@using Cloud_Vibe.Areas.Administration.ViewModels.Album
+﻿@using Cloud_Vibe.Areas.Administration.ViewModels.Song
 @{
-    const string ControllerName = "Album";
+    const string ControllerName = "Song";
 }
 
 <div class="container">
     <div class="row row-centered">
         <div class="col-centered">
             <ul class="nav nav-pills">
-                <li class="active">@Html.ActionLink("Albums", "All", "Album")</li>
-                <li>@Html.ActionLink("Songs", "All", "Song")</li>
+                <li>@Html.ActionLink("Albums", "All", "Album")</li>
+                <li class="active">@Html.ActionLink("Songs", "All", "Song")</li>
                 <li>@Html.ActionLink("Comments", "All", "Comment")</li>
             </ul>
         </div>
@@ -16,7 +16,7 @@
 </div>
 
 @(Html.Kendo()
-        .Grid<AlbumViewModel>()
+        .Grid<SongViewModel>()
         .Name("grid")
         .Columns(columns =>
         {
@@ -41,7 +41,7 @@
                 })
                 .Events(events => events.Error("onError"))
                 .Read(read => read.Action("Read", ControllerName))
-                //.Create(create => create.Action("Create", ControllerName))
+            //.Create(create => create.Action("Create", ControllerName))
                 .Update(update => update.Action("Update", ControllerName))
                 .Destroy(destroy => destroy.Action("Destroy", ControllerName))
         )
@@ -63,4 +63,5 @@
     }
 
 </script>
+
 

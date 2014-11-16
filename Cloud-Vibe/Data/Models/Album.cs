@@ -38,9 +38,5 @@ namespace Cloud_Vibe.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string TypeMIME { get; set; }
-
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DeletedOn { get; set; }
     }
 }

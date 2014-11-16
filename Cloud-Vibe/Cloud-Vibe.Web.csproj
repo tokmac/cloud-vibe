@@ -206,11 +206,12 @@
     <Compile Include="Areas\Administration\AdministrationAreaRegistration.cs" />
     <Compile Include="Areas\Administration\Controllers\AlbumController.cs" />
     <Compile Include="Areas\Administration\Controllers\Base\AdminController.cs" />
+    <Compile Include="Areas\Administration\Controllers\CommentController.cs" />
     <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administration\Controllers\SongController.cs" />
     <Compile Include="Areas\Administration\ViewModels\Album\AlbumViewModel.cs" />
-    <Compile Include="Areas\Albums\AlbumsAreaRegistration.cs" />
-    <Compile Include="Areas\Songs\SongsAreaRegistration.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Song\SongViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\Comment\CommentViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -517,8 +518,6 @@
     <Content Include="fonts\lato\lato-regular.eot" />
     <Content Include="fonts\lato\lato-regular.ttf" />
     <Content Include="fonts\lato\lato-regular.woff" />
-    <Content Include="Areas\Albums\Views\web.config" />
-    <Content Include="Areas\Songs\Views\web.config" />
     <Content Include="Scripts\flat-ui-pro.js" />
     <Content Include="Scripts\flat-ui-pro.min.js" />
     <Content Include="Content\kendo\images\kendoui.ttf" />
@@ -540,6 +539,8 @@
     <Content Include="Areas\Administration\Views\Shared\EditorTemplates\String.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\EditorTemplates\Time.cshtml" />
     <Content Include="Areas\Administration\Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Areas\Administration\Views\Song\All.cshtml" />
+    <Content Include="Areas\Administration\Views\Comment\All.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -1211,14 +1212,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="App_\" />
     <Folder Include="Areas\Administration\ViewModels\Base\" />
-    <Folder Include="Areas\Administration\Views\Admin\" />
-    <Folder Include="Areas\Administration\Views\Song\" />
-    <Folder Include="Areas\Albums\Controllers\" />
-    <Folder Include="Areas\Albums\Models\" />
-    <Folder Include="Areas\Albums\Views\Shared\" />
-    <Folder Include="Areas\Songs\Controllers\" />
-    <Folder Include="Areas\Songs\Models\" />
-    <Folder Include="Areas\Songs\Views\Shared\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>

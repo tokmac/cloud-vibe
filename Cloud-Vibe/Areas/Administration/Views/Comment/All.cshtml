@@ -1,33 +1,31 @@
-﻿@using Cloud_Vibe.Areas.Administration.ViewModels.Album
+﻿@using Cloud_Vibe.Areas.Administration.ViewModels.Comment
 @{
-    const string ControllerName = "Album";
+    const string ControllerName = "Comment";
 }
 
 <div class="container">
     <div class="row row-centered">
         <div class="col-centered">
             <ul class="nav nav-pills">
-                <li class="active">@Html.ActionLink("Albums", "All", "Album")</li>
+                <li>@Html.ActionLink("Albums", "All", "Album")</li>
                 <li>@Html.ActionLink("Songs", "All", "Song")</li>
-                <li>@Html.ActionLink("Comments", "All", "Comment")</li>
+                <li class="active">@Html.ActionLink("Comments", "All", "Comment")</li>
             </ul>
         </div>
     </div>
 </div>
 
 @(Html.Kendo()
-        .Grid<AlbumViewModel>()
+        .Grid<CommentViewModel>()
         .Name("grid")
         .Columns(columns =>
         {
             columns.Bound(pr => pr.ID);
-            columns.Bound(pr => pr.Title).Width(250);
-            columns.Bound(pr => pr.Artist);
-            columns.Bound(pr => pr.Year);
+            columns.Bound(pr => pr.SongName).Width(250);
+            columns.Bound(pr => pr.AlbumName);
+            columns.Bound(pr => pr.Text);
             columns.Bound(pr => pr.SharedOn).ClientTemplate("#=kendo.toString(SharedOn, 'dd/MM/yyyy HH:mm:ss')#");
             columns.Bound(pr => pr.UserShared);
-            columns.Bound(pr => pr.Views);
-            columns.Bound(pr => pr.Downloads);
             columns.Command(cmd => { cmd.Edit(); cmd.Destroy(); });
         })
         .DataSource(data => data
@@ -35,13 +33,11 @@
                 .Model(m =>
                 {
                     m.Id(p => p.ID);
-                    m.Field(p => p.Downloads).Editable(false);
-                    m.Field(p => p.Views).Editable(false);
                     m.Field(p => p.UserShared).DefaultValue(User.Identity.Name).Editable(false);
                 })
                 .Events(events => events.Error("onError"))
                 .Read(read => read.Action("Read", ControllerName))
-                //.Create(create => create.Action("Create", ControllerName))
+            //.Create(create => create.Action("Create", ControllerName))
                 .Update(update => update.Action("Update", ControllerName))
                 .Destroy(destroy => destroy.Action("Destroy", ControllerName))
         )
@@ -63,4 +59,5 @@
     }
 
 </script>
+
 

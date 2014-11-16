@@ -23,22 +23,28 @@
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li>@Html.ActionLink("Share song/album", "Share", "User")</li>
-                    <li>@Html.ActionLink("Check your profile", "ProfileDetails", "Account", new { username = User.Identity.GetUserName() }, null)</li>
-                    <li>@Html.ActionLink("Edit profile", "EditProfile", "Account", new { username = User.Identity.GetUserName() }, null)</li> 
-                    <li><a href="#">Something else here</a></li>
+                    <li>@Html.ActionLink("Share song/album", "Share", "User", new { area="" },null)</li>
+                    <li>@Html.ActionLink("Check your profile", "ProfileDetails", "Account", new {area="", username = User.Identity.GetUserName() }, null)</li>
+                    <li>@Html.ActionLink("Edit profile", "EditProfile", "Account", new {area="", username = User.Identity.GetUserName() }, null)</li>
+                    @{
+                        
+                        //if (User.IsInRole("Admin"))
+                        //{
+                            <li>@Html.ActionLink("Administration Panel", "Index", "Home", new { area = "Administration" },null)</li>
+                        @*}*@
+                    }
                     <li class="divider"></li>
                     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                 </ul>
             </div>
         </li>
         <li>
-            <a href="#fakelink" class="fui-mail">
+            @*<a href="#fakelink" class="fui-mail">
                 @if (@user.MessagesRecieved.Where(m => m.MessageStatus == Cloud_Vibe.Data.Models.MessageStatusTypes.NotRead).ToList().Count > 0)
                 {
                     <span class="navbar-unread">1</span>
                 }
-            </a>
+            </a>*@
         </li>
 
     </ul>

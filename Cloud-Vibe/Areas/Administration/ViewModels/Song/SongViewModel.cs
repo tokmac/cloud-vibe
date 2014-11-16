@@ -1,8 +1,5 @@
-﻿namespace Cloud_Vibe.Areas.Administration.ViewModels.Album
+﻿namespace Cloud_Vibe.Areas.Administration.ViewModels.Song
 {
-    using AutoMapper;
-    using Cloud_Vibe.Data.Models;
-    using Cloud_Vibe.Web.Infrastructure.Mapping;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -10,7 +7,13 @@
     using System.Web;
     using System.Web.Mvc;
 
-    public class AlbumViewModel : IHaveCustomMappings
+    using AutoMapper;
+
+    using Cloud_Vibe.Data.Models;
+    using Cloud_Vibe.Web.Infrastructure.Mapping;
+
+
+    public class SongViewModel : IHaveCustomMappings
     {
         [HiddenInput(DisplayValue = false)]
         public int? ID { get; set; }
@@ -44,9 +47,9 @@
 
         public void CreateMappings(IConfiguration configuration)
         {
-            configuration.CreateMap<Album, AlbumViewModel>()
+            configuration.CreateMap<Song, SongViewModel>()
                 .ForMember(m => m.UserShared, opt => opt.MapFrom(u => u.UserShared.UserName));
-            configuration.CreateMap<Album, AlbumViewModel>()
+            configuration.CreateMap<Song, SongViewModel>()
                 .ForMember(m => m.Artist, opt => opt.MapFrom(u => u.Artist.Name));
         }
 
