@@ -7,10 +7,10 @@ namespace Cloud_Vibe
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            RegisterScripts(bundles);
+            bundles.IgnoreList.Clear();
 
+            RegisterScripts(bundles);
             RegisterStyles(bundles);
-            
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
@@ -19,8 +19,15 @@ namespace Cloud_Vibe
 
         private static void RegisterScripts(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/vendor/jquery.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/kendo")
+                .Include("~/Scripts/kendo/kendo.all.min.js")
+                .Include("~/Scripts/kendo/kendo.aspnetmvc.min.js")
+                .Include("~/Scripts/kendo/kendo.web.js")
+                .Include("~/Scripts/kendo/cultures/kendo.culture.bg-BG.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery")
+                //.Include("~/Scripts/vendor/jquery.min.js"));
+                .Include("~/Scripts/kendo/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -32,16 +39,31 @@ namespace Cloud_Vibe
                       "~/Scripts/vendor/respond.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/flat-ui-pro").Include(
-                      "~/Scripts/flat-ui-pro.js",
-                      "~/Scripts/vendor/respond.min.js"));
+                      "~/Scripts/flat-ui-pro.js"
+                      ));
+
+            
         }
 
         private static void RegisterStyles(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.min.css",
-                      "~/Content/flat-ui-pro.css",
-                      "~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/Content/bootstrap").Include(
+                "~/Content/bootstrap.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/kendo").Include(
+                "~/Content/kendo/kendo.common-bootstrap.min.css",
+                "~/Content/kendo/kendo.bootstrap.min.css",
+                "~/Content/kendo/kendo.common.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/flat-ui").Include(
+                    "~/Content/flat-ui-pro.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/custom").Include(
+                    "~/Content/Site.css"
+                ));
         }
     }
 }

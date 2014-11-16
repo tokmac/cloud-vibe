@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Cloud_Vibe.Data.Models
 {
-    public class Album : IDownloadable
+    public class Album : IDownloadable, IDeletableEntity
     {
         public Album()
         {
@@ -23,7 +23,6 @@ namespace Cloud_Vibe.Data.Models
         public string Title { get; set; }
         public virtual Artist Artist { get; set; }
         public int Year { get; set; }
-        [Required]
         public DateTime SharedOn { get; set; }
         public virtual User UserShared { get; set; }
         [Required]
@@ -39,5 +38,9 @@ namespace Cloud_Vibe.Data.Models
         public virtual ICollection<Comment> Comments { get; set; }
 
         public string TypeMIME { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

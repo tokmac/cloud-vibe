@@ -31,5 +31,32 @@ namespace Cloud_Vibe.Data
         public IDbSet<SocialAccountLink> SocialAccountLinks { get; set; }
         public IDbSet<Song> Songs { get; set; }
         public IDbSet<Thanx> Thanxies { get; set; }
+
+        public override int SaveChanges()
+        {
+            this.ApplyDeletableEntityRules();
+            return base.SaveChanges();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+        }
+
+        private void ApplyDeletableEntityRules()
+        {
+            // Approach via @julielerman: http://bit.ly/123661P
+            foreach (
+                var entry in
+                    this.ChangeTracker.Entries()
+                        .Where(e => e.Entity is IDeletableEntity && (e.State == EntityState.Deleted)))
+            {
+                var entity = (IDeletableEntity)entry.Entity;
+
+                entity.DeletedOn = DateTime.Now;
+                entity.IsDeleted = true;
+                entry.State = EntityState.Modified;
+            }
+        }
     }
 }

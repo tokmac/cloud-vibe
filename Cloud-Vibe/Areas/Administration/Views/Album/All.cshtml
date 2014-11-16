@@ -1,0 +1,54 @@
+﻿@using Cloud_Vibe.Areas.Administration.ViewModels
+@{
+    const string ControllerName = "Album";
+}
+
+
+@(Html.Kendo()
+        .Grid<AlbumViewModel>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(pr => pr.ID);
+            columns.Bound(pr => pr.Title).Width(250);
+            columns.Bound(pr => pr.Artist);
+            columns.Bound(pr => pr.Year);
+            columns.Bound(pr => pr.SharedOn);
+            columns.Bound(pr => pr.UserShared);
+            columns.Bound(pr => pr.Views);
+            columns.Bound(pr => pr.Downloads);
+            columns.Command(cmd => cmd.Edit());
+        })
+        .DataSource(data => data
+                .Ajax()
+                .Model(m =>
+                {
+                    m.Id(p => p.ID);
+                    m.Field(p => p.Downloads).Editable(false);
+                    m.Field(p => p.Views).Editable(false);
+                    m.Field(p => p.SharedOn).DefaultValue(DateTime.Now).Editable(false);
+                    m.Field(p => p.UserShared).DefaultValue(User.Identity.Name).Editable(false);
+                })
+                .Events(events => events.Error("onError"))
+                .Read(read => read.Action("Read", ControllerName))
+                .Create(create => create.Action("Create", ControllerName))
+                .Update(update => update.Action("Update", ControllerName))
+                .Destroy(destroy => destroy.Action("Destroy", ControllerName))
+        )
+        .Pageable()
+        .Sortable()
+        .Filterable()
+        .Groupable()
+        .Selectable()
+        .ToolBar(toolbar => { toolbar.Create(); })
+        .Editable(edit => edit.Mode(GridEditMode.PopUp))
+
+)
+
+<script>
+
+    function onError(e, status) {
+        alert("A server error has occurred!");
+    }
+</script>
+

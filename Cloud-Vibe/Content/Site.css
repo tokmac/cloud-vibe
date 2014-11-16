@@ -1,22 +1,22 @@
-﻿body {
+﻿/*body {
     padding-top: 50px;
     padding-bottom: 20px;
-}
+}*/
 
-/* Set padding to keep content from hitting the edges */
+ /*Set padding to keep content from hitting the edges*/ 
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
+ Set width on the form input elements since they're 100% wide by default 
 input,
 select,
 textarea {
     max-width: 280px;
 }
 
-/* columns of same height styles */
+ /*columns of same height styles*/
 .container-xs-height {
     display:table;
     padding-left:0px;
@@ -71,7 +71,7 @@ textarea {
         float:none;
     }
 }
-/* vertical alignment styles */
+ /*vertical alignment styles*/ 
 .col-top {
     vertical-align:top;
 }
@@ -88,16 +88,11 @@ textarea {
 .col-centered {
     display:inline-block;
     float:none;
-    /* reset the text-align */
+     reset the text-align 
     text-align:left;
-    /* inline-block space fix */
+     inline-block space fix 
     margin-right:-4px;
 }
-
 .row-hight{
     line-height: 75px;
-}
-
-.comments-bg{
-    background-color:green;
 }

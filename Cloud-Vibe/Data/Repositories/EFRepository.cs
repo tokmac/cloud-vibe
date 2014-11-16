@@ -15,6 +15,12 @@ namespace Cloud_Vibe.Data.Repositories
 
         public EFRepository(DbContext context)
         {
+            if (context == null)
+            {
+                throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
+            }
+
+
             this.context = context;
             this.set = context.Set<T>();
         }
@@ -24,7 +30,7 @@ namespace Cloud_Vibe.Data.Repositories
             return this.set;
         }
 
-        public T Find(object id)
+        public virtual T Find(object id)
         {
             return this.set.Find(id);
         }

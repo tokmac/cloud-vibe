@@ -4,11 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @*@Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/respond")*@
-    <link href="~/Content/vendor/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/flat-ui-pro.css" rel="stylesheet" />
-    <script src="~/Scripts/vendor/respond.min.js"></script>
+
+    @Styles.Render("~/Content/bootstrap")
+
+    @Scripts.Render("~/bundles/jquery")
+
+    @Styles.Render("~/Content/flat-ui")
+
+    @RenderSection("Styles", false)
+    @Styles.Render("~/Content/custom")
+
+    @Scripts.Render("~/bundles/respond")
 </head>
 <body>
     <!--Header-->
@@ -101,8 +107,6 @@
             </div>
         </div> <!-- /bottom-menu -->
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/flat-ui-pro")
     @RenderSection("Scripts", false)
 </body>
