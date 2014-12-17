@@ -22,6 +22,18 @@
         <li class="active">@Html.ActionLink("Home", "Index", "User", new { area = "" }, null)</li>
         <li>@Html.ActionLink("All Songs", "AllSongs", "Song",new { area = "" }, null)</li>
         <li>@Html.ActionLink("All Albums", "AllAlbums", "Album", new { area = "" }, null)</li>
+        
+        using (Html.BeginForm("Search", "User", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
+        {
+            <div class="form-group">
+                <div class="input-group">
+                    @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Search", @class = "form-control", type = "search" })
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn"><span class="fui-search"></span></button>
+                    </span>
+                </div>
+            </div>
+        }
     }
     else
     {
@@ -30,18 +42,6 @@
         <li>@Html.ActionLink("How to Download", "DownloadGuide", "Info")</li>*@
     }
 </ul>
-
-@using (Html.BeginForm("Search", "User", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
-{
-    <div class="form-group">
-        <div class="input-group">
-            @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { placeholder = "Search", @class = "form-control", type = "search" })
-            <span class="input-group-btn">
-                <button type="submit" class="btn"><span class="fui-search"></span></button>
-            </span>
-        </div>
-    </div>
-}
 
 @*@using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
 {

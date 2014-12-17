@@ -41,16 +41,18 @@
     <hr />
 
     <div class="container">
-        @foreach (var song in Model)
+        @if (Model.Count != 0)
         {
+           foreach (var song in Model)
+           {
             <div class="row">
                 <!--List of songs-->
                 <div class="col-md-2">
                     <!--Image Container-->
                     @{
-            var albumImg = song.CoverArt;
-            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-            var songUrl = Url.Action("Details", "Album", new { title = song.Title.ToString() });
+               var albumImg = song.CoverArt;
+               var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+               var songUrl = Url.Action("Details", "Album", new { title = song.Title.ToString() });
                     }
                     <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
                 </div>
@@ -80,7 +82,18 @@
                 </div>
             </div>
             <hr />
+           }
         }
+        else
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <h4>There are no albums <i>... for now ...</i> be the first to <i><strong>@Html.ActionLink("share", "Share", "User")</strong></i></h4>
+                </div>
+            </div>
+            <hr />
+        }
+        
     </div>
 
     <br />

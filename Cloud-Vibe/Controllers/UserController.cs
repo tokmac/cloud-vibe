@@ -122,58 +122,68 @@
         [HttpPost]
         public ActionResult ShareSong(ShareSongViewModel song)
         {
-            List<byte[]> box = new List<byte[]>();
-            string fileType = song.CoverArt.ContentType;
-            if (song.CoverArt != null)
+            if (ModelState.IsValid)
             {
-                box.Add(Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.CoverArt));
-            }
-            else
-            {
-                box.Add(Utilities.FilesByteUtility.FileFromPathToByteArray(HttpContext.Server.MapPath("~/Content/images/no_user.jpg")));
-            }
-            var coverArt = box[0];
+                string fileType = "";
+
+                List<byte[]> box = new List<byte[]>();
+                if (song.CoverArt != null)
+                {
+                    fileType = song.CoverArt.ContentType;
+                }
+                if (song.CoverArt != null)
+                {
+                    box.Add(Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.CoverArt));
+                }
+                else
+                {
+                    box.Add(Utilities.FilesByteUtility.FileFromPathToByteArray(HttpContext.Server.MapPath("~/Content/images/no_user.jpg")));
+                }
+                var coverArt = box[0];
 
 
-            var artist = data.Artists.All().FirstOrDefault(a => a.Name == song.ArtistName);
-            if (artist == null)
-            {
-                artist = new Artist { Name = song.ArtistName, Picture = coverArt };
-                //TempData["need-artist"] = "true";
-                //return View("Share");
-                data.Artists.Add(artist);
+                var artist = data.Artists.All().FirstOrDefault(a => a.Name == song.ArtistName);
+                if (artist == null)
+                {
+                    artist = new Artist { Name = song.ArtistName};
+                    //TempData["need-artist"] = "true";
+                    //return View("Share");
+                    data.Artists.Add(artist);
+                    data.SaveChanges();
+                }
+
+                var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.Torrent);
+
+                var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
+
+                Song songToSave = new Song
+                {
+                    Artist = artist,
+                    UserShared = currentUser,
+                    SharedOn = DateTime.Now,
+                    TypeMIME = fileType,
+                    CoverArt = coverArt,
+                    Torrent = torrent,
+                    Title = song.Title,
+                    VideoLink = song.VideoLink,
+                    Year = song.Year
+                };
+
+
+                data.Songs.Add(songToSave);
                 data.SaveChanges();
+
+                artist.Songs.Add(songToSave);
+                data.SaveChanges();
+
+                currentUser.SharedSongs.Add(songToSave);
+                data.SaveChanges();
+
+                TempData["success"] = String.Format("Succesfully added album {0}", song.ArtistName);
+                return RedirectToAction("Index");
             }
 
-            var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(song.Torrent);
-
-            var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
-
-            Song songToSave = new Song
-            {
-                Artist = artist,
-                UserShared = currentUser,
-                SharedOn = DateTime.Now,
-                TypeMIME = fileType,
-                CoverArt = coverArt,
-                Torrent = torrent,
-                Title = song.Title,
-                VideoLink = song.VideoLink,
-                Year = song.Year
-            };
-
-
-            data.Songs.Add(songToSave);
-            data.SaveChanges();
-
-            artist.Songs.Add(songToSave);
-            data.SaveChanges();
-
-            currentUser.SharedSongs.Add(songToSave);
-            data.SaveChanges();
-
-            TempData["success"] = String.Format("Succesfully added album {0}", song.ArtistName);
-            return RedirectToAction("Index");
+            return View("Share");
         }
 
         [HttpGet]

@@ -8,14 +8,20 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-5 pull-left"> <!--Left Column - Latest Albums -->
+        <div class="col-md-6 pull-left">
+            <!--Left Column - Latest Albums -->
             <h4>Latest Albums</h4>
-            
-            @Html.Partial("_IndexLatestAlbums",ViewData["latestAlbums"])
-        </div>
-        <div class="col-md-5 pull-right"> <!--Left Column - Latest Song -->
-            <h4>Latest Songs</h4>
+            <hr />
             <div class="row">
+                @Html.Partial("_IndexLatestAlbums", ViewData["latestAlbums"])
+            </div>
+        </div>
+        <div class="col-md-6 pull-right">
+            <!--Left Column - Latest Song -->
+            <h4>Latest Songs</h4>
+            <hr />
+            <div class="row">
+
                 @Html.Partial("_IndexLatestSongs", ViewData["latestSongs"])
             </div>
         </div>
@@ -23,38 +29,38 @@
 </div>
 
 @*<div class="container container-md-height">
-    <div class="row col-xs-offset-1 row-md-height">
-        <div class="col-md-6 col-md-height">
-            <h3>Latest Albums</h3>
-        </div>
-    </div>
-    @for (int i = 0; i < Model.Count; i++)
-    {
-        var albumImg = Model[i].CoverArt;
-        var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-        <div class="row row-md-height">
-            <div class="col-xs-offset-1 row-md-height">
-                <div class="col-md-height">
-
-                    
-                </div>
-                <div class="col-md-height">
-                    <img src="@imgSrc" style="float:left;height:170px; margin-right:10px" class="img-rounded img-responsive" />
-                    <h3>@Model[i].Title</h3>
-                    <h5>@Model[i].Artist.Name</h5>
-                </div>
-                <div class="col-md-height">
-                    <p>
-                        Shared on: @Model[i].SharedOn
-                        @if (Model[i].UserShared != null)
-                        {
-                            @Model[i].UserShared.UserName;
-                        }
-                    </p>
-                </div>
-
-
+        <div class="row col-xs-offset-1 row-md-height">
+            <div class="col-md-6 col-md-height">
+                <h3>Latest Albums</h3>
             </div>
         </div>
-    }
-</div>*@
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var albumImg = Model[i].CoverArt;
+            var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+            <div class="row row-md-height">
+                <div class="col-xs-offset-1 row-md-height">
+                    <div class="col-md-height">
+
+
+                    </div>
+                    <div class="col-md-height">
+                        <img src="@imgSrc" style="float:left;height:170px; margin-right:10px" class="img-rounded img-responsive" />
+                        <h3>@Model[i].Title</h3>
+                        <h5>@Model[i].Artist.Name</h5>
+                    </div>
+                    <div class="col-md-height">
+                        <p>
+                            Shared on: @Model[i].SharedOn
+                            @if (Model[i].UserShared != null)
+                            {
+                                @Model[i].UserShared.UserName;
+                            }
+                        </p>
+                    </div>
+
+
+                </div>
+            </div>
+        }
+    </div>*@

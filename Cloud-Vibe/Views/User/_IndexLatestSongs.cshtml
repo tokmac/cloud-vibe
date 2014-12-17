@@ -4,43 +4,56 @@
     ViewBag.Title = "_IndexLatestSongs";
 }
 
-@foreach (var song in Model)
+@if (Model.Count != 0)
+{
+    foreach (var song in Model)
+    {
+        <div class="row">
+            <div class="col-md-6">
+                @{
+        var albumImg = song.CoverArt;
+        var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+        var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                }
+                <img src="@imgSrc" style="float:left;height:155px; margin-right:10px" class="img-rounded img-responsive" />
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <a href="@songUrl">
+                        <h5>
+                            <span style="font-weight: normal"><i>@song.Title</i></span>
+                            <br />
+                            @if (song.Artist != null)
+                            {
+                                @song.Artist.Name
+                            }
+                        </h5>
+                    </a>
+                </div>
+                <div class="row margin-top-30">
+                    <p style="font-size: 12px; line-height: 20px;">
+                        Shared: @Html.Timeago(song.SharedOn) <em>|</em>
+                        By: @if (song.UserShared != null)
+                        {
+                            @Html.ActionLink(song.UserShared.UserName, "ProfileDetails", "Account", new { username = song.UserShared.UserName }, null);
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+        <hr />
+    }
+}
+else
 {
     <div class="row">
-        <div class="col-md-6">
-            @{
-    var albumImg = song.CoverArt;
-    var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-    var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
-            }
-            <img src="@imgSrc" style="float:left;height:155px; margin-right:10px" class="img-rounded img-responsive" />
-        </div>
-        <div class="col-md-6">
-            <div class="row">
-                <a href="@songUrl">
-                    <h5>
-                        <span style="font-weight: normal"><i>@song.Title</i></span>
-                        <br />
-                        @if (song.Artist != null)
-                        {
-                            @song.Artist.Name
-                        }
-                    </h5>
-                </a>
-            </div>
-            <div class="row margin-top-30">
-                <p style="font-size: 12px; line-height: 20px;">
-                    Shared: @Html.Timeago(song.SharedOn) <em>|</em>
-                    By: @if (song.UserShared != null)
-                    {
-                        @Html.ActionLink(song.UserShared.UserName, "ProfileDetails", "Account", new { username = song.UserShared.UserName }, null);
-                    }
-                </p>
-            </div>
+        <div class="col-md-8">
+            <p>There are no songs <i>... for now ...</i> be the first to <i><strong>@Html.ActionLink("share", "Share", "User")</strong></i></p>
         </div>
     </div>
-    <hr />
+    
 }
+
 
 
 

@@ -22,7 +22,6 @@ namespace Cloud_Vibe.Data.Models
         [MaxLength(450)]
         public string Name { get; set; }
         public string Biography { get; set; }
-        [Required]
         public byte[] Picture { get; set; }
         [InverseProperty("Artist")]
         public virtual ICollection<Album> Albums { get; set; }

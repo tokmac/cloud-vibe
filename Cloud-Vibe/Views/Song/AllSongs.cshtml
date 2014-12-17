@@ -41,42 +41,54 @@
     <hr />
 
     <div class="container">
-        @foreach (var song in Model)
+        @if (Model.Count != 0)
+        {
+            foreach (var song in Model)
+            {
+                <div class="row">
+                    <!--List of songs-->
+                    <div class="col-md-2">
+                        <!--Image Container-->
+                        @{
+                var albumImg = song.CoverArt;
+                var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+                var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                        }
+                        <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
+                    </div>
+
+                    <div class="col-md-5 pull-left">
+                        <!--Main Info Container-->
+                        <p>
+                            <a href="@songUrl">
+                                @song.Title <br />
+                                <strong>@song.Artist.Name</strong>
+                            </a>
+                        </p>
+                        <p>
+                            Uploaded <strong>@Html.Timeago(song.SharedOn)</strong> <br />
+                            By: <strong>@Html.ActionLink(@song.UserShared.UserName, "ProfileDetails", "Account", new { username = @song.UserShared.UserName }, null) </strong> <br />
+                        </p>
+                    </div>
+
+                    <div class="col-md-5 pull-right">
+                        <!--Statistic Info Container-->
+                        <p>
+                            <strong>Viewed: </strong> @song.Views
+                        </p>
+                        <p>
+                            <strong>Downloaded: </strong> @song.Downloads
+                        </p>
+                    </div>
+                </div>
+                <hr />
+            }
+        }
+        else
         {
             <div class="row">
-                <!--List of songs-->
-                <div class="col-md-2">
-                    <!--Image Container-->
-                    @{
-            var albumImg = song.CoverArt;
-            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-            var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
-                    }
-                    <img src="@imgSrc" style="float:left;height:160px; margin-right:10px" class="img-rounded img-responsive" />
-                </div>
-
-                <div class="col-md-5 pull-left">
-                    <!--Main Info Container-->
-                    <p>
-                        <a href="@songUrl">
-                            @song.Title <br />
-                            <strong>@song.Artist.Name</strong>
-                        </a>
-                    </p>
-                    <p>
-                        Uploaded <strong>@Html.Timeago(song.SharedOn)</strong> <br />
-                        By: <strong>@Html.ActionLink(@song.UserShared.UserName, "ProfileDetails", "Account", new { username = @song.UserShared.UserName }, null) </strong> <br />
-                    </p>
-                </div>
-
-                <div class="col-md-5 pull-right">
-                    <!--Statistic Info Container-->
-                    <p>
-                        <strong>Viewed: </strong> @song.Views
-                    </p>
-                    <p>
-                        <strong>Downloaded: </strong> @song.Downloads
-                    </p>
+                <div class="col-md-8">
+                    <h4>There are no songs <i>... for now ...</i> be the first to <i><strong>@Html.ActionLink("share", "Share", "User")</strong></i></h4>
                 </div>
             </div>
             <hr />
