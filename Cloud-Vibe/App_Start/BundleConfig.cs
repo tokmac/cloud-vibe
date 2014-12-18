@@ -41,8 +41,6 @@ namespace Cloud_Vibe
             bundles.Add(new ScriptBundle("~/bundles/flat-ui-pro").Include(
                       "~/Scripts/flat-ui-pro.js"
                       ));
-
-            
         }
 
         private static void RegisterStyles(BundleCollection bundles)

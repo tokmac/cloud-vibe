@@ -2,53 +2,92 @@
     ViewBag.Title = "Share";
 }
 
-
-
 <div class="row row-centered">
     <div class="col-centered">
-        <h2>Share</h2>
-        <hr />
-        <ul class="nav nav-pills">
-            <li><a href="#" id="btn-song-view">Song</a></li>
-            <li><a href="#" id="btn-album-view">Album</a></li>
-        </ul>
+        <div id="header-share-info" class="row">
+            <h2>Share</h2>
+            <p><i>Choose whether you want to share an album or a song</i></p>
+            <hr />
+        </div>
+        <div class="row">
+            <div class="col-centered">
+                <ul class="nav nav-pills">
+                    <li><a href="#" id="btn-song-view">Song</a></li>
+                    <li><a href="#" id="btn-album-view">Album</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="row">
-    <div id="album-container">
-        <h1>Share Album</h1>
-
-        @Html.Partial("_AlbumShare")
-
-    </div>
-    <div id="song-container">
-        <h1>Share Song</h1>
-
-        @Html.Partial("_SongShare")
-
-    </div>
+    <div id="share-form-container"></div>
 </div>
 
 <br />
 <br />
 
+@*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@ 
+@if (false)
+{
+    <script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>
+}
+
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
     <script>
         $('#song-container').hide();
         $('#album-container').hide();
+        
         $('#btn-song-view').click(function () {
+            $('#header-share-info').hide("slow", function () {
+                $('#header-share-info').remove();
+            });
+
+            $.ajax({
+                url: "@Url.Action("ShareSong","User")",
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                dataType: 'html'
+            })
+            .success(function (result) {
+                $("#share-form-container").hide();
+                $("#share-form-container").html(result);
+                $.validator.unobtrusive.parse('#share-form-container')
+                $("#share-form-container").show("slow");
+            })
+            .error(function(status){
+                console.log(status);
+            })
+
             $('#btn-song-view').addClass('active');
             $('#btn-album-view').removeClass('active');
-            $('#song-container').show("slow");
-            $('#album-container').hide("slow");
             return false;
         });
+
         $('#btn-album-view').click(function () {
+            $('#header-share-info').hide("slow", function () {
+                $('#header-share-info').remove();
+            });
+
+            $.ajax({
+                url: "@Url.Action("ShareAlbum","User")",
+                contentType: 'application/html; charset=utf-8',
+            type: 'GET',
+            dataType: 'html'
+        })
+            .success(function (result) {
+                $("#share-form-container").hide();
+                $("#share-form-container").html(result);
+                $.validator.unobtrusive.parse('#share-form-container')
+                $("#share-form-container").show("slow");
+            })
+            .error(function(status){
+                console.log(status);
+            })
+
             $('#btn-album-view').addClass('active');
             $('#btn-song-view').removeClass('active');
-            $('#album-container').show("slow");
-            $('#song-container').hide("slow");
             return false;
         });
     </script>

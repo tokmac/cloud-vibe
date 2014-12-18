@@ -68,55 +68,72 @@
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ShareAlbum()
+        {
+            return PartialView("_AlbumShare");
+        }
+
         [HttpPost]
         public ActionResult ShareAlbum(ShareAlbumViewModel album)
         {
-            List<byte[]> box = new List<byte[]>();
-            if (album.CoverArt != null)
+            if (ModelState.IsValid)
             {
-                box.Add(Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.CoverArt));
-            }
-            else
-            {
-                box.Add(Utilities.FilesByteUtility.FileFromPathToByteArray(HttpContext.Server.MapPath("~/Content/images/no_user.jpg")));
-            }
+                List<byte[]> box = new List<byte[]>();
+                if (album.CoverArt != null)
+                {
+                    box.Add(Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.CoverArt));
+                }
+                else
+                {
+                    box.Add(Utilities.FilesByteUtility.FileFromPathToByteArray(HttpContext.Server.MapPath("~/Content/images/no_user.jpg")));
+                }
 
-            string fileType = album.Torrent.ContentType;
+                string fileType = album.Torrent.ContentType;
 
-            var coverArt = box[0];
+                var coverArt = box[0];
 
-            var artist = data.Artists.All().FirstOrDefault(a => a.Name == album.ArtistName);
-            if (artist == null)
-            {
-                artist = new Artist { Name = album.ArtistName, Picture = coverArt };
-                data.Artists.Add(artist);
+                var artist = data.Artists.All().FirstOrDefault(a => a.Name == album.ArtistName);
+                if (artist == null)
+                {
+                    artist = new Artist { Name = album.ArtistName, Picture = coverArt };
+                    data.Artists.Add(artist);
+                    data.SaveChanges();
+                }
+
+                var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.Torrent);
+                var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
+
+                Album albumToSave = new Album
+                {
+                    Artist = artist,
+                    UserShared = currentUser,
+                    SharedOn = DateTime.Now,
+                    TypeMIME = fileType,
+                    CoverArt = coverArt,
+                    Torrent = torrent,
+                    Title = album.Title,
+                    VideoLink = album.VideoLink,
+                    Year = album.Year
+
+                };
+
+                data.Albums.Add(albumToSave);
+                artist.Albums.Add(albumToSave);
+                currentUser.SharedAlbums.Add(albumToSave);
                 data.SaveChanges();
+
+                TempData["success"] = String.Format("Succesfully added album {0}", album.ArtistName);
+                return RedirectToAction("Index");
             }
 
-            var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.Torrent);
-            var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
+            return PartialView("_AlbumShare", album);
+        }
 
-            Album albumToSave = new Album
-            {
-                Artist = artist,
-                UserShared = currentUser,
-                SharedOn = DateTime.Now,
-                TypeMIME = fileType,
-                CoverArt = coverArt,
-                Torrent = torrent,
-                Title = album.Title,
-                VideoLink = album.VideoLink,
-                Year = album.Year
-
-            };
-
-            data.Albums.Add(albumToSave);
-            artist.Albums.Add(albumToSave);
-            currentUser.SharedAlbums.Add(albumToSave);
-            data.SaveChanges();
-
-            TempData["success"] = String.Format("Succesfully added album {0}", album.ArtistName);
-            return RedirectToAction("Index");
+        [HttpGet]
+        public ActionResult ShareSong() 
+        {
+            return PartialView("_SongShare");
         }
 
         [HttpPost]
@@ -183,7 +200,7 @@
                 return RedirectToAction("Index");
             }
 
-            return View("Share");
+            return PartialView("_SongShare",song);
         }
 
         [HttpGet]

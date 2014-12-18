@@ -22,7 +22,7 @@ namespace Cloud_Vibe.Data.Models
         [Display(Name = "Artist")]
         public virtual Artist Artist { get; set; }
         
-        [Required(ErrorMessage="Cannot save song with empty title")]
+        [Required(ErrorMessage="Title is required!")]
         [Index(IsUnique = true)]
         [MaxLength(450)]
         public string Title { get; set; }
@@ -35,7 +35,7 @@ namespace Cloud_Vibe.Data.Models
 
         public virtual User UserShared { get; set; }
 
-        [Required(ErrorMessage="You need to add torrent file")]
+        [Required(ErrorMessage="Torrent file is required!")]
         public byte[] Torrent { get; set; }
 
         public string VideoLink { get; set; }

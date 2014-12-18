@@ -9,20 +9,19 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 pull-left">
+            <!--Left Column - Latest Song -->
+            <h4>Latest Songs</h4>
+            <hr />
+            <div class="row">
+                @Html.Partial("_IndexLatestSongs", ViewData["latestSongs"])
+            </div>
+        </div>
+        <div class="col-md-6 pull-right">
             <!--Left Column - Latest Albums -->
             <h4>Latest Albums</h4>
             <hr />
             <div class="row">
                 @Html.Partial("_IndexLatestAlbums", ViewData["latestAlbums"])
-            </div>
-        </div>
-        <div class="col-md-6 pull-right">
-            <!--Left Column - Latest Song -->
-            <h4>Latest Songs</h4>
-            <hr />
-            <div class="row">
-
-                @Html.Partial("_IndexLatestSongs", ViewData["latestSongs"])
             </div>
         </div>
     </div>
