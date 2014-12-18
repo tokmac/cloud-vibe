@@ -5,8 +5,6 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Web", "Cloud-Vibe\Cloud-Vibe.Web.csproj", "{2BC2EA10-31ED-40E3-A1C0-5D5949BCAD0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Tests", "Cloud-Vibe.Tests\Cloud-Vibe.Tests.csproj", "{EF94A6E7-79A2-4988-8C53-521F2B4B7141}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cloud-Vibe.Web.Infrastructure", "Cloud-Vibe.Web.Infrastructure\Cloud-Vibe.Web.Infrastructure.csproj", "{253FF344-3B0D-4884-B0C5-372BD3596617}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{2BC2EA10-31ED-40E3-A1C0-5D5949BCAD0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BC2EA10-31ED-40E3-A1C0-5D5949BCAD0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BC2EA10-31ED-40E3-A1C0-5D5949BCAD0E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF94A6E7-79A2-4988-8C53-521F2B4B7141}.Release|Any CPU.Build.0 = Release|Any CPU
 		{253FF344-3B0D-4884-B0C5-372BD3596617}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{253FF344-3B0D-4884-B0C5-372BD3596617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{253FF344-3B0D-4884-B0C5-372BD3596617}.Release|Any CPU.ActiveCfg = Release|Any CPU
