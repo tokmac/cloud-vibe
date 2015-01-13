@@ -26,49 +26,86 @@
                         <strong>@Model.Username</strong>
                     </p>
                     <p>
-                        <strong>Socials </strong><span class="fui-facebook"></span> 
-                        <span class="fui-twitter"></span>
-                        <span class="fui-youtube"></span>
-                        <span class="fui-google-plus"></span>
-                    </p>
-                </div>
+                        <strong>Socials</strong>
+                        <br />
+                        @if (Model.SocialAccoutsLinks.Count != 0)
+                        {
+                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook") != null)
+                            {
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook").AccountLink"><span class="fui-facebook"></span></a>
+                            }
+                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google+") != null)
+                            {
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google+").AccountLink"><span class="fui-google-plus"></span></a>
+                            }
+                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter") != null)
+                            {
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter").AccountLink"><span class="fui-twitter"></span></a>
+                            }
 
-                <div class="col-md-4 pull-right">
-                    <!--Statistic Info Container-->
-                    <p>
-                        <h4>Shared</h4>
-                        <strong>Albums : </strong> @Model.SharedAlbums.Count <br />
-                        <strong>Songs : </strong> @Model.SharedSongs.Count
-                    </p>
-                    <p>
-                        <h4>Downloaded</h4>
-                        <strong>Songs : </strong> @Model.DownloadedSongs.Count <br />
-                        <strong>Albums : </strong> @Model.DownloadedAlbums.Count
-                    </p>
+                            @*<span class="fui-youtube"></span>*@
+                        }
+                        else
+                        {
+                        <p>
+                            <em>no social networks connected to the user</em>
+                        </p>
+                        }
 
+
+                        </p>
+                    </div>
+
+                    <div class="col-md-4 pull-right">
+                        <!--Statistic Info Container-->
+                        <p>
+                            <h4>Shared</h4>
+                            <strong>Albums : </strong> @Model.SharedAlbums.Count <br />
+                            <strong>Songs : </strong> @Model.SharedSongs.Count
+                        </p>
+                        <p>
+                            <h4>Downloaded</h4>
+                            <strong>Songs : </strong> @Model.DownloadedSongs.Count <br />
+                            <strong>Albums : </strong> @Model.DownloadedAlbums.Count
+                        </p>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<hr />
+    <hr />
 
-<div class="container jumbotron">
-    <div class="row">
-        <div class="col-md-5 pull-left">
-            <!--Left Column - Latest Albums -->
-            <h4>Shared Albums</h4>
-
-            @Html.Partial("_UserSharedAlbums", Model.SharedAlbums)
-        </div>
-        <div class="col-md-5 pull-right">
-            <!--Left Column - Latest Song -->
-            <h4>Shared Songs</h4>
-            <div class="row">
-                @Html.Partial("_UserSharedSongs", Model.SharedSongs)
+    <div class="container jumbotron">
+        <div class="row">
+            <div class="col-md-5 pull-left">
+                <!--Left Column - Latest Albums -->
+                <h4>Shared Albums</h4>
+                @if (Model.SharedAlbums.Count != 0)
+                {
+                    Html.Partial("_UserSharedAlbums", Model.SharedAlbums);
+                }
+                else
+                {
+                    <p>
+                        <em>no shared albums yet</em>
+                    </p>
+                }
+            </div>
+            <div class="col-md-5 pull-right">
+                <!--Left Column - Latest Song -->
+                <h4>Shared Songs</h4>
+                @if (Model.SharedSongs.Count != 0)
+                {
+                    @Html.Partial("_UserSharedSongs", Model.SharedSongs)
+                }
+                else
+                {
+                    <p>
+                        <em>no shared songs yet</em>
+                    </p>
+                }
             </div>
         </div>
     </div>
-</div>
-

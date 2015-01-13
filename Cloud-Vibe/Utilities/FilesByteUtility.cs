@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Web;
 
 namespace Cloud_Vibe.Utilities
@@ -132,6 +133,14 @@ namespace Cloud_Vibe.Utilities
             // use this instead of response.end to avoid thread aborted exception (known issue):
             // http://support.microsoft.com/kb/312629/EN-US
             context.ApplicationInstance.CompleteRequest();
+        }
+
+        public static byte[] ImageFromUrlToByteArray(string url)
+        {
+            using (var webClient = new WebClient())
+            {
+                return webClient.DownloadData(url);
+            }
         }
     }
 }

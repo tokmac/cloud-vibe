@@ -11,9 +11,12 @@ namespace Cloud_Vibe.Data.Models
         public int ID { get; set; }
 
         public virtual SocialNetwork SocialNetwork { get; set; }
-        [Required(ErrorMessage="Cannot save empty social link")]
-        public string AccountLink { get; set; }
+
+        [Required(ErrorMessage="Cannot save empty identifier")]
+        public string Identifier { get; set; }
         public virtual User User { get; set; }
         public virtual Artist Artist { get; set; }
+
+        public string AccountLink { get; set; }
     }
 }

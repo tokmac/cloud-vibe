@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Cloud_Vibe.Controllers
 {
+    [RequireHttps]
     public class HomeController : BaseController
     {
         public HomeController(ICloudVibeData data)

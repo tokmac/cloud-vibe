@@ -24,14 +24,14 @@ namespace Cloud_Vibe.Controllers
     public class AccountController : BaseController
     {
         public AccountController(ICloudVibeData data)
-            :base(data)
+            : base(data)
         {
 
         }
         private ApplicationUserManager _userManager;
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, ICloudVibeData data)
-            :base(data)
+            : base(data)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -209,7 +209,7 @@ namespace Cloud_Vibe.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                 }
-                
+
             }
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -376,6 +376,18 @@ namespace Cloud_Vibe.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+
+                    //Check if user have changed profile picture i Facebook
+                    var currentIdentifier = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type == "urn:facebook:id").Value;
+                    var currentUserId = data.SocialAccountLinks.All().FirstOrDefault(sal => sal.Identifier == currentIdentifier).User.Id;
+                    var currentUser = data.Users.GetById(currentUserId);
+                    var currentAvatar = FilesByteUtility.ImageFromUrlToByteArray("http://graph.facebook.com/" + currentIdentifier + "/picture?width=200&height=200");
+                    if (!currentUser.Avatar.SequenceEqual(currentAvatar))
+                    {
+                        currentUser.Avatar = currentAvatar;
+                        data.SaveChanges();
+                    }
+
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -386,7 +398,14 @@ namespace Cloud_Vibe.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("ExternalLoginConfirmation",
+                        new ExternalLoginConfirmationViewModel
+                        {
+                            UserName = loginInfo.DefaultUserName,
+                            FirstName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value,
+                            LastName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value,
+                            Email = loginInfo.Email
+                        });
             }
         }
 
@@ -406,14 +425,36 @@ namespace Cloud_Vibe.Controllers
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var currentUserId = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
+                var avatar = FilesByteUtility.ImageFromUrlToByteArray("http://graph.facebook.com/" + currentUserId + "/picture?width=200&height=200");
+
+                //var externalIdentity = HttpContext.GetOwinContext().Authentication.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+                //var email = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email).Value;
+                //var firstName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:first_name").Value;
+                //var lastName = externalIdentity.Result.Claims.FirstOrDefault(c => c.Type == "urn:facebook:last_name").Value;
+
+
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    //Add Facebook account of the user 
+                    var socialNetwork = info.Login.LoginProvider;
+                    var currentSocialLink = new SocialAccountLink
+                    {
+                        User = data.Users.GetById(user.Id),
+                        SocialNetwork = data.SocialNetworks.All().FirstOrDefault(n => n.Name == socialNetwork),
+                        Identifier = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value,
+                        AccountLink = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:link").Value
+                    };
+                    data.SocialAccountLinks.Add(currentSocialLink);
+                    data.SaveChanges();
+
+
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

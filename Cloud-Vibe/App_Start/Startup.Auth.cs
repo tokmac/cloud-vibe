@@ -8,6 +8,7 @@ using Owin;
 using Cloud_Vibe.Models;
 using Cloud_Vibe.Data.Models;
 using Cloud_Vibe.Data;
+using Microsoft.Owin.Security.Facebook;
 
 namespace Cloud_Vibe
 {
@@ -56,15 +57,42 @@ namespace Cloud_Vibe
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            var facebookLogin = new FacebookAuthenticationOptions();
+
+            facebookLogin.Scope.Add("email");
+            facebookLogin.Scope.Add("public_profile");
+
+            facebookLogin.AppId = "831232856922288";
+            facebookLogin.AppSecret = "5609a5569bee51919cd6b9f6f550e4a4";
+            facebookLogin.Provider = new FacebookAuthenticationProvider()
+            {
+                OnAuthenticated = async  context =>
+                {
+                    context.Identity.AddClaim(new System.Security.Claims.Claim("FacebookAccessToken", context.AccessToken));
+                    foreach (var claim in context.User)
+                    {
+                        var claimType = string.Format("urn:facebook:{0}", claim.Key);
+                        string claimValue = claim.Value.ToString();
+                        if (!context.Identity.HasClaim(claimType, claimValue))
+                            context.Identity.AddClaim(new System.Security.Claims.Claim(claimType, claimValue, "XmlSchemaString", "Facebook"));
+
+                    }
+
+                }
+            };
+
+            facebookLogin.SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie;
+            app.UseFacebookAuthentication(facebookLogin);
+            //app.UseFacebookAuthentication(
+            //   appId: "831232856922288",
+            //   appSecret: "5609a5569bee51919cd6b9f6f550e4a4");
+
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "246716165019-ll9umh733aljba2hemsdjna7ft884sbu.apps.googleusercontent.com",
+                ClientSecret = "OhgpGlMDNwV1OjQDAtMln7LM"
+            });
         }
     }
 }
