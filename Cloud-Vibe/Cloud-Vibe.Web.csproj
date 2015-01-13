@@ -263,8 +263,14 @@
     <Compile Include="Utilities\HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-social.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\flat-ui-pro.css" />
     <Content Include="Content\flat-ui-pro.min.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\album-collage.jpg" />
     <Content Include="Content\images\album-collage.png" />
     <Content Include="Content\images\carosel_1.jpg" />
@@ -490,6 +496,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons\flat-ui-pro-icons-regular.svg" />
     <Content Include="fonts\lato\lato-black.svg" />
@@ -521,6 +528,8 @@
     <Content Include="fonts\lato\lato-regular.eot" />
     <Content Include="fonts\lato\lato-regular.ttf" />
     <Content Include="fonts\lato\lato-regular.woff" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\flat-ui-pro.js" />
     <Content Include="Scripts\flat-ui-pro.min.js" />
     <Content Include="Content\kendo\images\kendoui.ttf" />
@@ -544,6 +553,15 @@
     <Content Include="Areas\Administration\Views\Shared\EditorTemplates\Url.cshtml" />
     <Content Include="Areas\Administration\Views\Song\All.cshtml" />
     <Content Include="Areas\Administration\Views\Comment\All.cshtml" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
@@ -1039,6 +1057,7 @@
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-CN.min.js" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-HK.min.js" />
     <Content Include="Scripts\kendo\messages\kendo.messages.zh-TW.min.js" />
+    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\vendor\html5shiv.js" />
     <Content Include="Scripts\vendor\jquery.min.js" />
     <Content Include="Scripts\vendor\respond.min.js" />
@@ -1219,9 +1238,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="Content\flat-ui-pro.css.map" />
     <None Include="Project_Readme.html" />

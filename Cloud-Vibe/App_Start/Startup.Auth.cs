@@ -9,6 +9,8 @@ using Cloud_Vibe.Models;
 using Cloud_Vibe.Data.Models;
 using Cloud_Vibe.Data;
 using Microsoft.Owin.Security.Facebook;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Cloud_Vibe
 {
@@ -58,14 +60,15 @@ namespace Cloud_Vibe
             //   consumerSecret: "");
 
 
-            var facebookLogin = new FacebookAuthenticationOptions();
+            //Facebook Login Options
+            var facebookOptions = new FacebookAuthenticationOptions();
 
-            facebookLogin.Scope.Add("email");
-            facebookLogin.Scope.Add("public_profile");
+            facebookOptions.Scope.Add("email");
+            facebookOptions.Scope.Add("public_profile");
 
-            facebookLogin.AppId = "831232856922288";
-            facebookLogin.AppSecret = "5609a5569bee51919cd6b9f6f550e4a4";
-            facebookLogin.Provider = new FacebookAuthenticationProvider()
+            facebookOptions.AppId = "831232856922288";
+            facebookOptions.AppSecret = "5609a5569bee51919cd6b9f6f550e4a4";
+            facebookOptions.Provider = new FacebookAuthenticationProvider()
             {
                 OnAuthenticated = async  context =>
                 {
@@ -82,17 +85,44 @@ namespace Cloud_Vibe
                 }
             };
 
-            facebookLogin.SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie;
-            app.UseFacebookAuthentication(facebookLogin);
+            facebookOptions.SignInAsAuthenticationType = DefaultAuthenticationTypes.ExternalCookie;
+            app.UseFacebookAuthentication(facebookOptions);
             //app.UseFacebookAuthentication(
             //   appId: "831232856922288",
             //   appSecret: "5609a5569bee51919cd6b9f6f550e4a4");
 
-            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+
+            var googleOptions = new GoogleOAuth2AuthenticationOptions()
             {
                 ClientId = "246716165019-ll9umh733aljba2hemsdjna7ft884sbu.apps.googleusercontent.com",
-                ClientSecret = "OhgpGlMDNwV1OjQDAtMln7LM"
-            });
+                ClientSecret = "OhgpGlMDNwV1OjQDAtMln7LM",
+                Provider = new GoogleOAuth2AuthenticationProvider()
+                {
+                    OnAuthenticated = context =>
+                    {
+                        var userDetail = context.User;
+                        //context.Identity.AddClaim(new Claim(ClaimTypes.Name, context.Identity.FindFirstValue(ClaimTypes.Name)));
+                        //context.Identity.AddClaim(new Claim(ClaimTypes.Email, context.Identity.FindFirstValue(ClaimTypes.Email)));
+
+                        //var gender = userDetail.Value<string>("gender");
+                        //context.Identity.AddClaim(new Claim(ClaimTypes.Gender, gender));
+
+                        var picture = userDetail.Value<string>("picture");
+                        context.Identity.AddClaim(new Claim("picture", picture));
+
+                        return Task.FromResult(0);
+                    },
+                },
+            };
+            googleOptions.Scope.Add("https://www.googleapis.com/auth/plus.login");
+            googleOptions.Scope.Add("https://www.googleapis.com/auth/userinfo.email");
+
+            app.UseGoogleAuthentication(googleOptions);
+            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            //{
+            //    ClientId = "246716165019-ll9umh733aljba2hemsdjna7ft884sbu.apps.googleusercontent.com",
+            //    ClientSecret = "OhgpGlMDNwV1OjQDAtMln7LM"
+            //});
         }
     }
 }

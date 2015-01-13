@@ -34,9 +34,9 @@
                             {
                                 <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook").AccountLink"><span class="fui-facebook"></span></a>
                             }
-                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google+") != null)
+                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google") != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google+").AccountLink"><span class="fui-google-plus"></span></a>
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google").AccountLink"><span class="fui-google-plus"></span></a>
                             }
                             if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter") != null)
                             {
@@ -51,9 +51,7 @@
                             <em>no social networks connected to the user</em>
                         </p>
                         }
-
-
-                        </p>
+                    </p>
                     </div>
 
                     <div class="col-md-4 pull-right">

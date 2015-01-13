@@ -55,6 +55,11 @@ namespace Cloud_Vibe
                 "~/Content/kendo/kendo.common.min.css"
                 ));
 
+            bundles.Add(new StyleBundle("~/Content/font-awesome").Include(
+                    "~/Content/font-awesome.css",
+                    "~/Content/bootstrap-social.css"
+                ));
+
             bundles.Add(new StyleBundle("~/Content/flat-ui").Include(
                     "~/Content/flat-ui-pro.css"
                 ));
