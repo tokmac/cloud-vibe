@@ -254,6 +254,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Utilities\AuthorizationUtility.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />

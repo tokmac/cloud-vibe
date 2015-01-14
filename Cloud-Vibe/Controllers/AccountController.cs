@@ -376,16 +376,8 @@ namespace Cloud_Vibe.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    //Check if user have changed profile picture i Facebook
-                    var currentIdentifier = loginInfo.ExternalIdentity.Claims.FirstOrDefault(c => c.Type == "urn:facebook:id").Value;
-                    var currentUserId = data.SocialAccountLinks.All().FirstOrDefault(sal => sal.Identifier == currentIdentifier).User.Id;
-                    var currentUser = data.Users.GetById(currentUserId);
-                    var currentAvatar = FilesByteUtility.ImageFromUrlToByteArray("http://graph.facebook.com/" + currentIdentifier + "/picture?width=200&height=200");
-                    if (!currentUser.Avatar.SequenceEqual(currentAvatar))
-                    {
-                        currentUser.Avatar = currentAvatar;
-                        data.SaveChanges();
-                    }
+                    //Checks for update in profile picture
+                    AuthorizationUtility.CheckIfProfilePictureChanged(loginInfo, data);                    
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -396,33 +388,10 @@ namespace Cloud_Vibe.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    var FirstName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname").Value;
-                    if (loginInfo.Login.LoginProvider == "Facebook")
-                    {
-                        return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel
-                        {
-                            UserName = loginInfo.DefaultUserName,
-                            FirstName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:first_name").Value,
-                            LastName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:last_name").Value,
-                            Email = loginInfo.Email
-                        });
-                    }
-                    else if (loginInfo.Login.LoginProvider == "Google")
-                    {
-                        return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel
-                        {
-                            UserName = loginInfo.DefaultUserName,
-                            FirstName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname").Value,
-                            LastName = loginInfo.ExternalIdentity.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname").Value,
-                            Email = loginInfo.Email
-                        });
-                    }
-                    else
-                    {
-                        return null;
-                    }
+
+                    //Get the right Login Confirmation View Model and return the confirmation view with it
+                    var viewModelToReturn = Utilities.AuthorizationUtility.GetRightExternalLoginConfirmationViewModel(loginInfo);
+                    return View("ExternalLoginConfirmation", viewModelToReturn);
             }
         }
 
@@ -442,58 +411,21 @@ namespace Cloud_Vibe.Controllers
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                dynamic avatar = 0;
-
-                if (info.Login.LoginProvider == "Facebook")
-                {
-                    var currentUserId = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value;
-                    avatar = FilesByteUtility.ImageFromUrlToByteArray("http://graph.facebook.com/" + currentUserId + "/picture?width=200&height=200"); 
-                }
-                else if (info.Login.LoginProvider == "Google")
-                {
-                    avatar = FilesByteUtility.ImageFromUrlToByteArray(info.ExternalIdentity.Claims.First(c => c.Type == "picture").Value);
-                }
-                
 
                 if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
+
+                //Create the social user in the db
+                byte[] avatar = AuthorizationUtility.GetRightProfilePicture(info);
                 var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    var socialNetwork = info.Login.LoginProvider;
-                    //Add Facebook account of the user 
-                    if (socialNetwork == "Facebook")
-                    {
-                        var currentSocialLink = new SocialAccountLink
-                        {
-                            User = data.Users.GetById(user.Id),
-                            SocialNetwork = data.SocialNetworks.All().FirstOrDefault(n => n.Name == socialNetwork),
-
-                            Identifier = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:id").Value,
-                            AccountLink = info.ExternalIdentity.Claims.First(c => c.Type == "urn:facebook:link").Value
-                        };
-                        data.SocialAccountLinks.Add(currentSocialLink);
-                        data.SaveChanges();
-                    }
-                    else if (socialNetwork == "Google")
-                    {
-                        var currentSocialLink = new SocialAccountLink
-                        {
-                            User = data.Users.GetById(user.Id),
-                            SocialNetwork = data.SocialNetworks.All().FirstOrDefault(n => n.Name == socialNetwork),
-                            Identifier = info.ExternalIdentity.Claims.First(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").Value,
-                            AccountLink = info.ExternalIdentity.Claims.First(c => c.Type == "urn:google:profile").Value
-                        };
-                        data.SocialAccountLinks.Add(currentSocialLink);
-                        data.SaveChanges();
-                    }
+                    //Connect the user with the social account information
+                    AuthorizationUtility.AddSocialAccountLinkForUser(info, data, user);
                     
-                    
-
-
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

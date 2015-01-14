@@ -1,7 +1,7 @@
 ﻿@using Cloud_Vibe.Utilities
 @model Cloud_Vibe.Models.OtherUserDetailsViewModel
 @{
-    ViewBag.Title = "ProfileDetails";
+    ViewBag.Title = Model.Username + " - ProfileDetails";
 }
 <div class="container jumbotron">
     <div class="row">
@@ -32,15 +32,15 @@
                         {
                             if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook") != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook").AccountLink"><span class="fui-facebook"></span></a>
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook").AccountLink" target="_blank"><span class="fui-facebook"></span></a>
                             }
                             if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google") != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google").AccountLink"><span class="fui-google-plus"></span></a>
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google").AccountLink" target="_blank"><span class="fui-google-plus"></span></a>
                             }
                             if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter") != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter").AccountLink"><span class="fui-twitter"></span></a>
+                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter").AccountLink" target="_blank"><span class="fui-twitter"></span></a>
                             }
 
                             @*<span class="fui-youtube"></span>*@
@@ -51,7 +51,7 @@
                             <em>no social networks connected to the user</em>
                         </p>
                         }
-                    </p>
+                        </p>
                     </div>
 
                     <div class="col-md-4 pull-right">
