@@ -38,6 +38,7 @@ namespace Cloud_Vibe.Data.Models
         //[Required]
         public string LastName { get; set; }
         public Byte[] Avatar { get; set; }
+        public bool HasLoggedWithSocial { get; set; }
 
         [InverseProperty("UserShared")]
         public virtual ICollection<Album> SharedAlbums { get; set; }

@@ -419,7 +419,7 @@ namespace Cloud_Vibe.Controllers
 
                 //Create the social user in the db
                 byte[] avatar = AuthorizationUtility.GetRightProfilePicture(info);
-                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar };
+                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar, HasLoggedWithSocial = true };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

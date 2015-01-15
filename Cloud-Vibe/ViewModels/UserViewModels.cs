@@ -23,13 +23,14 @@ namespace Cloud_Vibe.Models.ViewModels
         public int Year { get; set; }
 
         [Required]
-        [Display(Name = "Torrent File")]
+        [Display(Name = "Torrent")]
+        [FileExtensions(Extensions="torrent", ErrorMessage="You can add only torrent file")]
         public HttpPostedFileBase Torrent { get; set; }
 
         [Display(Name = "Album Art")]
         public HttpPostedFileBase CoverArt { get; set; }
 
-        [Display(Name = "YouTube or Vimeo link")]
+        [Display(Name = "YouTube")]
         public string VideoLink { get; set; }
     }
 
@@ -74,10 +75,11 @@ namespace Cloud_Vibe.Models.ViewModels
         public DateTime SharedOn { get; set; }
 
         [Required(ErrorMessage = "You need to add torrent file")]
-        [Display(Name = "Add Torrent File")]
+        [Display(Name = "Torrent")]
+        [FileExtensions(Extensions = "torrent", ErrorMessage = "You can add only torrent file")]
         public HttpPostedFileBase Torrent { get; set; }
 
-        [Display(Name = "YouTube or Vimeo")]
+        [Display(Name = "YouTube")]
         public string VideoLink { get; set; }
 
     }

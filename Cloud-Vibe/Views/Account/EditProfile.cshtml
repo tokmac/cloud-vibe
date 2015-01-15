@@ -1,58 +1,62 @@
 ﻿@model Cloud_Vibe.Models.OtherUserDetailsViewModel
+@{
+    var albumImg = Model.Avatar;
+    var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+}
 
 @using (Html.BeginForm("EditProfile", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.ValidationSummary("")
     <div class="container">
-        <div class="row">
-            @Html.ValidationSummary("", new { @class = "alert alert-danger" })
+        <div class="row-centered">
+            <h1>Edit Profile</h1>
+            <hr />
         </div>
 
 
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
+        <div class="row-centered">
+            <h2>@Model.UserName</h2>
+        </div>
+        <div class="row-centered">
+            <!--Image Container-->
+            <div class="col-centered">
+                <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive thumbnail" />
+            </div>
+        </div>
+        <hr />
 
-                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-9">
-                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-                    </div>
+        <div class="row-centered">
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-9">
-                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-                    </div>
+        </div>
+        <div class="row-centered">
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row-centered">
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, new { @class = "col-md-3 control-label" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                 </div>
             </div>
         </div>
         <hr />
 
-        <div class="row">
-            <div class="col-md-6 pul">
-                <div class="row">
-                    @Html.Label("Current Avatar")
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <!--Image Container-->
-                        @{
-                            var albumImg = Model.Avatar;
-                            var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-                        }
-                        <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive thumbnail" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    @Html.Label("New Avatar")
-                </div>
-                <div class="row ">
+        @if (!Model.HasLoggedWithSocial)
+        {
+            <div class="row-centered">
+                <div class="col-md-6 col-centered">
                     <div class="form-group">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <div class="fileinput-new thumbnail" style="width: 270px; height: 270px;">
@@ -71,22 +75,61 @@
                     </div>
                 </div>
             </div>
-        </div>
+            <hr/>
+        }
 
-        <hr />
-        <div class="row">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" class="btn btn-default" value="Share" />
-                </div>
+        <!--TODO: CONNECT OTHER SOCIAL ACCOUNTS TO THE USER-->
+        @using (Html.BeginForm("SocialAccountConnect", "Account"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="row-centered">
+                @if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google" && sal.User.UserName == User.Identity.Name) != null)
+                {
+                    <div class="col-centered col-md-4">
+                        <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google" && sal.User.UserName == User.Identity.Name).AccountLink" class="btn btn-block btn-social btn-lg disabled btn-google-plus">
+                            <i class="fa fa-google-plus"></i> <span>Your Main Login Account</span>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-centered col-md-4">
+                        <button class="btn btn-block btn-social btn-lg btn-google-plus" type="submit" name="provider" id="" value="">
+                            <i class="fa fa-google-plus"></i> <span>Connect with Google+</span>
+                        </button>
+                    </div>
+                }
             </div>
+            <br/>
+            <div class="row-centered">
+                @if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook" && sal.User.UserName == User.Identity.Name) != null)
+                {
+                    <div class="col-centered col-md-4">
+                        <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook" && sal.User.UserName == User.Identity.Name).AccountLink" class="btn btn-block btn-social btn-lg disabled btn-facebook">
+                            <i class="fa fa-facebook"></i> <span>Your Main Login Account</span>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-centered col-md-4">
+                        <button class="btn btn-block btn-social btn-lg btn-facebook" type="submit" name="provider" id="" value="">
+                            <i class="fa fa-facebook"></i> <span>Connect to Facebook</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        }
+        <hr />
+
+        <div class="form-group">
+            @Html.HiddenFor(m => m.UserName)
         </div>
-    </div>
 
-
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.HiddenFor(m => m.Username, new { value = Model.Username.ToString(), name = "username" })
+        <div class="row-centered">
+            <div class="form-group">
+                <input type="submit" class="btn btn-warning col-centered col-md-3" value="Edit" />
+            </div>
         </div>
     </div>
 

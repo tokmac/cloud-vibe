@@ -1,7 +1,7 @@
 ﻿@using Cloud_Vibe.Utilities
 @model Cloud_Vibe.Models.OtherUserDetailsViewModel
 @{
-    ViewBag.Title = Model.Username + " - ProfileDetails";
+    ViewBag.Title = Model.UserName + " - ProfileDetails";
 }
 <div class="container jumbotron">
     <div class="row">
@@ -23,7 +23,7 @@
                     <!--Main Info Container-->
                     <p>
                         @Model.FirstName @Model.LastName<br />
-                        <strong>@Model.Username</strong>
+                        <strong>@Model.UserName</strong>
                     </p>
                     <p>
                         <strong>Socials</strong>

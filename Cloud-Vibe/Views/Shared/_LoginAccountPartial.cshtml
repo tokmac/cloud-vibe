@@ -13,42 +13,41 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-    <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-            <div class="btn-group btn-group-hg">
-                <button class="btn btn-inverse dropdown-toggle" type="button" data-toggle="dropdown">
-                    <a href="">
-                        <img src="@imgSrc" style="float:left;height:25px; margin-right:10px" class="img-rounded img-responsive" />
-                        @User.Identity.GetUserName()
-                    </a>
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li>@Html.ActionLink("Share song/album", "Share", "User", new { area="" },null)</li>
-                    <li>@Html.ActionLink("Check your profile", "ProfileDetails", "Account", new {area="", username = User.Identity.GetUserName() }, null)</li>
-                    <li>@Html.ActionLink("Edit profile", "EditProfile", "Account", new {area="", username = User.Identity.GetUserName() }, null)</li>
-                    @{
-                        
-                        //if (User.IsInRole("Admin"))
-                        //{
-                            <li>@Html.ActionLink("Administration Panel", "Index", "Home", new { area = "Administration" },null)</li>
-                        @*}*@
-                    }
-                    <li class="divider"></li>
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                </ul>
-            </div>
-        </li>
-        <li>
-            @*<a href="#fakelink" class="fui-mail">
-                @if (@user.MessagesRecieved.Where(m => m.MessageStatus == Cloud_Vibe.Data.Models.MessageStatusTypes.NotRead).ToList().Count > 0)
-                {
-                    <span class="navbar-unread">1</span>
-                }
-            </a>*@
-        </li>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <div class="btn-group btn-group-hg">
+                    <button class="btn btn-inverse dropdown-toggle" type="button" data-toggle="dropdown">
+                        <a href="">
+                            <img src="@imgSrc" style="float:left;height:25px; margin-right:10px" class="img-rounded img-responsive" />
+                            @User.Identity.GetUserName()
+                        </a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>@Html.ActionLink("Share song/album", "Share", "User", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("Check your profile", "ProfileDetails", "Account", new { area = "", username = User.Identity.GetUserName() }, null)</li>
+                        <li>@Html.ActionLink("Edit profile", "EditProfile", "Account", new { area = "", username = User.Identity.GetUserName() }, null)</li>
 
-    </ul>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li>@Html.ActionLink("Administration Panel", "Index", "Home", new { area = "Administration" }, null)</li>
+                        }
+
+                        <li class="divider"></li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                @*<a href="#fakelink" class="fui-mail">
+                        @if (@user.MessagesRecieved.Where(m => m.MessageStatus == Cloud_Vibe.Data.Models.MessageStatusTypes.NotRead).ToList().Count > 0)
+                        {
+                            <span class="navbar-unread">1</span>
+                        }
+                    </a>*@
+            </li>
+
+        </ul>
     }
 }
 else
