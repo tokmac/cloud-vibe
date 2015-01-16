@@ -1,6 +1,7 @@
 ﻿namespace Cloud_Vibe.Controllers
 {
     using System;
+    using System.Net;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
@@ -131,7 +132,7 @@
         }
 
         [HttpGet]
-        public ActionResult ShareSong() 
+        public ActionResult ShareSong()
         {
             return PartialView("_SongShare");
         }
@@ -162,7 +163,7 @@
                 var artist = data.Artists.All().FirstOrDefault(a => a.Name == song.ArtistName);
                 if (artist == null)
                 {
-                    artist = new Artist { Name = song.ArtistName};
+                    artist = new Artist { Name = song.ArtistName };
                     //TempData["need-artist"] = "true";
                     //return View("Share");
                     data.Artists.Add(artist);
@@ -200,7 +201,7 @@
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_SongShare",song);
+            return PartialView("_SongShare", song);
         }
 
         [HttpGet]
@@ -224,36 +225,68 @@
             return File(model.Torrent, "application/x-bittorrent ");
         }
 
+        [HttpGet]
+        public ActionResult Comments(string type, string id)
+        {
+            //For test only
+            System.Threading.Thread.Sleep(2000);
+
+            var comments = new List<CommentViewModel>();
+            var fileId = Int32.Parse(id);
+
+            switch (type)
+            {
+                case "song":
+                    var songCurrentComments = data.Comments.All().Where(c => c.Song.ID == fileId).ToList();
+                    foreach (var comment in songCurrentComments)
+                    {
+                        comments.Add(Mapper.Map<CommentViewModel>(comment));
+                    }
+                    break;
+                case "album":
+                    var albumCurrentComments = data.Comments.All().Where(c => c.Album.ID == fileId).ToList();
+                    foreach (var comment in albumCurrentComments)
+                    {
+                        comments.Add(Mapper.Map<CommentViewModel>(comment));
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return PartialView("_CommentsList",comments);
+        }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Comments(string type, string id, string comment)
         {
             var user = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
             var currentComment = new Comment { User = user, Text = comment, SharedOn = DateTime.Now };
             switch (type)
-	        {
+            {
                 case "song":
                     currentComment.Song = data.Songs.GetById(Int32.Parse(id));
                     break;
                 case "album":
                     currentComment.Album = data.Albums.GetById(Int32.Parse(id));
                     break;
-		        default:
+                default:
                     break;
-	        }
+            }
 
             data.Comments.Add(currentComment);
             data.SaveChanges();
 
-            switch (type)
-            {
-                case "song":
-                    return RedirectToAction("Details", "Song", new { title = currentComment.Song.Title });
-                case "album":
-                    return RedirectToAction("Details", "Album", new { title = currentComment.Album.Title });
-                default:
-                    return RedirectToAction("Index", "Home");
-            }
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
+            //switch (type)
+            //{
+            //    case "song":
+            //        return RedirectToAction("Details", "Song", new { title = currentComment.Song.Title });
+            //    case "album":
+            //        return RedirectToAction("Details", "Album", new { title = currentComment.Album.Title });
+            //    default:
+            //        return RedirectToAction("Index", "Home");
+            //}
         }
 
         private IDownloadable GetModel(int id, string type)

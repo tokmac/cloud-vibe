@@ -34,6 +34,20 @@ namespace Cloud_Vibe.Data.Migrations
 
             SeedRoles(context);
             SeedAdmin(context);
+            SeedSocialNetworks(context);
+        }
+
+        //Seed All Social Networks
+        private void SeedSocialNetworks(CloudVibeDbContex context)
+        {
+            if (context.SocialNetworks.Any())
+            {
+                return;
+            }
+
+            context.SocialNetworks.Add(new SocialNetwork { Name = "Facebook" });
+            context.SocialNetworks.Add(new SocialNetwork { Name = "Google" });
+            context.SaveChanges();
         }
 
         //Seed User Roles
@@ -61,14 +75,19 @@ namespace Cloud_Vibe.Data.Migrations
                 return;
             }
 
-            var userManager = new UserManager<User>(new UserStore<User>(context));
+            var UserManager = new ApplicationUserManager(new UserStore<User>(context));
             var admin = new User()
             {
                 UserName = "admin"
             };
 
-            userManager.Create(admin, "admin");
-            userManager.AddToRole(admin.Id, "Admin");
+            var adminResult = UserManager.Create(admin, "admin");
+
+            //Add User Admin to Role Admin
+            if (adminResult.Succeeded)
+            {
+                var result = UserManager.AddToRole(admin.Id, "Admin");
+            }
 
             context.SaveChanges();
         }

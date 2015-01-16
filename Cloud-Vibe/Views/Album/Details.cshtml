@@ -107,4 +107,60 @@
 
 @{ViewBag.id = Model.ID;}
 @{ViewBag.Type = "album";}
+
 @Html.Partial("_Comments", ViewBag.CommentsInfo as List<CommentViewModel>)
+
+@section Scripts {
+    <script>
+        var songType = 'album';
+        var songId = @Model.ID;
+
+        $(document).ready(function () {
+            loadComments("#container-comments");
+        });
+
+        $('#btn-add-comment').click(function () {
+            addComment();
+        })
+
+        var addComment = function addComment() {
+            var userComment = $('#text-comments').val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Comments", "User")",
+                data: { type : songType, id : songId, comment: userComment},
+            })
+            .success(function () {
+                $('#text-comments').val('');
+                loadComments("#container-comments");
+            })
+            .error(function(status){
+                console.log(status);
+            })
+        }
+
+        var loadComments = function loadComments(container) {
+            $.ajax({
+                url: "@Url.Action("Comments","User")",
+                contentType: 'application/html; charset=utf-8',
+                type: 'GET',
+                data: { type : songType, id : songId},
+                dataType: 'html',
+                beforeSend: function(){
+                    $('#loader').show();
+                },
+                complete: function(){
+                    $('#loader').hide();
+                }
+            })
+            .success(function (result) {
+                $(container).hide();
+                $(container).html(result);
+                $(container).show("slow");
+            })
+            .error(function(status){
+                console.log(status);
+            })
+        }
+    </script>
+}

@@ -26,21 +26,25 @@
                         <strong>@Model.UserName</strong>
                     </p>
                     <p>
-                        <strong>Socials</strong>
-                        <br />
                         @if (Model.SocialAccoutsLinks.Count != 0)
                         {
-                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook") != null)
+                            var facebookSocialLink = Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook");
+                            if (facebookSocialLink != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Facebook").AccountLink" target="_blank"><span class="fui-facebook"></span></a>
+                                <a class="btn btn-social-icon btn-facebook" href="@facebookSocialLink.AccountLink" target="_blank">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
                             }
-                            if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google") != null)
+
+                            var googleSocialLink = Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google");
+                            if (googleSocialLink != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Google").AccountLink" target="_blank"><span class="fui-google-plus"></span></a>
+                                <a class="btn btn-social-icon btn-google-plus" href="@googleSocialLink.AccountLink" target="_blank">
+                                    <i class="fa fa-google-plus"></i>
+                                </a>
                             }
                             if (Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter") != null)
                             {
-                                <a href="@Model.SocialAccoutsLinks.FirstOrDefault(sal => sal.SocialNetwork.Name == "Twitter").AccountLink" target="_blank"><span class="fui-twitter"></span></a>
                             }
 
                             @*<span class="fui-youtube"></span>*@

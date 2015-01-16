@@ -24,7 +24,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
         [Required]
         [Display(Name = "Torrent")]
-        [FileExtensions(Extensions="torrent", ErrorMessage="You can add only torrent file")]
+        //[FileExtensions(Extensions="torrent", ErrorMessage="You can add only torrent file")]
         public HttpPostedFileBase Torrent { get; set; }
 
         [Display(Name = "Album Art")]
@@ -76,7 +76,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
         [Required(ErrorMessage = "You need to add torrent file")]
         [Display(Name = "Torrent")]
-        [FileExtensions(Extensions = "torrent", ErrorMessage = "You can add only torrent file")]
+        //[FileExtensions(Extensions = ".torrent", ErrorMessage = "You can add only torrent file")]
         public HttpPostedFileBase Torrent { get; set; }
 
         [Display(Name = "YouTube")]
@@ -201,6 +201,6 @@ namespace Cloud_Vibe.Models.ViewModels
     {
         public User User { get; set; }
         public string Text { get; set; }
-        public DateTime PostedOn { get; set; }
+        public DateTime SharedOn { get; set; }
     }
 }

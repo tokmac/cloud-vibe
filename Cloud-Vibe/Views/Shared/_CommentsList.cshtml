@@ -1,0 +1,35 @@
+﻿@using Cloud_Vibe.Utilities
+@model ICollection<Cloud_Vibe.Models.ViewModels.CommentViewModel>
+
+<div class="row">
+    @if (Model.Count == 0)
+    {
+        <h1>No comments yet</h1>
+    }
+    @foreach (var comment in Model)
+    {
+        var avatar = comment.User.Avatar;
+        var img = FilesByteUtility.ByteArrayToImageSrcString(avatar);
+
+        <div class="row">
+            <div class="col-md-2 pull-left">
+                <div class="row">
+                    <h4>@comment.User.UserName</h4>
+                </div>
+                <div class="row">
+                    <!--Image Container-->
+                    <img src="@img" class="thumbnail img-rounded img-responsive" style="float:left;height:120px; margin-right:10px" />
+                </div>
+
+                <div class="row">
+                    <p>Posted @Html.Timeago(comment.SharedOn)</p>
+                </div>
+            </div>
+            <div class="col-md-9 pull-right">
+                <p>@comment.Text</p>
+            </div>
+        </div>
+        <hr />
+    }
+</div>
+
