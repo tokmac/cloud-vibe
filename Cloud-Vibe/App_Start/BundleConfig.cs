@@ -26,11 +26,12 @@ namespace Cloud_Vibe
                 .Include("~/Scripts/kendo/cultures/kendo.culture.bg-BG.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery")
-                //.Include("~/Scripts/vendor/jquery.min.js"));
-                .Include("~/Scripts/kendo/jquery.min.js"));
+                .Include("~/Scripts/kendo/jquery.min.js"
+                ));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*"
+                        ));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -39,8 +40,10 @@ namespace Cloud_Vibe
                       "~/Scripts/vendor/respond.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/flat-ui-pro").Include(
-                      "~/Scripts/flat-ui-pro.js"
-                      ));
+                      "~/Scripts/flat-ui-pro.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery-avgrund").Include(
+                      "~/Scripts/jquery.avgrund/jquery.avgrund.js"));
         }
 
         private static void RegisterStyles(BundleCollection bundles)
@@ -62,6 +65,10 @@ namespace Cloud_Vibe
 
             bundles.Add(new StyleBundle("~/Content/flat-ui").Include(
                     "~/Content/flat-ui-pro.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/jquery-avgrund").Include(
+                    "~/Content/avgrund.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/custom").Include(

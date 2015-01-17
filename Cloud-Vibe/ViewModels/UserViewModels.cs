@@ -199,6 +199,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
     public class CommentViewModel : IMapFrom<Comment>
     {
+        public int ID { get; set; }
         public User User { get; set; }
         public string Text { get; set; }
         public DateTime SharedOn { get; set; }

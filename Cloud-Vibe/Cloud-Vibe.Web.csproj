@@ -264,6 +264,7 @@
     <Compile Include="Utilities\HtmlHelperExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\avgrund.css" />
     <Content Include="Content\bootstrap-social.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -272,6 +273,7 @@
     <Content Include="Content\flat-ui-pro.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\album-collage.jpg" />
     <Content Include="Content\images\album-collage.png" />
     <Content Include="Content\images\carosel_1.jpg" />
@@ -565,6 +567,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
+    <Content Include="Scripts\jquery.avgrund\jquery.avgrund.js" />
+    <Content Include="Scripts\jquery.avgrund\jquery.avgrund.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

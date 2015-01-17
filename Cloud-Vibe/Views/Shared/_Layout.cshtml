@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Cloud Vibe</title>
 
+    <!--Styles-->
     @Styles.Render("~/Content/bootstrap")
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/flat-ui")
     @Styles.Render("~/Content/font-awesome")
+    @Styles.Render("~/Content/jquery-avgrund")
     @RenderSection("Styles", false)
     @Styles.Render("~/Content/custom")
     @Scripts.Render("~/bundles/respond")
@@ -22,6 +24,7 @@
             </button>
             <a class="navbar-brand" href="@Url.Action("Index","User")">Cloud <span class="fui-spotify"></span> Vibe</a>
         </div>
+
         <div class="collapse navbar-collapse" id="navbar-collapse-03">
             @Html.Partial("_LoginNavigationPartial")
             @Html.Partial("_LoginAccountPartial")
@@ -29,10 +32,10 @@
     </nav>
 
     <!--Main Container-->
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-        </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
 
     <!--Footer-->
     <div class="mvl pvl">
@@ -74,8 +77,12 @@
             </div>
         </div> <!-- /bottom-menu -->
     </div>
+
+    <!--Scripts-->
     @Scripts.Render("~/bundles/flat-ui-pro")
+    @Scripts.Render("~/bundles/jquery-avgrund")
     <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
     @RenderSection("Scripts", false)
+
 </body>
 </html>

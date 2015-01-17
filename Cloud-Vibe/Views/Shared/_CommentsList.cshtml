@@ -12,6 +12,10 @@
         var img = FilesByteUtility.ByteArrayToImageSrcString(avatar);
 
         <div class="row">
+            @if (comment.User.UserName == User.Identity.Name)
+            {
+                <button type="button" id="btn-delete-comment-@comment.ID" class="close fui-cross"></button>
+            }
             <div class="col-md-2 pull-left">
                 <div class="row">
                     <h4>@comment.User.UserName</h4>

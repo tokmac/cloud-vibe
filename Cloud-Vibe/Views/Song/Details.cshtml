@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Details";
 }
+
 <div class="container jumbotron">
     <div class="row">
         <!--Info Container-->
@@ -63,7 +64,7 @@
             <h4> SONGS FROM "@Model.Artist.Name.ToUpper()"</h4>
         </div>
         <div class="row">
-            
+
             @foreach (var song in moreSongs)
             {
                 <div class="col-md-2">
@@ -79,11 +80,11 @@
                         <a href="@Url.Action("Details", "Song", new { title = song.Title })">
                             @if (song.Title.Count() < 30)
                                 {
-                                <p>@song.Title</p>
+                            <p>@song.Title</p>
                                 }
                                 else
                                 {
-                                <p>@song.Title.Substring(0, 30) ...</p>
+                            <p>@song.Title.Substring(0, 30) ...</p>
                                 }
                         </a>
                     </div>
@@ -96,10 +97,10 @@
         <div class="row row-centered">
             @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
             {
-            <div class="input-group input-group-lg col-md-12">
-                @Html.Hidden("SearchString", Model.Artist.Name)
-                <button class="btn btn-lg btn-block btn-warning" type="submit">See more song from "@Model.Artist.Name"</button>
-            </div>
+                <div class="input-group input-group-lg col-md-12">
+                    @Html.Hidden("SearchString", Model.Artist.Name)
+                    <button class="btn btn-lg btn-block btn-warning" type="submit">See more song from "@Model.Artist.Name"</button>
+                </div>
             }
         </div>
     </div>
@@ -121,9 +122,29 @@
 
         $('#btn-add-comment').click(function () {
             addComment();
-        })
+        })		
 
         var addComment = function addComment() {
+            var userComment = $('#text-comments').val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("Comments", "User")",
+                data: { type : songType, id : songId, comment: userComment},
+            })
+            .success(function () {
+                $('#text-comments').val('');
+                loadComments("#container-comments");
+            })
+            .error(function(status){
+                console.log(status);
+            })
+        }
+
+        var removeComment = function removeComment() {
+
+
+
+
             var userComment = $('#text-comments').val();
             $.ajax({
                 type: "POST",
