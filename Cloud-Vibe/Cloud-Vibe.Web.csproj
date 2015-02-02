@@ -279,6 +279,7 @@
     <Content Include="Content\images\album-collage.jpg" />
     <Content Include="Content\images\album-collage.png" />
     <Content Include="Content\images\album-wallpaper.jpg" />
+    <Content Include="Content\images\album-wallpaper1.jpg" />
     <Content Include="Content\images\album-wallpaper3.jpg" />
     <Content Include="Content\images\no_user.jpg" />
     <Content Include="Content\images\space-wallpaper-prod.jpg" />
