@@ -1,0 +1,48 @@
+﻿@using Cloud_Vibe.Models
+@model LoginViewModel
+
+<div class="col-centered col-md-6 container-transparent">
+
+    <div class="row">
+        <h4><em>Sign in</em></h4>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6 pull-left">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal col-md-12", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Username, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control transparent-input" })
+                        @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-9 ">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control transparent-input" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-8">
+                        <input type="submit" onclick="prepareForLogin()" value="Log in" class="btn btn-info" />
+                    </div>
+                </div>
+                <br />
+            }
+        </div>
+        <div class="col-md-6 pull-right">
+            <section id="socialLoginForm">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-5 pull-right">
+            <p><em>You never entered?</em> <a href="javaScript:void(0);" class="custom-a-white" onclick="loadRegisterContainer()" id="btn-signup"><em>Sign Up</em></a></p>
+        </div>
+    </div>
+</div>

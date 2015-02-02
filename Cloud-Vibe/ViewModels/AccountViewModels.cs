@@ -1,12 +1,14 @@
-﻿using Cloud_Vibe.Data.Models;
-using Cloud_Vibe.Web.Infrastructure.Mapping;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Web;
-
-namespace Cloud_Vibe.Models
+﻿namespace Cloud_Vibe.Models
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Web;
+
+    using Cloud_Vibe.Data.Models;
+    using Cloud_Vibe.Utilities.DataAnnotations;
+    using Cloud_Vibe.Web.Infrastructure.Mapping;
+
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -112,6 +114,8 @@ namespace Cloud_Vibe.Models
         [Display(Name = "Avatar")]
         public HttpPostedFileBase Avatar { get; set; }
 
+        [Required(ErrorMessage = "Need to agree with our Terms of use")]
+        [Boolean(Value=true, ErrorMessage="You must check \"Agree with Terms\"")]
         public bool hasAgreedWithTerms { get; set; }
     }
 
@@ -155,7 +159,7 @@ namespace Cloud_Vibe.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Display(Name="E-mail")]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
 
         public bool HasLoggedWithSocial { get; set; }

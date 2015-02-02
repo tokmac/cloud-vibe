@@ -255,6 +255,7 @@
     </Compile>
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Utilities\AuthorizationUtility.cs" />
+    <Compile Include="Utilities\DataAnnotations\BooleanAttribute.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
@@ -269,6 +270,7 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\codrops.captionhovereffect\component.css" />
     <Content Include="Content\flat-ui-pro.css" />
     <Content Include="Content\flat-ui-pro.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -276,10 +278,11 @@
     <Content Include="Content\images\ajax-loader.gif" />
     <Content Include="Content\images\album-collage.jpg" />
     <Content Include="Content\images\album-collage.png" />
-    <Content Include="Content\images\carosel_1.jpg" />
-    <Content Include="Content\images\carosel_2.jpg" />
-    <Content Include="Content\images\carosel_3.jpg" />
+    <Content Include="Content\images\album-wallpaper.jpg" />
+    <Content Include="Content\images\album-wallpaper3.jpg" />
     <Content Include="Content\images\no_user.jpg" />
+    <Content Include="Content\images\space-wallpaper-prod.jpg" />
+    <Content Include="Content\images\space-wallpaper-prod2.jpg" />
     <Content Include="Content\kendo\Black\editor.png" />
     <Content Include="Content\kendo\Black\imagebrowser.png" />
     <Content Include="Content\kendo\Black\indeterminate.gif" />
@@ -533,6 +536,8 @@
     <Content Include="fonts\lato\lato-regular.woff" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\codrops.captionhovereffect\modernizr.custom.js" />
+    <Content Include="Scripts\codrops.captionhovereffect\toucheffects.js" />
     <Content Include="Scripts\flat-ui-pro.js" />
     <Content Include="Scripts\flat-ui-pro.min.js" />
     <Content Include="Content\kendo\images\kendoui.ttf" />
@@ -569,6 +574,7 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery.avgrund\jquery.avgrund.js" />
     <Content Include="Scripts\jquery.avgrund\jquery.avgrund.min.js" />
+    <Content Include="Scripts\jquery.mixitup\jquery.mixitup.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -1236,6 +1242,8 @@
     <Content Include="Scripts\kendo\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\kendo.window.min.js.map" />
     <Content Include="Views\Shared\_CommentsList.cshtml" />
+    <Content Include="Views\Account\_Login.cshtml" />
+    <Content Include="Views\Account\_Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

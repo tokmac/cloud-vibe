@@ -1,14 +1,14 @@
 ﻿@using Cloud_Vibe.Data
 @using Cloud_Vibe.Utilities
 @model List<Cloud_Vibe.Data.Models.Album>
+
 @{
     ViewBag.Title = "Index";
-    ICloudVibeData data = new CloudVibeData(new CloudVibeDbContex());
 }
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 pull-left">
+        <div class="col-md-5 custom-jumbotron">
             <!--Left Column - Latest Song -->
             <h4>Latest Songs</h4>
             <hr />
@@ -16,7 +16,7 @@
                 @Html.Partial("_IndexLatestSongs", ViewData["latestSongs"])
             </div>
         </div>
-        <div class="col-md-6 pull-right">
+        <div class="col-md-5 col-md-offset-1 custom-jumbotron">
             <!--Left Column - Latest Albums -->
             <h4>Latest Albums</h4>
             <hr />
@@ -27,39 +27,18 @@
     </div>
 </div>
 
-@*<div class="container container-md-height">
-        <div class="row col-xs-offset-1 row-md-height">
-            <div class="col-md-6 col-md-height">
-                <h3>Latest Albums</h3>
-            </div>
-        </div>
-        @for (int i = 0; i < Model.Count; i++)
-        {
-            var albumImg = Model[i].CoverArt;
-            var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-            <div class="row row-md-height">
-                <div class="col-xs-offset-1 row-md-height">
-                    <div class="col-md-height">
-
-
-                    </div>
-                    <div class="col-md-height">
-                        <img src="@imgSrc" style="float:left;height:170px; margin-right:10px" class="img-rounded img-responsive" />
-                        <h3>@Model[i].Title</h3>
-                        <h5>@Model[i].Artist.Name</h5>
-                    </div>
-                    <div class="col-md-height">
-                        <p>
-                            Shared on: @Model[i].SharedOn
-                            @if (Model[i].UserShared != null)
-                            {
-                                @Model[i].UserShared.UserName;
-                            }
-                        </p>
-                    </div>
-
-
-                </div>
-            </div>
-        }
-    </div>*@
+@section Scripts {
+    @*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@
+    @if (false)
+    {
+        <script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>
+    }
+    <script>
+        $('document').ready(function () {
+            @if (ViewBag.Title == "Index" && TempData["JustLoggedIn"] != null)
+            {
+                <text>$('#nav-header').show({ duration: 700 });</text>
+            }
+        });
+    </script>
+}

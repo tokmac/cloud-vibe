@@ -1,6 +1,154 @@
-﻿@{
-    ViewBag.Title = "About";
+﻿@using Cloud_Vibe.Utilities
+@using Cloud_Vibe.Models.ViewModels
+
+@model IList<SongDetailsViewModel>
+@{
+    ViewBag.Title = "All Songs";
 }
 
+<div class="container">
+    <!--Sort By Menu-->
+    <div class="row-centered">
+        <div class="col-centered col-md-7 container-transparent">
+            <div class="col-md-8">
+                <div class="btn-group btn-group-lg">
+                    <ul class="nav nav-pills">
+                        <li class="active sort" data-sort="date:desc"><a href="javascript:;">Date</a></li>
+                        <li class="sort" data-sort="title:asc"><a href="javascript:;">Title</a></li>
+                        <li class="sort" data-sort="artist:asc"><a href="javascript:;">Artist</a></li>
+                        <li class="sort" data-sort="downloads:desc"><a href="javascript:;">Downloads</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group input-group-sm input-group-rounded">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn"><span class="fui-search"></span></button>
+                    </span>
+                    <input type="search" class="form-control" placeholder="Search" id="filter-search">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Songs List-->
+    <div class="row">
+        <div class="container container-transparent" id="Container">
+            @if (Model.Count != 0)
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="grid cs-style-3">
+                            <!--List of songs-->
+                            @foreach (var song in Model)
+                            {
+                                var albumImg = song.CoverArt;
+                                var imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+                                var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                                var dateFormated = song.SharedOn.Year.ToString() + song.SharedOn.Month.ToString() + song.SharedOn.Day.ToString() + song.SharedOn.Minute.ToString() + song.SharedOn.Second.ToString() as String;
+                                <li class="mix" data-date="@dateFormated" data-title="@song.Title" data-artist="@song.Artist.Name" data-downloads="@song.Downloads">
+                                    <a href="@songUrl">
+                                        <figure>
+                                            <img src="@imgSrc" alt="img01">
+                                            <figcaption>
+                                                <h3 class="row-centered">@song.Title</h3>
+                                                <div class="row-centered"><span class="artist">@song.Artist.Name</span></div>
+                                                <div class="row">
+                                                    <div class=" pull-left col-md-4">
+                                                        <span><span class="fui-eye"></span> @song.Views </span>
+                                                    </div>
+                                                    <div class="pull-right col-md-4">
+                                                        <span><span class="fui-upload"></span> @song.Downloads </span>
+                                                    </div>
+                                                </div>
+                                                <div class="row-centered">
+                                                    <div class="col-md-12 col-centered">
+                                                        <span style="font-size:small">@Html.Timeago(song.SharedOn) </span>
+                                                    </div>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>There are no songs <i>... for now ...</i> be the first to <i><strong>@Html.ActionLink("share", "Share", "User")</strong></i></h4>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
 
 
+@section Scripts {
+    @*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@
+    @if (false){<script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>}
+                                                                       
+    <script>
+        //Global variables to use in the callback after mixItUp sorts
+        var isClicked,
+            $currentClicledBtn;
+
+        $(function () {
+            $('#Container').mixItUp({
+                callbacks: {
+                    onMixEnd: function (state) {
+                        if (isClicked) {
+                            $("li.active").removeClass("active");
+                            $(this).addClass("active");
+                            changeSortingDataOfButtonAfterSort($currentClicledBtn);
+                            isClicked = false;
+                            $currentClicledBtn = undefined;
+                        }
+                    }
+                }
+            });
+        });
+
+        $("li.sort").click(function () {
+            isClicked = true;
+            $currentClicledBtn = $(this);
+        });
+
+        $("#filter-search").keyup(function () {
+            showFiltered($(this).val());
+        })
+
+        var showFiltered = function showFiltered(searchValue) {
+            $('li.mix').each(function () {
+                var hasSearchValueInTitle = (($(this).attr("data-title")).toLowerCase()).indexOf(searchValue.toLowerCase()) >= 0;
+                var hasSeatchValueInArtist = (($(this).attr("data-artist")).toLowerCase()).indexOf(searchValue.toLowerCase()) >= 0;
+
+                if (searchValue == "") {
+                    $(this).show("slow");
+                } else if (hasSearchValueInTitle || hasSeatchValueInArtist) {
+                    $(this).show("slow");
+                } else {
+                    $(this).hide("slow");
+                }
+            })
+        }
+
+        var changeSortingDataOfButtonAfterSort = function changeSortingDataOfButtonAfterSort($element) {
+            var $currentSortAttribute = $($element).attr("data-sort")
+            var indexOfCurrentDataSortCommand = $currentSortAttribute.indexOf("asc");
+
+            if (indexOfCurrentDataSortCommand >= 0) {
+                $currentSortAttribute = $currentSortAttribute.substr(0, indexOfCurrentDataSortCommand) + "desc";
+            } else {
+                $currentSortAttribute = $currentSortAttribute.substr(0, $currentSortAttribute.indexOf(":") + 1) + "asc";
+            }
+
+            $($element).attr("data-sort", $currentSortAttribute);
+        }
+    </script>
+}

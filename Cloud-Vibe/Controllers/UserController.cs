@@ -72,7 +72,14 @@
         [HttpGet]
         public ActionResult ShareAlbum()
         {
-            return PartialView("_AlbumShare");
+            var model = TempData["ShareAlbumViewModel"] as ShareAlbumViewModel;
+
+            if (model != null)
+            {
+                TryValidateModel(model);
+            }
+
+            return PartialView("_AlbumShare", model);
         }
 
         [HttpPost]
@@ -128,13 +135,21 @@
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_AlbumShare", album);
+            TempData["AlbumShareViewModel"] = album;
+            return RedirectToAction("Share");
         }
 
         [HttpGet]
         public ActionResult ShareSong()
         {
-            return PartialView("_SongShare");
+            var model = TempData["ShareSongViewModel"] as ShareSongViewModel;
+
+            if (model != null)
+            {
+                TryValidateModel(model);
+            }
+
+            return PartialView("_SongShare", model);
         }
 
         [HttpPost]
@@ -201,7 +216,8 @@
                 return RedirectToAction("Index");
             }
 
-            return PartialView("_SongShare", song);
+            TempData["SongShareViewModel"] = song;
+            return RedirectToAction("Share");
         }
 
         [HttpGet]
@@ -254,7 +270,7 @@
                     break;
             }
 
-            return PartialView("_CommentsList",comments);
+            return PartialView("_CommentsList", comments);
         }
 
         [HttpPost]

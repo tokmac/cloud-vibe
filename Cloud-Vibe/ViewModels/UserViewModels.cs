@@ -58,14 +58,14 @@ namespace Cloud_Vibe.Models.ViewModels
     public class ShareSongViewModel
     {
         [Display(Name = "Artist Name")]
-        [Required(ErrorMessage = "Artist Name is required!")]
+        [Required(ErrorMessage = "Artist Name is required.")]
         public string ArtistName { get; set; }
 
-        [Required(ErrorMessage = "Title is required!")]
+        [Required(ErrorMessage = "Title is required.")]
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage = "Need to add cover!")]
+        [Required(ErrorMessage = "Cover is required.")]
         [Display(Name = "Cover picture")]
         public HttpPostedFileBase CoverArt { get; set; }
 
@@ -74,7 +74,7 @@ namespace Cloud_Vibe.Models.ViewModels
 
         public DateTime SharedOn { get; set; }
 
-        [Required(ErrorMessage = "You need to add torrent file")]
+        [Required(ErrorMessage = "Torrent file is required.")]
         [Display(Name = "Torrent")]
         //[FileExtensions(Extensions = ".torrent", ErrorMessage = "You can add only torrent file")]
         public HttpPostedFileBase Torrent { get; set; }

@@ -2,32 +2,28 @@
     ViewBag.Title = "Share";
 }
 
-<div class="row row-centered">
-    <div class="col-centered">
+<div class="row row-centered ">
+    <div class="col-centered col-md-4 container-transparent" style="color:#9574a3">
         <div id="header-share-info" class="row">
             <h2>Share</h2>
             <p><i>Choose whether you want to share an album or a song</i></p>
-            <hr />
         </div>
         <div class="row">
             <div class="col-centered">
                 <ul class="nav nav-pills">
-                    <li><a href="#" id="btn-song-view">Song</a></li>
-                    <li><a href="#" id="btn-album-view">Album</a></li>
+                    <li><a href="javascript:" id="btn-song-view">Song</a></li>
+                    <li><a href="javascript:" id="btn-album-view">Album</a></li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <div id="share-form-container"></div>
+<div>
+    <div id="share-form-container" class="row-centered"></div>
 </div>
 
-<br />
-<br />
-
-@*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@ 
+@*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@
 @if (false)
 {
     <script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>
@@ -36,10 +32,46 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script>
-        $('#song-container').hide();
-        $('#album-container').hide();
-        
+        $('document').ready(function () {
+            $('#song-container').hide();
+            $('#album-container').hide();
+
+            @{
+                var modelAlbum = TempData["AlbumShareViewModel"];
+                var modelSong = TempData["SongShareViewModel"];
+
+
+                if (modelAlbum != null || modelSong != null)
+                {
+                    if (modelAlbum != null)
+                    {
+                        TempData["ShareAlbumViewModel"] = modelAlbum;
+                        <text>
+            loadAlbumShareView();
+            </text>
+                    }
+                    else if (modelSong != null)
+                    {
+                        TempData["ShareSongViewModel"] = modelSong;
+                        <text>
+            loadSongShareView();
+            </text>
+                    }
+                }
+            }
+        })
+
         $('#btn-song-view').click(function () {
+            loadSongShareView();
+        });
+
+        $('#btn-album-view').click(function () {
+            loadAlbumShareView();
+        });
+
+        var loadSongShareView = function loadSongShareView() {
+            document.title = "Share Song - Cloud Vibe";
+
             $('#header-share-info').hide("slow", function () {
                 $('#header-share-info').remove();
             });
@@ -51,21 +83,22 @@
                 dataType: 'html'
             })
             .success(function (result) {
-                $("#share-form-container").hide();
+                $("#share-form-container").hide("slow");
                 $("#share-form-container").html(result);
                 $.validator.unobtrusive.parse('#share-form-container')
                 $("#share-form-container").show("slow");
             })
-            .error(function(status){
+            .error(function (status) {
                 console.log(status);
             })
 
             $('#btn-song-view').addClass('active');
             $('#btn-album-view').removeClass('active');
-            return false;
-        });
+        }
 
-        $('#btn-album-view').click(function () {
+        var loadAlbumShareView = function loadAlbumShareView() {
+            document.title = "Share Album - Cloud Vibe";
+
             $('#header-share-info').hide("slow", function () {
                 $('#header-share-info').remove();
             });
@@ -73,23 +106,23 @@
             $.ajax({
                 url: "@Url.Action("ShareAlbum","User")",
                 contentType: 'application/html; charset=utf-8',
-            type: 'GET',
-            dataType: 'html'
-        })
-            .success(function (result) {
-                $("#share-form-container").hide();
-                $("#share-form-container").html(result);
-                $.validator.unobtrusive.parse('#share-form-container')
-                $("#share-form-container").show("slow");
+                type: 'GET',
+                dataType: 'html'
             })
-            .error(function(status){
-                console.log(status);
-            })
+                .success(function (result) {
+                    $("#share-form-container").hide("slow");
+                    $("#share-form-container").html(result);
+                    $.validator.unobtrusive.parse('#share-form-container')
+                    $("#share-form-container").show("slow");
+                })
+                .error(function (status) {
+                    console.log(status);
+                })
 
             $('#btn-album-view').addClass('active');
             $('#btn-song-view').removeClass('active');
-            return false;
-        });
+        }
+
     </script>
 }
 

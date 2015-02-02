@@ -51,11 +51,23 @@ namespace Cloud_Vibe.Controllers
 
         //
         // GET: /Account/Login
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View();
+            var model = TempData["LoginViewModel"] as LoginViewModel;
+            var modelError = TempData["LoginViewModelError"] as String;
+
+            if (model != null)
+            {
+                TryValidateModel(model);
+            }
+            if (modelError != null)
+            {
+                ModelState.AddModelError("Username", modelError);
+            }
+
+            return PartialView("_Login", model);
         }
 
         private ApplicationSignInManager _signInManager;
@@ -78,7 +90,8 @@ namespace Cloud_Vibe.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                TempData["LoginViewModel"] = model;
+                return RedirectToAction("Index", "Home");
             }
 
             // This doesn't count login failures towards account lockout
@@ -87,6 +100,10 @@ namespace Cloud_Vibe.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    TempData["LoginViewModel"] = null;
+                    TempData["LoginViewModelError"] = null;
+                    TempData["JustLoggedIn"] = true;
+
                     return RedirectToAction("Index", "User");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -94,8 +111,9 @@ namespace Cloud_Vibe.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                    TempData["LoginViewModelError"] = "Invalid login attempt.";
+                    TempData["LoginViewModel"] = model;
+                    return RedirectToAction("Index", "Home");
             }
         }
 
@@ -149,10 +167,18 @@ namespace Cloud_Vibe.Controllers
 
         //
         // GET: /Account/Register
+        [HttpGet]
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            var model = TempData["RegViewModel"] as RegisterViewModel;
+
+            if (model != null)
+            {
+                TryValidateModel(model);
+            }
+
+            return PartialView("_Register", model);
         }
 
         //
@@ -162,7 +188,7 @@ namespace Cloud_Vibe.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            string NO_USER_IMAGE_PATH = HttpContext.Server.MapPath("~/Content/images/no_user.jpg");
+            var NO_USER_IMAGE_PATH = HttpContext.Server.MapPath("~/Content/images/no_user.jpg") as String;
 
             if (ModelState.IsValid && model.hasAgreedWithTerms == true)
             {
@@ -178,22 +204,20 @@ namespace Cloud_Vibe.Controllers
                 {
                     if (model.Avatar.ContentType == "image/jpeg" || model.Avatar.ContentType == "image/png" || model.Avatar.ContentType == "image/gif")
                     {
-
                         user.Avatar = FilesByteUtility.HttpPostedFileToByteArray(model.Avatar);
-
                         var result = await UserManager.CreateAsync(user, model.Password);
-                        //UserManager.AddToRole(user.Id, "Admin");
+
                         if (result.Succeeded)
                         {
                             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
+                            TempData["RegisterViewModel"] = null;
                             return RedirectToAction("Index", "Home");
                         }
                         AddErrors(result);
                     }
                     else
                     {
-                        AddErrors(new IdentityResult(new List<String>() { "You must can only add files with extension '.jpeg', '.gif' or '.png' for avatar " }));
+                        AddErrors(new IdentityResult(new List<String>() { "You can only add files with extension '.jpeg', '.gif' or '.png' for avatar " }));
                     }
                 }
                 else
@@ -202,17 +226,19 @@ namespace Cloud_Vibe.Controllers
 
                     var result = await UserManager.CreateAsync(user, model.Password);
                     //UserManager.AddToRole(user.Id, "Admin");
+
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
+                        TempData["RegisterViewModel"] = null;
                         return RedirectToAction("Index", "Home");
                     }
                 }
 
             }
-            // If we got this far, something failed, redisplay form
-            return View(model);
+
+            TempData["RegisterViewModel"] = model;
+            return RedirectToAction("Index", "Home");
         }
 
         //
@@ -318,7 +344,6 @@ namespace Cloud_Vibe.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Request a redirect to the external login provider
@@ -377,7 +402,7 @@ namespace Cloud_Vibe.Controllers
             {
                 case SignInStatus.Success:
                     //Checks for update in profile picture
-                    AuthorizationUtility.CheckIfProfilePictureChanged(loginInfo, data);                    
+                    AuthorizationUtility.CheckIfProfilePictureChanged(loginInfo, data);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -419,13 +444,13 @@ namespace Cloud_Vibe.Controllers
 
                 //Create the social user in the db
                 byte[] avatar = AuthorizationUtility.GetRightProfilePicture(info);
-                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar, HasLoggedWithSocial = true };
+                var user = new User { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, Avatar = avatar, LoggedSocial = true };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     //Connect the user with the social account information
                     AuthorizationUtility.AddSocialAccountLinkForUser(info, data, user);
-                    
+
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
                     if (result.Succeeded)
                     {

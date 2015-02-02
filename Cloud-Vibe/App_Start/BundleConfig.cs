@@ -42,6 +42,11 @@ namespace Cloud_Vibe
             bundles.Add(new ScriptBundle("~/bundles/flat-ui-pro").Include(
                       "~/Scripts/flat-ui-pro.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery-mixitup")
+                .Include("~/Scripts/codrops.captionhovereffect/toucheffects.js")
+                .Include("~/Scripts/codrops.captionhovereffect/modernizr.custom.js")
+                .Include("~/Scripts/jquery.mixitup/jquery.mixitup.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jquery-avgrund").Include(
                       "~/Scripts/jquery.avgrund/jquery.avgrund.js"));
         }
@@ -69,6 +74,10 @@ namespace Cloud_Vibe
 
             bundles.Add(new StyleBundle("~/Content/jquery-avgrund").Include(
                     "~/Content/avgrund.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/codrops-captionhovereffect").Include(
+                    "~/Content/codrops.captionhovereffect/component.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/custom").Include(

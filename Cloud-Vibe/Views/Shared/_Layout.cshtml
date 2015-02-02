@@ -11,78 +11,111 @@
     @Styles.Render("~/Content/flat-ui")
     @Styles.Render("~/Content/font-awesome")
     @Styles.Render("~/Content/jquery-avgrund")
+    @Styles.Render("~/Content/codrops-captionhovereffect")
     @RenderSection("Styles", false)
     @Styles.Render("~/Content/custom")
     @Scripts.Render("~/bundles/respond")
 </head>
 <body>
     <!--Header-->
-    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-03">
-                <span class="sr-only">Toggle navigation</span>
-            </button>
-            <a class="navbar-brand" href="@Url.Action("Index","User")">Cloud <span class="fui-spotify"></span> Vibe</a>
-        </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div id="nav-header" 
+             @if (ViewBag.Title == "Index" && TempData["JustLoggedIn"] != null)
+             {
+                 <text>style="display:none"</text>
+             }>
+            <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-03">
+                        <span class="sr-only">Toggle navigation</span>
+                    </button>
+                    <a class="navbar-brand" href="@Url.Action("Index","User")">Cloud <span class="fui-spotify"></span> Vibe</a>
+                </div>
 
-        <div class="collapse navbar-collapse" id="navbar-collapse-03">
-            @Html.Partial("_LoginNavigationPartial")
-            @Html.Partial("_LoginAccountPartial")
+                <div class="collapse navbar-collapse" id="navbar-collapse-03">
+                    @Html.Partial("_LoginNavigationPartial")
+                    @Html.Partial("_LoginAccountPartial")
+                </div>
+            </nav>
         </div>
-    </nav>
+    }
+
 
     <!--Main Container-->
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-    </div>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        @RenderBody();
+    }
+    else
+    {
+        <div class="container">
+            @RenderBody()
+        </div>
+    }
+
 
     <!--Footer-->
-    <div class="mvl pvl">
-        <div class="bottom-menu bottom-menu-large bottom-menu-inverse">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-2 col-sm-2">
-                        <a href="#fakelink" class="bottom-menu-brand">Cloud <span class="fui-spotify"></span> Vibe</a>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div id="nav-footer">
+            <div class="mvl pvl">
+                <div class="bottom-menu bottom-menu-large bottom-menu-inverse">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-2 col-sm-2">
+                                <a href="#fakelink" class="bottom-menu-brand">Cloud <span class="fui-spotify"></span> Vibe</a>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <h5 class="title">ABOUT US</h5>
+                                <ul class="bottom-menu-list">
+                                    <li><a href="#fakelink">About the project</a></li>
+                                    <li><a href="#fakelink">About me</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <h5 class="title">CATEGORIES</h5>
+                                <ul class="bottom-menu-list">
+                                    <li><a href="#fakelink">Songs</a></li>
+                                    <li><a href="#fakelink">Albums</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <h5 class="title">MAINFRAME</h5>
+                                <ul class="bottom-menu-list">
+                                    <li><a href="#fakelink">Register / Login</a></li>
+                                    <li><a href="#fakelink">Terms of Use</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <h5 class="title">FIND ME ON</h5>
+                                <ul class="bottom-menu-list">
+                                    <li><a href="https://github.com/tokmac"><span class="fui-github"></span>  GitHub</a></li>
+                                    <li><a href="https://linkedin.com/in/lyubomirmitkov/"><span class="fui-linkedin"></span>  LinkedIn</a></li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 col-sm-2">
-                        <h5 class="title">ABOUT US</h5>
-                        <ul class="bottom-menu-list">
-                            <li><a href="#fakelink">About the project</a></li>
-                            <li><a href="#fakelink">About me</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <h5 class="title">CATEGORIES</h5>
-                        <ul class="bottom-menu-list">
-                            <li><a href="#fakelink">Songs</a></li>
-                            <li><a href="#fakelink">Albums</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <h5 class="title">MAINFRAME</h5>
-                        <ul class="bottom-menu-list">
-                            <li><a href="#fakelink">Register / Login</a></li>
-                            <li><a href="#fakelink">Terms of Use</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2 col-sm-2">
-                        <h5 class="title">FIND ME ON</h5>
-                        <ul class="bottom-menu-list">
-                            <li><a href="https://github.com/tokmac"><span class="fui-github"></span>  GitHub</a></li>
-                            <li><a href="https://linkedin.com/in/lyubomirmitkov/"><span class="fui-linkedin"></span>  LinkedIn</a></li>
-                        </ul>
-                    </div>
-                </div>
+                </div> <!-- /bottom-menu -->
             </div>
-        </div> <!-- /bottom-menu -->
-    </div>
-
+        </div>
+    }
+    
     <!--Scripts-->
     @Scripts.Render("~/bundles/flat-ui-pro")
     @Scripts.Render("~/bundles/jquery-avgrund")
+    @Scripts.Render("~/bundles/jquery-mixitup")
+
     <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
     @RenderSection("Scripts", false)
 
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script>
+            //Sets background picture darker when logged in
+            $('body').css("background", "url(../../Content/images/album-wallpaper3.jpg) no-repeat center center");
+            $('body').css("background-size", "cover");
+        </script>
+    }
 </body>
 </html>
