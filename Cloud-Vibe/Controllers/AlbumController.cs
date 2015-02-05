@@ -37,7 +37,7 @@
                 Mapper.CreateMap<Album, AlbumDetailsViewModel>();
                 AlbumDetailsViewModel albumToSee = Mapper.Map<AlbumDetailsViewModel>(album);
 
-                var albumsFrom = data.Songs.All().Where(s => s.Artist.Name.Contains(album.Artist.Name)).Take(5).ToList();
+                var albumsFrom = data.Albums.All().Where(s => s.Artist.Name.Contains(album.Artist.Name)).Take(5).ToList();
                 var moreAlbums = new List<AlbumDetailsViewModel>();
 
                 foreach (var alb in albumsFrom)

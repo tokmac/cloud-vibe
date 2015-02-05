@@ -65,6 +65,123 @@
 	color: #fff;
 }*/
 
+/*Custom horizontal grid tile*/
+.custom-grid {
+	padding: 0;
+	max-height: 100%;
+	margin: 0 auto;
+	list-style: none;
+	text-align: center;
+}
+
+.custom-grid li {
+	display: block;
+	width: 100%;
+    height:100px;
+	margin: 5px 0 5px 0;
+	padding: 10px;
+	text-align: left;
+	position: relative;
+}
+
+.custom-grid figure {
+	margin: 0;
+    height:100px;
+    width:100%;
+	position: relative;
+}
+
+.custom-grid figure img {
+    height:170px;
+    width:100%;
+	max-width: 100%;
+	display: block;
+	position: relative;
+}
+
+.custom-grid figcaption {
+    max-width:100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 5px;
+	background: white;
+	color: #9574A3;
+}
+
+.custom-grid figcaption h3 {
+    font-size:small;
+	margin: 0;
+	padding: 0;
+	color: #58037C;
+}
+
+.custom-grid figcaption a{
+    max-width:100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 5px;
+	background: white;
+	color: #9574A3;
+}
+
+/*dsadsa*/
+/* Caption Style 3 */
+.custom-cs-style-3 figure {
+	overflow: hidden;
+}
+
+.custom-cs-style-3 figure img {
+	-webkit-transition: -webkit-transform 0.4s;
+	-moz-transition: -moz-transform 0.4s;
+	transition: transform 0.4s;
+}
+
+.no-touch .custom-cs-style-3 figure:hover img,
+.custom-cs-style-3 figure.cs-hover img {
+	-webkit-transform: translateY(-50px);
+	-moz-transform: translateY(-50px);
+	-ms-transform: translateY(-50px);
+	transform: translateY(-50px);
+}
+
+.custom-cs-style-3 figcaption {
+	height: 100px;
+	/*width: 100%;*/
+    width:100%;
+	top: auto;
+	bottom: 0;
+	opacity: 0;
+	-webkit-transform: translateY(100%);
+	-moz-transform: translateY(100%);
+	-ms-transform: translateY(100%);
+	transform: translateY(100%);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s 0.3s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s 0.3s;
+	transition: transform 0.8s, opacity 0.1s 0.3s;
+}
+
+.no-touch .custom-cs-style-3 figure:hover figcaption,
+.custom-cs-style-3 figure.cs-hover figcaption {
+	opacity: 1;
+	-webkit-transform: translateY(50px);
+	-moz-transform: translateY(50px);
+	-ms-transform: translateY(50px);
+	transform: translateY(50px);
+	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
+	-moz-transition: -moz-transform 0.4s, opacity 0.1s;
+	transition: transform 0.8s, opacity 0.1s;
+}
+
+.custom-cs-style-3 figcaption a {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+}
+
+
+
 /* Individual Caption Styles */
 
 /* Caption Style 1 */
@@ -162,10 +279,10 @@
 .no-touch .cs-style-3 figure:hover figcaption,
 .cs-style-3 figure.cs-hover figcaption {
 	opacity: 1;
-	-webkit-transform: translateY(50px);
-	-moz-transform: translateY(50px);
-	-ms-transform: translateY(50px);
-	transform: translateY(50px);
+	-webkit-transform: translateY(40px);
+	-moz-transform: translateY(40px);
+	-ms-transform: translateY(40px);
+	transform: translateY(40px);
 	-webkit-transition: -webkit-transform 0.4s, opacity 0.1s;
 	-moz-transition: -moz-transform 0.4s, opacity 0.1s;
 	transition: transform 0.8s, opacity 0.1s;

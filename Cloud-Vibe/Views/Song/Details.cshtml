@@ -2,129 +2,340 @@
 @using Cloud_Vibe.Models.ViewModels
 @model SongDetailsViewModel
 @{
-    ViewBag.Title = "Song Details";
+    ViewBag.Title = Model.Title;
+
+    var albumImg = Model.CoverArt;
+    var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
 }
 
-<div class="container jumbotron">
-    <div class="row">
-        <!--Info Container-->
-        <div class="col-md-4">
-            <!--Image Container-->
-            @{
-                var albumImg = Model.CoverArt;
-                var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
-            }
-            <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive" />
+<!--Used for Blurring effect on the Details Pages-->
+<div id="bg-blurry"></div>
+
+
+<div class="row">
+
+    <!--Main Container-->
+    <div class="col-md-8">
+
+        <!--Title and Artist-->
+        <div class="row">
+            <div class="col-md-12 container-black custom-text-white" style="margin-bottom:5px">
+
+                <div class="row-centered">
+                    <div class="col-centered">
+                        <h3>@Model.Artist.Name - <em>@Model.Title</em></h3>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-8">
-            <!--Info Container-->
-            <div class="row">
-                <div class="col-md-8 pull-left">
-                    <!--Main Info Container-->
-                    <p>
-                        @Model.Title <br />
-                        <strong>@Model.Artist.Name</strong>
-                    </p>
-                    <p>
-                        Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
-                        By: <strong>@Html.ActionLink(@Model.UserShared.UserName, "ProfileDetails", "Account", new { username = @Model.UserShared.UserName }, null) </strong> <br />
+        <!--Display Panel-->
+        <div class="row">
+            <div class="col-md-12 custom-grid container-black" style="max-height:380px">
+                <!--Cover Picture-->
+                <div class="row-centered">
+                    <div class="col-centered col-md-12 col-xs-12 col-sm-12">
+                        <img src="@imgSrc" style="max-height:330px;border:1px solid  rgba(255, 255, 255, 0.30)" class="img-rounded img-responsive col-centered" />
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                        <a href="@Url.Action("DownloadFile","User", new { id = Model.ID, name= Model.Title+"-"+Model.Artist.Name , item = "song"})" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
-                    </p>
+        <!--Navigation Panel Below Display-->
+        <div class="row">
+            <div class="col-md-12 container-black">
+                <!--Left Part-->
+                <div class="col-md-3">
                 </div>
 
-                <div class="col-md-4 pull-right">
-                    <!--Statistic Info Container-->
-                    <p>
-                        <strong>Viewed: </strong> @Model.Views
+                <!--Center Part-->
+                <div class="col-md-6 ">
+                    @if (Model.VideoLink == null || Model.VideoLink == "")
+                            {
+                                <!--Btn Download-->
+                    <div class="row-centered">
+                        <div class="col-centered">
+                            <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-block btn-info" id="btn-download">Download</a>
+                        </div>
+                    </div>
+                            }
+                            else
+                            {
+                                <!--Btn Download-->
+                    <div class="col-md-6">
+                        <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-lg btn-block btn-info" id="btn-download">Download</a>
+                    </div>
+                                <!--Btn Youtube-->
+                    <div class="col-md-6">
+                        <a href="@Model.VideoLink" class="btn btn-lg btn-block btn-warning">Youtube</a>
+                    </div>
+                            }
+                </div>
+
+                <!--Right Part-->
+                <div class="col-md-3 custom-text-white">
+                    <p class="pull-left">
+                        <span><span class="fui-eye"></span> @Model.Views </span>
                     </p>
-                    <p>
-                        <strong>Downloaded: </strong> @Model.Downloads
+                    <p class="pull-right">
+                        <span><span class="fui-upload"></span> @Model.Downloads </span>
                     </p>
                 </div>
             </div>
         </div>
+
+        <!--Information Panel-->
+        <div class="row container-white">
+            <!--Uploaded by Info Panel-->
+            <div class="row-centered">
+                <div class="col-centered">
+                    <div class="row">
+                        @{var avatarSrc = FilesByteUtility.ByteArrayToImageSrcString(Model.UserShared.Avatar);}
+                        <img src="@avatarSrc" style="height:41px; margin-right:0 20px 0 20px;" class="img-rounded" />
+                    </div>
+                    <div class="row">
+                        <strong>@Html.ActionLink(Model.UserShared.UserName, "ProfileDetails", "Account", new { username = @Model.UserShared.UserName }, null) </strong>
+                    </div>
+                    <div class="row">
+                        <strong>@Html.Timeago(Model.SharedOn)</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!--Review Panel-->
+            <div class="row">
+
+            </div>
+        </div>
+
+        <!--Comments-->
+        <div class="row container-white">
+            @{ViewBag.id = Model.ID;}
+            @{ViewBag.Type = "song";}
+
+            <div class="col-md-12">
+                @Html.Partial("_Comments", ViewBag.CommentsInfo as List<CommentViewModel>)
+            </div>
+        </div>
+    </div>
+
+    <!--More songs Right Panel-->
+    <div class="col-md-4">
+        <div class="col-md-12 container-white custom-grid  pull-right">
+            @{var moreSongs = ViewBag.MoreSongs as List<SongDetailsViewModel>;  }
+            @if (moreSongs.Count != 0)
+            {
+                <div class="row-centered">
+                    <h6> SONGS FROM "@Model.Artist.Name.ToUpper()"</h6>
+                </div>
+
+                if (moreSongs.Count == 1 && moreSongs[0].Title == Model.Title)
+                {
+                    <div class="row-centered">
+                        <div class="col-centered col-md-8">
+                            <p>no other songs known for now</p>
+                        </div>
+                    </div>
+                }
+
+                <ul class="grid cs-style-3">
+                    @foreach (var song in moreSongs)
+                    {
+                        if (song.Title == Model.Title)
+                        {
+                            continue;
+                        }
+
+                        albumImg = song.CoverArt;
+                        imgSrc = Cloud_Vibe.Utilities.FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+                        var songUrl = Url.Action("Details", "Song", new { title = song.Title.ToString() });
+                        var dateFormated = song.SharedOn.Year.ToString() + song.SharedOn.Month.ToString() + song.SharedOn.Day.ToString() + song.SharedOn.Minute.ToString() + song.SharedOn.Second.ToString() as String;
+                        <li>
+                            <a href="@songUrl">
+                                <figure>
+                                    <img src="@imgSrc" alt="img-@song.Title">
+                                    <figcaption>
+                                        <h3 class="row-centered">@song.Title</h3>
+                                        <div class="row-centered"><span class="artist">@song.Artist.Name</span></div>
+                                        <div class="row">
+                                            <div class=" pull-left col-md-5">
+                                                <span><span class="fui-eye"></span> @song.Views </span>
+                                            </div>
+                                            <div class="pull-right col-md-5">
+                                                <span><span class="fui-upload"></span> @song.Downloads </span>
+                                            </div>
+                                        </div>
+                                        <div class="row-centered">
+                                            <div class="col-md-12 col-centered">
+                                                <span style="font-size:small">@Html.Timeago(song.SharedOn) </span>
+                                            </div>
+                                        </div>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                if (moreSongs.Count != 1)
+                {
+                    <div class="row-centered">
+                        @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
+                        {
+                            <div class="input-group input-group-lg col-centered ">
+                                @Html.Hidden("SearchString", Model.Artist.Name)
+                                <button class="btn btn-lg btn-info" type="submit">See more song from "@Model.Artist.Name"</button>
+                            </div>
+                        }
+                    </div>
+                }
+
+            }
+        </div>
     </div>
 </div>
 
-@if (Model.VideoLink != null)
-{
+
+
+
+
+@*<div class="container jumbotron">
+        <div class="row">
+            <!--Info Container-->
+            <div class="col-md-4">
+                <!--Image Container-->
+                @{
+                var albumImg = Model.CoverArt;
+                var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(albumImg);
+                }
+                <img src="@imgSrc" style="float:left;height:260px; margin-right:10px" class="img-rounded img-responsive" />
+            </div>
+
+            <div class="col-md-8">
+                <!--Info Container-->
+                <div class="row">
+                    <div class="col-md-8 pull-left">
+                        <!--Main Info Container-->
+                        <p>
+                            @Model.Title <br />
+                            <strong>@Model.Artist.Name</strong>
+                        </p>
+                        <p>
+                            Uploaded <strong>@Html.Timeago(Model.SharedOn)</strong> <br />
+                            By: <strong>@Html.ActionLink(@Model.UserShared.UserName, "ProfileDetails", "Account", new { username = @Model.UserShared.UserName }, null) </strong> <br />
+
+                            <a href="@Url.Action(" downloadfile","user", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-lg btn-block btn-warning" id="btn-download">Download</a>
+                        </p>
+                    </div>
+
+                    <div class="col-md-4 pull-right">
+                        <!--Statistic Info Container-->
+                        <p>
+                            <strong>Viewed: </strong> @Model.Views
+                        </p>
+                        <p>
+                            <strong>Downloaded: </strong> @Model.Downloads
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        @if (Model.VideoLink != null)
+        {
     <div class="jumbotron">
         <!--Video Container-->
     </div>
-}
+        }
 
-@{var moreSongs = ViewBag.MoreSongs as List<SongDetailsViewModel>;  }
-@if (moreSongs.Count != 0)
-{
-    <div class="jumbotron col-md-12">
-        <div class="row">
-            <h4> SONGS FROM "@Model.Artist.Name.ToUpper()"</h4>
-        </div>
-        <div class="row">
+        @{var moreSongs = ViewBag.MoreSongs as List<songdetailsviewmodel>
+        ;  }
+        @if (moreSongs.Count != 0)
+        {
+        <div class="jumbotron col-md-12">
+            <div class="row">
+                <h4> SONGS FROM "@Model.Artist.Name.ToUpper()"</h4>
+            </div>
+            <div class="row">
 
-            @foreach (var song in moreSongs)
-            {
+                @foreach (var song in moreSongs)
+                {
                 <div class="col-md-2">
                     <div class="row">
                         <!--Image Container-->
                         @{
-                var cover = song.CoverArt;
-                    var img = FilesByteUtility.ByteArrayToImageSrcString(cover);
+                        var cover = song.CoverArt;
+                        var img = FilesByteUtility.ByteArrayToImageSrcString(cover);
                         }
                         <img src="@img" style="float:left;height:150px; margin-right:10px" class="img-rounded img-responsive" />
                     </div>
                     <div class="row">
-                        <a href="@Url.Action("Details", "Song", new { title = song.Title })">
+                        <a href="@Url.Action(" details", "Song" , new { title=song.Title })">
                             @if (song.Title.Count() < 30)
-                                {
+                            {
                             <p>@song.Title</p>
-                                }
-                                else
-                                {
+                            }
+                            else
+                            {
                             <p>@song.Title.Substring(0, 30) ...</p>
-                                }
+                            }
                         </a>
                     </div>
                 </div>
-            }
+                }
 
-        </div>
-        <hr />
+            </div>
+            <hr />
 
-        <div class="row row-centered">
-            @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
-            {
+            <div class="row row-centered">
+                @using (Html.BeginForm("AllSongs", "Song", FormMethod.Get))
+                {
                 <div class="input-group input-group-lg col-md-12">
                     @Html.Hidden("SearchString", Model.Artist.Name)
                     <button class="btn btn-lg btn-block btn-warning" type="submit">See more song from "@Model.Artist.Name"</button>
                 </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-}
+        }*@
 
-@{ViewBag.id = Model.ID;}
-@{ViewBag.Type = "song";}
 
-@Html.Partial("_Comments", ViewBag.CommentsInfo as List<CommentViewModel>)
 
 @section Scripts {
+    @*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@
+    @if (false)
+    {
+        <script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>}
+
+    <script src="~/Scripts/jquery.blurr/jquery.blurr.js"></script>
+
     <script>
         var songType = 'song';
         var songId = @Model.ID;
 
+
         $(document).ready(function () {
             loadComments("#container-comments");
+
+            //Make bg picture the same as the cover picture but blurred
+            $('body').css("background", "url(@Url.Action("GetPicture", "User", new { id = Model.ID, type = "song" })) no-repeat center center");
+            $('body').css("background-size", "cover");
+            $('#bg-blurry').blurjs({
+                source: 'body',
+                radius: 30,
+                overlay: 'rgba(0, 0, 0, .2)'
+            });
         });
+
 
         $('#btn-add-comment').click(function () {
             addComment();
-        })		
+        })
 
         var addComment = function addComment() {
+            //Current comment to be added value
             var userComment = $('#text-comments').val();
+
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("Comments", "User")",
@@ -141,10 +352,8 @@
 
         var removeComment = function removeComment() {
 
-
-
-
             var userComment = $('#text-comments').val();
+
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("Comments", "User")",

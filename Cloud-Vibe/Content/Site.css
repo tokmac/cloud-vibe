@@ -80,21 +80,26 @@ input, select, textarea {
 .col-top {
     vertical-align: top;
 }
+
 .col-middle {
     vertical-align: middle;
 }
+
 .col-bottom {
     vertical-align: bottom;
 }
+
 .row-centered {
     text-align: center;
 }
+
 .col-centered {
     display: inline-block;
     float: none;
     reset the text-align text-align:left;
     inline-block space fix margin-right:-4px;
 }
+
 .row-hight {
     line-height: 75px;
 }
@@ -110,7 +115,7 @@ input, select, textarea {
     background: rgba(0, 0, 0, .4);
     border: 2px none;
     border-radius: 5px;
-    margin-bottom:2%;
+    margin-bottom: 2%;
 }
 
 /*Loading Animation Styles*/
@@ -124,6 +129,7 @@ input, select, textarea {
     -ms-transform: scale(0.6);
     transform: scale(0.6);
 }
+
 .f_circleG {
     position: absolute;
     background-color: #FFFFFF;
@@ -155,6 +161,7 @@ input, select, textarea {
     animation-iteration-count: infinite;
     animation-direction: linear;
 }
+
 #frotateG_01 {
     left: 0;
     top: 52px;
@@ -164,6 +171,7 @@ input, select, textarea {
     -ms-animation-delay: 0.39s;
     animation-delay: 0.39s;
 }
+
 #frotateG_02 {
     left: 15px;
     top: 15px;
@@ -173,6 +181,7 @@ input, select, textarea {
     -ms-animation-delay: 0.52s;
     animation-delay: 0.52s;
 }
+
 #frotateG_03 {
     left: 52px;
     top: 0;
@@ -182,6 +191,7 @@ input, select, textarea {
     -ms-animation-delay: 0.65s;
     animation-delay: 0.65s;
 }
+
 #frotateG_04 {
     right: 15px;
     top: 15px;
@@ -191,6 +201,7 @@ input, select, textarea {
     -ms-animation-delay: 0.78s;
     animation-delay: 0.78s;
 }
+
 #frotateG_05 {
     right: 0;
     top: 52px;
@@ -200,6 +211,7 @@ input, select, textarea {
     -ms-animation-delay: 0.91s;
     animation-delay: 0.91s;
 }
+
 #frotateG_06 {
     right: 15px;
     bottom: 15px;
@@ -209,6 +221,7 @@ input, select, textarea {
     -ms-animation-delay: 1.04s;
     animation-delay: 1.04s;
 }
+
 #frotateG_07 {
     left: 52px;
     bottom: 0;
@@ -218,6 +231,7 @@ input, select, textarea {
     -ms-animation-delay: 1.17s;
     animation-delay: 1.17s;
 }
+
 #frotateG_08 {
     left: 15px;
     bottom: 15px;
@@ -282,7 +296,7 @@ input, select, textarea {
 .custom-jumbotron {
     padding: 20px 15px 0 15px;
     margin-bottom: 30px;
-    margin-top:30px;
+    margin-top: 30px;
     color: inherit;
     background-color: #ffffff;
 }
@@ -291,18 +305,22 @@ input, select, textarea {
     .custom-jumbotron .h1 {
         color: inherit;
     }
+
     .custom-jumbotron p {
         margin-bottom: 15px;
         font-size: 21px;
         font-weight: 200;
     }
+
     .custom-jumbotron > hr {
         border-top-color: #d5d5d5;
     }
+
 .container .custom-jumbotron,
 .container-fluid .custom-jumbotron {
     border-radius: 3px;
 }
+
 .custom-jumbotron .container {
     max-width: 100%;
 }
@@ -328,33 +346,128 @@ input, select, textarea {
 .mbl, .mvl, .mal {
     margin-bottom: 0 !important;
 }
+
 .pbl, .pvl, .pal {
     padding-bottom: 0 !important;
 }
 
 /*Custom Input Transparent Background*/
 input.transparent-input {
-    background-color: rgba(255, 255, 255, .7); !important;
+    background-color: rgba(255, 255, 255, .7);
+    !important;
 }
 
 /*Custom Link Color Where Needed*/
-a.custom-a-white:link{
-    color:rgba(255, 255, 255, .7) !important; 
+.custom-text-white {
+    color: rgba(255, 255, 255, .7) !important;
 }
+
+a.custom-a-white:link {
+    color: rgba(255, 255, 255, .7) !important;
+}
+
 a.custom-a-white:hover {
     color: #337ab7 !important;
 }
 
 /*Custom Button Only Text*/
 .custom-btn-clear {
-    background:none;
-    border:none;
-    margin:0;
-    padding:0;
+    background: none;
+    border: none;
+    margin: 0;
+    padding: 0;
 }
 
 /*Reseting some margin values from the Nav bar to the content*/
-.navbar{
+.navbar {
     /*margin-bottom:0 !important;*/
     border-radius: 0;
 }
+
+/*Custom Transparent Container*/
+.container-white {
+    padding: 2% 2% 0 2%;
+    background: rgba(255, 255, 255, 0.80);
+    border: 2px none;
+    margin-bottom: 2%;
+}
+
+.container-black {
+    padding: 2% 2% 2% 2%;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px none;
+    margin-bottom: 2%;
+}
+
+.custom-grid {
+    margin: 0 0 5px 0;
+    height: 360px;
+}
+
+.custom-grid-lighter:hover {
+    background: rgba(212, 207, 207, 0.70);
+}
+
+.custom-grid-darker:hover {
+    background: rgba(225, 222, 222, 0.80);
+}
+
+#bg-blurry {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: #FFF;
+    background-size: cover !important;
+}
+
+/*Custom speach bubble*/
+.bubble {
+    position: relative;
+    width: 100%;
+    height: 20%;
+    padding: 0;
+    background: #FFFFFF;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border: #4d036d solid 1px;
+}
+
+    .bubble:after {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 14px 14px 14px 0;
+        border-color: transparent #FFFFFF;
+        display: block;
+        width: 0;
+        z-index: 1;
+        margin-top: -14px;
+        left: -14px;
+        top: 30%;
+    }
+
+    .bubble:before {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 14px 14px 14px 0;
+        border-color: transparent #4d036d;
+        display: block;
+        width: 0;
+        z-index: 0;
+        margin-top: -14px;
+        left: -15px;
+        top: 30%;
+    }
+
+    .bubble textarea {
+        height: 100%;
+        width: 100%;
+        display: block;
+        border: none;
+        resize: none;
+    }

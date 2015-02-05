@@ -14,6 +14,7 @@
     using Cloud_Vibe.Data.Models;
     using Cloud_Vibe.Models;
     using Cloud_Vibe.Models.ViewModels;
+    using Cloud_Vibe.Utilities;
 
     [Authorize]
     public class UserController : BaseController
@@ -238,7 +239,7 @@
             model.Downloads = model.Downloads + 1;
             data.SaveChanges();
 
-            return File(model.Torrent, "application/x-bittorrent ");
+            return File(model.Torrent, "application/x-bittorrent");
         }
 
         [HttpGet]
@@ -408,6 +409,22 @@
             int pageNumber = (page ?? 1);
 
             return View(results.ToPagedList(pageNumber, pageSize));
+        }
+
+        [HttpGet]
+        public FileContentResult GetPicture(string id, string type)
+        {
+            switch (type)
+            {
+                case "song":
+                    var currentSong = data.Songs.GetById(Int32.Parse(id));
+                    return File(currentSong.CoverArt,currentSong.TypeMIME) ;
+                case "album":
+                    var currentAlbum = data.Albums.GetById(Int32.Parse(id));
+                    return File(currentAlbum.CoverArt, currentAlbum.TypeMIME);
+                default:
+                    return null;
+            }
         }
 
     }

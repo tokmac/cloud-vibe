@@ -575,6 +575,8 @@
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery.avgrund\jquery.avgrund.js" />
     <Content Include="Scripts\jquery.avgrund\jquery.avgrund.min.js" />
+    <Content Include="Scripts\jquery.blurr\jquery.blurr.js" />
+    <Content Include="Scripts\jquery.match-height\jquery.matchHeight.js" />
     <Content Include="Scripts\jquery.mixitup\jquery.mixitup.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />

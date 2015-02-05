@@ -54,10 +54,10 @@
                                                 <h3 class="row-centered">@song.Title</h3>
                                                 <div class="row-centered"><span class="artist">@song.Artist.Name</span></div>
                                                 <div class="row">
-                                                    <div class=" pull-left col-md-4">
+                                                    <div class="col-md-6 text-left">
                                                         <span><span class="fui-eye"></span> @song.Views </span>
                                                     </div>
-                                                    <div class="pull-right col-md-4">
+                                                    <div class="col-md-6 text-right">
                                                         <span><span class="fui-upload"></span> @song.Downloads </span>
                                                     </div>
                                                 </div>
@@ -92,8 +92,7 @@
 @section Scripts {
     @*Referenced Intellisense for this view(this is a work around which fix the problem with the intellisense in Razor)*@
     @if (false)
-    {
-    <script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>}
+    {<script src="~/Scripts/jquery-2.1.0-vsdoc.js"></script>}
 
     <script>
         //Global variables to use in the callback after mixItUp sorts

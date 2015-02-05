@@ -1,31 +1,58 @@
 ﻿@using Cloud_Vibe.Utilities
+@using Microsoft.AspNet.Identity
+@using Cloud_Vibe.Data
 @model ICollection<Cloud_Vibe.Models.ViewModels.CommentViewModel>
 
-<div class="container">
+
+<!--New comment panel-->
+<div class="row">
+    <!--Enter a comment Container with picture-->
     <div class="row">
-        <div class="row jumbotron col-md-6 col-md-offset-3">
+        <!--Show current user's avatar on right-->
+        <div class="col-md-2">
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <textarea id="text-comments" rows="9" name="comment" required placeholder="Add comment..." class="form-control"></textarea>
-                </div>
+                @{
+                    ICloudVibeData data = new CloudVibeData(new CloudVibeDbContex());
+                    var user = data.Users.GetById(User.Identity.GetUserId());
+
+                    var avatar = user.Avatar;
+                    var imgSrc = FilesByteUtility.ByteArrayToImageSrcString(avatar);
+                }
+                <img src="@imgSrc" style="height:30%; margin-right:0;" class="img-rounded" />
             </div>
-            <hr />
-            <div class="row">
-                <span class="input-group input-group-lg col-md-4 col-md-offset-4">
-                    <button id="btn-add-comment" class="btn btn-lg btn-block btn-warning" type="submit">Add Comment</button>
-                </span>
+        </div>
+
+        <!--Text area for the new comment-->
+        <div class="col-md-10">
+            <div class="bubble">
+                <textarea id="text-comments" rows="4" name="comment" required placeholder="Share what is on your mind..." class="form-control"></textarea>
             </div>
         </div>
     </div>
-    <hr />
+    <br />
 
+    <!--Button Panel For Comments -->
+    <div class="row-centered">
+        <div class="col-centered">
+            <button id="btn-add-comment" class="btn btn-lg btn-block btn-info" type="submit">Add Comment</button>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<!--List of all comments-->
+<div class="row">
+    <!--Loading Circle-->
     <div class="row-centered">
         <div id="loader">
             <img src="~/Content/images/ajax-loader.gif" alt="loading comments..." />
         </div>
     </div>
 
-    <div id="container-comments">
+    <!--List of comments container-->
+    <div class="row" id="container-comments">
     </div>
 </div>
+
 

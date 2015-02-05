@@ -1,39 +1,57 @@
 ﻿@using Cloud_Vibe.Utilities
 @model ICollection<Cloud_Vibe.Models.ViewModels.CommentViewModel>
 
-<div class="row">
-    @if (Model.Count == 0)
-    {
-        <h1>No comments yet</h1>
-    }
-    @foreach (var comment in Model)
-    {
-        var avatar = comment.User.Avatar;
-        var img = FilesByteUtility.ByteArrayToImageSrcString(avatar);
+@if (Model.Count == 0)
+{
+    <div class="row-centered">
+        <div class="col-centered">
+            <h3>no comments yet...</h3>
+        </div>
+    </div>
+}
+@foreach (var comment in Model)
+{
+    var avatar = comment.User.Avatar;
+    var img = FilesByteUtility.ByteArrayToImageSrcString(avatar);
+    <div class="row">
+        <!--Left Info Panel-->
+        <div class="col-md-3">
 
-        <div class="row">
-            @if (comment.User.UserName == User.Identity.Name)
-            {
-                <button type="button" id="btn-delete-comment-@comment.ID" class="close fui-cross"></button>
-            }
-            <div class="col-md-2 pull-left">
-                <div class="row">
-                    <h4>@comment.User.UserName</h4>
-                </div>
-                <div class="row">
-                    <!--Image Container-->
-                    <img src="@img" class="thumbnail img-rounded img-responsive" style="float:left;height:120px; margin-right:10px" />
-                </div>
-
-                <div class="row">
-                    <p>Posted @Html.Timeago(comment.SharedOn)</p>
+            <!--Picture Container-->
+            <div class="row-centered">
+                <div class="col-centered">
+                    <img src="@img" class="thumbnail img-rounded img-responsive" style="height:100px; width:100px; margin-right:10px" />
                 </div>
             </div>
-            <div class="col-md-9 pull-right">
-                <p>@comment.Text</p>
+
+            <!--Uploaded Info Container-->
+            <div class="row">
+
+                <!--Username of the user-->
+                <div class="row-centered">
+                    <div class="col-centered">
+                        <h4>@comment.User.UserName</h4>
+                    </div>
+                </div>
+
+                <!--Timeago-->
+                <div class="row-centered">
+                    <div class="col-centered">
+                        <p style="font-size:smaller">Posted @Html.Timeago(comment.SharedOn)</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <hr />
-    }
-</div>
+
+        <!--Center Main Panel-->
+        <div class="col-md-9" >
+            <p>@comment.Text</p>
+        </div>
+
+        <!--Right Buttons Panel-->
+        <div class="col-md-1">
+
+        </div>
+    </div>
+}
 
