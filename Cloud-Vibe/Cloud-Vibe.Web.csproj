@@ -212,9 +212,11 @@
     <Compile Include="Areas\Administration\Controllers\CommentController.cs" />
     <Compile Include="Areas\Administration\Controllers\HomeController.cs" />
     <Compile Include="Areas\Administration\Controllers\SongController.cs" />
+    <Compile Include="Areas\Administration\Controllers\UserController.cs" />
     <Compile Include="Areas\Administration\ViewModels\Album\AlbumViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Song\SongViewModel.cs" />
     <Compile Include="Areas\Administration\ViewModels\Comment\CommentViewModel.cs" />
+    <Compile Include="Areas\Administration\ViewModels\UserViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlbumController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -256,6 +258,7 @@
     <Compile Include="Data\Migrations\Configuration.cs" />
     <Compile Include="Utilities\AuthorizationUtility.cs" />
     <Compile Include="Utilities\DataAnnotations\BooleanAttribute.cs" />
+    <Compile Include="Utilities\VideoUtility.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
     <Compile Include="ViewModels\UserViewModels.cs" />
@@ -571,6 +574,7 @@
     <Content Include="Areas\Administration\Views\Comment\All.cshtml" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\Administration\Views\Shared\EditorTemplates\AlbumEditor.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.0-vsdoc.js" />
     <Content Include="Scripts\jquery.avgrund\jquery.avgrund.js" />
@@ -1252,6 +1256,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="App_\" />
     <Folder Include="Areas\Administration\ViewModels\Base\" />
+    <Folder Include="Areas\Administration\Views\User\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -33,9 +33,17 @@
         <div class="row">
             <div class="col-md-12 custom-grid container-black" style="max-height:380px">
                 <!--Cover Picture-->
-                <div class="row-centered">
+                <div id="container-song-image" class="row-centered media-info active">
                     <div class="col-centered col-md-12 col-xs-12 col-sm-12">
                         <img src="@imgSrc" style="max-height:330px;border:1px solid  rgba(255, 255, 255, 0.30)" class="img-rounded img-responsive col-centered" />
+                    </div>
+                </div>
+
+                <!--Youtube Video-->
+                <div id="container-song-video" class="row-centered media-info ">
+                    <div class="col-centered col-md-12 col-xs-12 col-sm-12">
+                        <iframe width="520" height="330" frameborder="0" allowfullscreen=""
+                                src="@Model.VideoLink"></iframe>
                     </div>
                 </div>
             </div>
@@ -51,25 +59,25 @@
                 <!--Center Part-->
                 <div class="col-md-6 ">
                     @if (Model.VideoLink == null || Model.VideoLink == "")
-                            {
-                                <!--Btn Download-->
-                    <div class="row-centered">
-                        <div class="col-centered">
-                            <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-block btn-info" id="btn-download">Download</a>
+                    {
+                        <!--Btn Download-->
+                        <div class="row-centered">
+                            <div class="col-centered">
+                                <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-block btn-info" id="btn-download">Download</a>
+                            </div>
                         </div>
-                    </div>
-                            }
-                            else
-                            {
+                    }
+                    else
+                    {
                                 <!--Btn Download-->
-                    <div class="col-md-6">
-                        <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-lg btn-block btn-info" id="btn-download">Download</a>
-                    </div>
+                        <div class="col-md-6">
+                            <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-lg btn-block btn-info" id="btn-download">Download</a>
+                        </div>
                                 <!--Btn Youtube-->
-                    <div class="col-md-6">
-                        <a href="@Model.VideoLink" class="btn btn-lg btn-block btn-warning">Youtube</a>
-                    </div>
-                            }
+                        <div class="col-md-6">
+                            <a href="javascript:" id="btn-media" class="btn btn-lg btn-block btn-warning">Video</a>
+                        </div>
+                    }
                 </div>
 
                 <!--Right Part-->
@@ -325,8 +333,27 @@
                 radius: 30,
                 overlay: 'rgba(0, 0, 0, .2)'
             });
+
+            $('.media-info active').show();
+            $('#container-song-video').hide();
+            
         });
 
+        $('#btn-media').click(function(e){
+            $('.media-info.active').hide();
+
+            if ($('#container-song-image').hasClass('active')) {
+                $('#container-song-image').removeClass('active');
+                $('#container-song-video').addClass('active');
+                $(this).text('Cover');
+            }else if($('#container-song-video').hasClass('active')){
+                $('#container-song-image').addClass('active');
+                $('#container-song-video').removeClass('active');
+                $(this).text('Video')
+            }
+
+            $('.media-info.active').show();
+        });
 
         $('#btn-add-comment').click(function () {
             addComment();

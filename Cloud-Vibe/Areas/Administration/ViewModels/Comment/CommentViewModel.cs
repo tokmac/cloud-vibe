@@ -17,18 +17,22 @@
         [HiddenInput(DisplayValue = false)]
         public int? ID { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "User")]
         public string UserShared { get; set; }
 
         [Display(Name = "Text")]
         public string Text { get; set; }
 
+        [UIHint("Date")]
         [Display(Name = "Shared On")]
         public DateTime SharedOn { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "Song")]
         public string SongName { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "Album")]
         public string AlbumName { get; set; }
 

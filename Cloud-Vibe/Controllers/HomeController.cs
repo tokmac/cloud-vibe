@@ -22,6 +22,7 @@ namespace Cloud_Vibe.Controllers
         }
 
         [HttpGet]
+        [OutputCache(Duration = 60 * 60 * 24 * 14)]
         public ActionResult Index()
         {
             if (User.Identity.IsAuthenticated)

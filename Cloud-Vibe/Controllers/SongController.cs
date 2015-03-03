@@ -22,6 +22,7 @@
         }
 
         // GET: Song
+        [OutputCache(VaryByParam = "title", Duration = 60 * 60 * 6)]
         public ActionResult Details(string title)
         {
             if (title == null)

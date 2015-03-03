@@ -20,28 +20,28 @@
         .Name("grid")
         .Columns(columns =>
         {
-            columns.Bound(pr => pr.ID);
+            //columns.Bound(pr => pr.ID);
             columns.Bound(pr => pr.Title).Width(250);
-            columns.Bound(pr => pr.Artist);
-            columns.Bound(pr => pr.Year);
-            columns.Bound(pr => pr.SharedOn).ClientTemplate("#=kendo.toString(SharedOn, 'dd/MM/yyyy HH:mm:ss')#");
+            columns.Bound(pr => pr.Artist).Width(350);
+            columns.Bound(pr => pr.Year).Width(250);
+            columns.Bound(pr => pr.SharedOn).ClientTemplate("#=kendo.toString(SharedOn, 'dd/MM/yyyy')#");
             columns.Bound(pr => pr.UserShared);
-            columns.Bound(pr => pr.Views);
-            columns.Bound(pr => pr.Downloads);
-            columns.Command(cmd => { cmd.Edit(); cmd.Destroy(); });
+            columns.Bound(pr => pr.Views).Width(50);
+            columns.Bound(pr => pr.Downloads).Width(50);
+            columns.Command(cmd => { cmd.Edit(); cmd.Destroy(); }).Width(600);
         })
         .DataSource(data => data
                 .Ajax()
                 .Model(m =>
                 {
                     m.Id(p => p.ID);
-                    m.Field(p => p.Downloads).Editable(false);
-                    m.Field(p => p.Views).Editable(false);
-                    m.Field(p => p.UserShared).DefaultValue(User.Identity.Name).Editable(false);
+                    m.Field(p => p.Downloads);
+                    m.Field(p => p.Views);
+                    m.Field(p => p.UserShared).DefaultValue(User.Identity.Name);
                 })
                 .Events(events => events.Error("onError"))
                 .Read(read => read.Action("Read", ControllerName))
-                //.Create(create => create.Action("Create", ControllerName))
+                    .Create(create => create.Action("Create", ControllerName))
                 .Update(update => update.Action("Update", ControllerName))
                 .Destroy(destroy => destroy.Action("Destroy", ControllerName))
         )
@@ -51,7 +51,9 @@
         .Groupable()
         .Selectable()
         //.ToolBar(toolbar => { toolbar.Create(); })
-        .Editable(edit => edit.Mode(GridEditMode.PopUp))
+        .Editable(edit => edit.Mode(GridEditMode.PopUp).Window(w => w.Title("Edit Album").Name("editWindow").HtmlAttributes(new { style = "width:1000px;" }))
+        )
+
 
 )
 

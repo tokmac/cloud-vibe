@@ -113,6 +113,14 @@
                 var torrent = Utilities.FilesByteUtility.HttpPostedFileToByteArray(album.Torrent);
                 var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
 
+                var videoLink = "";
+
+                if (album.VideoLink != "" && album.VideoLink != null)
+                {
+                    videoLink = VideoUtility.YoutubeWatchToEmbededLink(album.VideoLink);
+                }
+                 
+
                 Album albumToSave = new Album
                 {
                     Artist = artist,
@@ -122,7 +130,7 @@
                     CoverArt = coverArt,
                     Torrent = torrent,
                     Title = album.Title,
-                    VideoLink = album.VideoLink,
+                    VideoLink = videoLink,
                     Year = album.Year
 
                 };
@@ -156,7 +164,7 @@
         [HttpPost]
         public ActionResult ShareSong(ShareSongViewModel song)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && song.Torrent.ContentType == "application/x-bittorent")
             {
                 string fileType = "";
 
@@ -190,6 +198,13 @@
 
                 var currentUser = data.Users.All().SingleOrDefault(u => u.UserName == User.Identity.Name);
 
+                var videoLink = "";
+
+                if (song.VideoLink != "" && song.VideoLink != null)
+                {
+                    videoLink = VideoUtility.YoutubeWatchToEmbededLink(song.VideoLink);
+                }
+
                 Song songToSave = new Song
                 {
                     Artist = artist,
@@ -199,7 +214,7 @@
                     CoverArt = coverArt,
                     Torrent = torrent,
                     Title = song.Title,
-                    VideoLink = song.VideoLink,
+                    VideoLink = videoLink,
                     Year = song.Year
                 };
 
@@ -217,6 +232,9 @@
                 return RedirectToAction("Index");
             }
 
+            if (song.Torrent.ContentType != "application/x-bittorent")
+                ModelState.AddModelError("Torrent", "You must upload only torrent file!");
+
             TempData["SongShareViewModel"] = song;
             return RedirectToAction("Share");
         }
@@ -228,7 +246,7 @@
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
-                FileName = name,
+                FileName = name + ".torrent",
 
                 // always prompt the user for downloading, set to true if you want 
                 // the browser to try to show the file inline

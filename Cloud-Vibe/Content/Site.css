@@ -471,3 +471,16 @@ a.custom-a-white:hover {
         border: none;
         resize: none;
     }
+
+body, html {
+    height: 100%;
+}
+
+.container {
+    min-height: 100%;
+}
+
+.footer {
+    height: 40px;
+    margin-top: -40px;
+}

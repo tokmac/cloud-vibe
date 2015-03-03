@@ -31,15 +31,18 @@
         [Display(Name = "Shared On")]
         public DateTime SharedOn { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "Shared By")]
         public string UserShared { get; set; }
 
         [Display(Name = "Video URL")]
         public string VideoLink { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "Downloads")]
         public int Downloads { get; set; }
 
+        [HiddenInput(DisplayValue = false)]
         [Display(Name = "Views")]
         public int Views { get; set; }
 

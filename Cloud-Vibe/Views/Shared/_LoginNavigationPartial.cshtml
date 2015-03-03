@@ -3,8 +3,8 @@
 
 <ul class="nav navbar-nav">
     <li class="nav-btn">@Html.ActionLink("Home", "Index", "User", new { area = "" }, null)</li>
-    <li class="nav-btn">@Html.ActionLink("All Songs", "AllSongs", "Song", new { area = "" }, null)</li>
-    <li class="nav-btn">@Html.ActionLink("All Albums", "AllAlbums", "Album", new { area = "" }, null)</li>
+    <li class="nav-btn">@Html.ActionLink("Songs", "AllSongs", "Song", new { area = "" }, null)</li>
+    <li class="nav-btn">@Html.ActionLink("Albums", "AllAlbums", "Album", new { area = "" }, null)</li>
 
     @using (Html.BeginForm("Search", "User", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
     {

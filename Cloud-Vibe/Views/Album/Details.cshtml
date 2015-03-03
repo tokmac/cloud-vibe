@@ -33,9 +33,17 @@
         <div class="row">
             <div class="col-md-12 custom-grid container-black">
                 <!--Cover Picture-->
-                <div class="row-centered">
+                <div id="container-album-image" class="row-centered media-info active">
                     <div class="col-centered col-md-8 col-xs-7 col-sm-7">
                         <img src="@imgSrc" style="max-height:330px;border:1px solid  rgba(255, 255, 255, 0.30)" class="img-rounded img-responsive col-centered" />
+                    </div>
+                </div>
+
+                <!--Youtube Video-->
+                <div id="container-album-video" class="row-centered media-info ">
+                    <div class="col-centered col-md-12 col-xs-12 col-sm-12">
+                        <iframe width="520" height="330" frameborder="0" allowfullscreen=""
+                                src="@Model.VideoLink"></iframe>
                     </div>
                 </div>
             </div>
@@ -67,7 +75,7 @@
                         </div>
                         <!--Btn Youtube-->
                         <div class="col-md-6">
-                            <a href="@Model.VideoLink" class="btn btn-lg btn-block btn-warning">Youtube</a>
+                            <a href="javascript:" id="btn-media" class="btn btn-lg btn-block btn-warning">Video</a>
                         </div>
                     }
                 </div>
@@ -212,6 +220,25 @@
                 radius: 30,
                 overlay: 'rgba(0, 0, 0, .2)'
             });
+
+            $('.media-info active').show();
+            $('#container-album-video').hide();
+        });
+
+        $('#btn-media').click(function(e){
+            $('.media-info.active').hide();
+
+            if ($('#container-album-image').hasClass('active')) {
+                $('#container-album-image').removeClass('active');
+                $('#container-album-video').addClass('active');
+                $(this).text('Cover');
+            }else if($('#container-album-video').hasClass('active')){
+                $('#container-album-image').addClass('active');
+                $('#container-album-video').removeClass('active');
+                $(this).text('Video')
+            }
+
+            $('.media-info.active').show();
         });
 
         $('#btn-add-comment').click(function () {
