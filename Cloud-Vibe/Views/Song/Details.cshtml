@@ -129,7 +129,7 @@
 
     <!--More songs Right Panel-->
     <div class="col-md-4">
-        <div class="col-md-12 container-white custom-grid  pull-right">
+        <div class="col-md-12 container-white custom-grid  pull-right" style="height:450px">
             @{var moreSongs = ViewBag.MoreSongs as List<SongDetailsViewModel>;  }
             @if (moreSongs.Count != 0)
             {
@@ -145,8 +145,7 @@
                         </div>
                     </div>
                 }
-
-                <ul class="grid cs-style-3">
+                <ul class="grid cs-style-3" style="margin-bottom:20px">
                     @foreach (var song in moreSongs)
                     {
                         if (song.Title == Model.Title)

@@ -6,7 +6,7 @@
     <li class="nav-btn">@Html.ActionLink("Songs", "AllSongs", "Song", new { area = "" }, null)</li>
     <li class="nav-btn">@Html.ActionLink("Albums", "AllAlbums", "Album", new { area = "" }, null)</li>
 
-    @using (Html.BeginForm("Search", "User", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
+    @*@using (Html.BeginForm("Search", "User", FormMethod.Get, new { @class = "navbar-form navbar-left", role = "search" }))
     {
         <li class="form-group">
             <div class="input-group">
@@ -16,5 +16,5 @@
                 </span>
             </div>
         </li>
-    }
+    }*@
 </ul>

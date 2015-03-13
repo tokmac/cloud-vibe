@@ -71,7 +71,7 @@
                     {
                         <!--Btn Download-->
                         <div class="col-md-6">
-                            <a href="@Url.Action("DownloadFile","User", new { id=Model.ID, name=Model.Title+"-"+Model.Artist.Name , item="song" })" class="btn btn-lg btn-block btn-info" id="btn-download">Download</a>
+                            <a href="@Url.Action("DownloadFile", "User", new { id = Model.ID, name = Model.Title + "-" + Model.Artist.Name, item = "album" })" class="btn btn-lg btn-block btn-info" id="btn-download">Download</a>
                         </div>
                         <!--Btn Youtube-->
                         <div class="col-md-6">
@@ -129,7 +129,7 @@
 
     <!--More songs Right Panel-->
     <div class="col-md-4">
-        <div class="col-md-12 container-white custom-grid  pull-right">
+        <div class="col-md-12 container-white custom-grid  pull-right" style="height:450px">
             @{var moreAlbums = ViewBag.MoreAlbums as List<AlbumDetailsViewModel>;  }
             @if (moreAlbums.Count != 0)
             {
@@ -146,7 +146,7 @@
                     </div>
                 }
 
-                <ul class="grid cs-style-3">
+                <ul class="grid cs-style-3" style="margin-bottom:20px">
                     @foreach (var album in moreAlbums)
                     {
                         if (album.Title == Model.Title)

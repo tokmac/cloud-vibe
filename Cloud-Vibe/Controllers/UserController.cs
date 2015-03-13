@@ -164,7 +164,7 @@
         [HttpPost]
         public ActionResult ShareSong(ShareSongViewModel song)
         {
-            if (ModelState.IsValid && song.Torrent.ContentType == "application/x-bittorent")
+            if (ModelState.IsValid)//&& song.Torrent.ContentType == "application/x-bittorent")
             {
                 string fileType = "";
 
@@ -232,8 +232,8 @@
                 return RedirectToAction("Index");
             }
 
-            if (song.Torrent.ContentType != "application/x-bittorent")
-                ModelState.AddModelError("Torrent", "You must upload only torrent file!");
+            //if (song.Torrent.ContentType != "application/x-bittorent")
+            //    ModelState.AddModelError("Torrent", "You must upload only torrent file!");
 
             TempData["SongShareViewModel"] = song;
             return RedirectToAction("Share");
