@@ -284,6 +284,7 @@
     <Content Include="Content\images\album-wallpaper.jpg" />
     <Content Include="Content\images\album-wallpaper1.jpg" />
     <Content Include="Content\images\album-wallpaper3.jpg" />
+    <Content Include="Content\images\favicon.ico" />
     <Content Include="Content\images\no_user.jpg" />
     <Content Include="Content\images\space-wallpaper-prod.jpg" />
     <Content Include="Content\images\space-wallpaper-prod2.jpg" />
